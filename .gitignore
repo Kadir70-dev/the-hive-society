@@ -33,3 +33,6 @@ next-env.d.ts
 
 # scratch extraction workspace (not part of the app)
 /extraction/
+
+# Local Netlify folder
+.netlify
