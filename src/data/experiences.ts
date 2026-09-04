@@ -18,7 +18,7 @@ export const marketingExperiences: Experience[] = [
     going: 14,
     attendeeNames: ["Aisha", "Noor", "Layla", "Mona"],
     verified: true,
-    image: "/images/a1-coffee.jpg",
+    image: "/images/coffee.jpg",
     description:
       "A relaxed weekly gathering over coffee and conversation — new faces welcome every week.",
   },
@@ -35,7 +35,7 @@ export const marketingExperiences: Experience[] = [
     going: 9,
     attendeeNames: ["Sara", "Reem", "Hana"],
     verified: true,
-    image: "/images/a2-pilates.jpg",
+    image: "/images/gym.jpg",
     description:
       "Mat pilates on the Corniche as the sun comes up. All levels welcome, mats provided.",
   },
@@ -52,7 +52,7 @@ export const marketingExperiences: Experience[] = [
     going: 22,
     attendeeNames: ["Fatima", "Alia", "Maya", "Dana"],
     verified: true,
-    image: "/images/a3-majlis.jpg",
+    image: "/images/majlisnight.jpg",
     description:
       "An evening majlis under the stars — music, mezze and easy conversation by the shore.",
   },
@@ -85,7 +85,7 @@ export const marketingExperiences: Experience[] = [
     going: 8,
     attendeeNames: ["Salma", "Huda"],
     verified: true,
-    image: "/images/a5-pottery.jpg",
+    image: "/images/claypot.jpg",
     description:
       "Hand-build your first piece with a small group and take it home fired and glazed.",
   },
@@ -102,7 +102,7 @@ export const marketingExperiences: Experience[] = [
     going: 12,
     attendeeNames: ["Amal", "Zainab", "Yara"],
     verified: false,
-    image: "/images/a6-tennis.jpg",
+    image: "/images/tennis.jpg",
     description: "Doubles rotation for all levels — rackets available to borrow.",
   },
   {
@@ -206,7 +206,7 @@ export const appExperiences: Experience[] = [
     sayHi: 2,
     attendeeNames: ["Maryam", "Sara", "Noor", "Fatima"],
     verified: true,
-    image: "/images/a1-coffee.jpg",
+    image: "/images/coffee.jpg",
     description:
       "A relaxed weekly gathering over coffee and conversation — new faces welcome every week.",
   },
@@ -224,7 +224,7 @@ export const appExperiences: Experience[] = [
     sayHi: 3,
     attendeeNames: ["Hana", "Zainab", "Layla", "Amal"],
     verified: true,
-    image: "/images/a2-pilates.jpg",
+    image: "/images/gym.jpg",
     description: "Mat pilates as the sun comes up. All levels welcome, mats provided.",
   },
   {
@@ -241,7 +241,7 @@ export const appExperiences: Experience[] = [
     sayHi: 0,
     attendeeNames: ["Dana", "Salma", "Noura"],
     verified: true,
-    image: "/images/a3-majlis.jpg",
+    image: "/images/majlisnight.jpg",
     description:
       "An evening majlis — Arabic coffee, dates and easy conversation under warm light.",
   },
@@ -276,7 +276,7 @@ export const appExperiences: Experience[] = [
     sayHi: 2,
     attendeeNames: ["Wadha", "Asma", "Maitha"],
     verified: true,
-    image: "/images/a5-pottery.jpg",
+    image: "/images/claypot.jpg",
     description:
       "Hand-build your first piece with a small group and take it home fired and glazed.",
   },
@@ -294,7 +294,7 @@ export const appExperiences: Experience[] = [
     sayHi: 0,
     attendeeNames: ["Shaikha", "Latifa", "Ghalia"],
     verified: false,
-    image: "/images/a6-tennis.jpg",
+    image: "/images/tennis.jpg",
     description: "Doubles rotation for all levels — rackets available to borrow.",
   },
 ];

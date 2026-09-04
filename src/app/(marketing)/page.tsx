@@ -212,7 +212,7 @@ export default function HomePage() {
         <div className="container">
           <div className="grid grid-2" style={{ alignItems: "center" }}>
             <PhotoTile
-              src="/images/community-teaser.jpg"
+              src="/images/gathering.jpg"
               alt="Women in a wellness circle on Yas Island"
               tag="Yas Island, Abu Dhabi"
               className="photo"
