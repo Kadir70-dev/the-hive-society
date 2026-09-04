@@ -4,7 +4,7 @@ export function AppHero() {
   return (
     <div className="app-hero">
       <Image
-        src="/images/app-hero.jpg"
+        src="/images/introhive.jpg"
         alt="Women sharing Arabic coffee at a Hive gathering"
         fill
         sizes="100vw"
