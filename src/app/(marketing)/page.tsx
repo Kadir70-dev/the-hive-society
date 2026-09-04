@@ -33,8 +33,8 @@ export default function HomePage() {
     <>
       <section className="hero">
         <Image
-          src="/images/womem2.jpg"
-          alt="Women gathering together on the Corniche, Abu Dhabi"
+          src="/images/real-photo-variant.jpg"
+          alt="Women sharing coffee together on the Corniche, Abu Dhabi"
           fill
           sizes="100vw"
           style={{ objectFit: "cover" }}
