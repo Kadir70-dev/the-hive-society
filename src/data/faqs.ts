@@ -20,15 +20,3 @@ export const membershipFaqs: FAQ[] = [
     answer: "Early waitlist members will receive early access and preferred pricing once membership tiers are finalised.",
   },
 ];
-
-export const membershipComparisonRows: { label: string; community: boolean; membership: boolean }[] = [
-  { label: "Discover experiences", community: true, membership: true },
-  { label: "Join community circles", community: true, membership: true },
-  { label: "Save activities", community: true, membership: true },
-  { label: "Booking access", community: true, membership: true },
-  { label: "Early access", community: false, membership: true },
-  { label: "Member-only gatherings", community: false, membership: true },
-  { label: "Priority booking", community: false, membership: true },
-  { label: "Partner benefits", community: false, membership: true },
-  { label: "Exclusive invitations", community: false, membership: true },
-];

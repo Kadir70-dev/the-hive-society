@@ -9,11 +9,8 @@ export const metadata: Metadata = {
 const NEIGHBOURHOODS = ["Saadiyat", "Al Reem", "Yas", "Al Bateen", "Khalifa City", "Al Raha", "Corniche", "Al Maryah", "Hudayriyat"];
 
 const PRINCIPLES = [
-  { letter: "D", title: "Discover", desc: "Find what to do, and where." },
-  { letter: "C", title: "Connect", desc: "Meet women who share your interests." },
   { letter: "T", title: "Trust", desc: "Verified hosts, respectful spaces." },
-  { letter: "B", title: "Book", desc: "Reserve with confidence." },
-  { letter: "R", title: "Return", desc: "Familiar faces, next time." },
+  { letter: "C", title: "Connect", desc: "Women who share your interests." },
   { letter: "B", title: "Belong", desc: "A Hive that grows with you." },
 ];
 
@@ -48,13 +45,11 @@ export default function AboutPage() {
             />
             <div className="stack gap-16">
               <p className="lede">
-                The Hive Society was created around a simple realisation: finding something to do
-                is not always the real problem.
+                The real barrier was never finding something to do — it was not wanting to arrive alone.
               </p>
               <p className="text-2">
-                Sometimes the real barrier is not wanting to arrive alone. The Hive Society brings
-                discovery, community, trusted experiences and booking together — so that going
-                somewhere new never has to mean going alone.
+                The Hive Society exists to close that gap: real gatherings, trusted faces, a
+                community worth returning to.
               </p>
             </div>
           </div>

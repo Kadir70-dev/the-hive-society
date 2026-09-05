@@ -2,28 +2,22 @@ import type { NavLink } from "./types";
 
 export const marketingNav: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Explore", href: "/explore" },
   { label: "Community", href: "/community" },
-  { label: "Join the Community", href: "/membership" },
-  { label: "Host", href: "/host" },
-  { label: "Partners", href: "/partners" },
+  { label: "Experiences", href: "/explore" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Join the Community", href: "/membership" },
 ];
 
 export const mobileNav: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Explore", href: "/explore" },
   { label: "Community", href: "/community" },
-  { label: "Join the Community", href: "/membership" },
-  { label: "Host an Activity", href: "/host" },
-  { label: "Partners", href: "/partners" },
+  { label: "Experiences", href: "/explore" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Join the Community", href: "/membership" },
 ];
 
 export const footerDiscoverLinks: NavLink[] = [
-  { label: "Explore", href: "/explore" },
+  { label: "Experiences", href: "/explore" },
   { label: "Community", href: "/community" },
   { label: "Join the Community", href: "/membership" },
   { label: "Host an Activity", href: "/host" },

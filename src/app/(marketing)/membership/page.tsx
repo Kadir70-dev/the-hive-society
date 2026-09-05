@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CommunitySignupForm } from "@/components/forms/CommunitySignupForm";
-import { membershipComparisonRows, membershipFaqs } from "@/data/faqs";
+import { membershipFaqs } from "@/data/faqs";
 
 export const metadata: Metadata = {
   title: "Join the Community",
@@ -86,36 +86,6 @@ export default function MembershipPage() {
       </div>
 
       <div className="section">
-        <div className="container">
-          <h2 className="h2" style={{ marginBottom: 24 }}>Compare what&rsquo;s included.</h2>
-          <div className="table-wrap">
-            <table className="compare">
-              <thead>
-                <tr>
-                  <th>Included</th>
-                  <th style={{ textAlign: "center" }}>Community</th>
-                  <th style={{ textAlign: "center" }}>Membership</th>
-                </tr>
-              </thead>
-              <tbody>
-                {membershipComparisonRows.map((row) => (
-                  <tr key={row.label}>
-                    <td>{row.label}</td>
-                    <td className={row.community ? "ck" : "dash"}>{row.community ? "✓" : "—"}</td>
-                    <td className={row.membership ? "ck" : "dash"}>{row.membership ? "✓" : "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="small text-3" style={{ marginTop: 14 }}>
-            Benefits shown for the Membership tier are proposed and subject to change before
-            public launch.
-          </p>
-        </div>
-      </div>
-
-      <div className="section section--alt">
         <div className="container" style={{ maxWidth: 800 }}>
           <h2 className="h2" style={{ marginBottom: 8 }}>Membership questions.</h2>
           <div className="faq">
