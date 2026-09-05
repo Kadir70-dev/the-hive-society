@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { circles } from "@/data/circles";
+import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 
 export const metadata: Metadata = {
   title: "Community",
@@ -144,7 +145,7 @@ export default function CommunityPage() {
             <h2 className="h2">Ready to find your circle?</h2>
             <div className="row wrap gap-16" style={{ justifyContent: "center", marginTop: 24 }}>
               <Link href="/explore" className="btn btn--on-dark">Explore Gatherings</Link>
-              <Link href="/membership" className="btn btn--ghost-dark">Join the Hive</Link>
+              <JoinCommunityButton className="btn btn--ghost-dark" />
             </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { MembershipWaitlistForm } from "@/components/forms/MembershipWaitlistForm";
+import { CommunitySignupForm } from "@/components/forms/CommunitySignupForm";
 import { membershipComparisonRows, membershipFaqs } from "@/data/faqs";
 
 export const metadata: Metadata = {
-  title: "Membership",
-  description: "More than access. A place to belong. Hive Membership is built around priority, curation and belonging.",
+  title: "Join the Community",
+  description:
+    "Join The Hive Society's early UAE community and stay connected for gatherings, meetups, events and launch updates.",
 };
 
 export default function MembershipPage() {
@@ -13,23 +14,38 @@ export default function MembershipPage() {
     <>
       <div className="page-hero hex-texture">
         <div className="container stack gap-14">
-          <span className="eyebrow">Membership</span>
+          <span className="eyebrow">Join the Community</span>
           <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
-            More than access.
+            Join the Community.
             <br />
-            A place to belong.
+            Be part of it from day one.
           </h1>
           <p className="lede" style={{ color: "var(--on-dark-2)", maxWidth: "60ch" }}>
-            Hive Membership is built around priority, curation and belonging — not a paywall
-            between you and the community.
+            Join The Hive Society&rsquo;s early UAE community and stay connected for gatherings,
+            meetups, events and launch updates.
           </p>
           <span className="tag-proposed" style={{ alignSelf: "flex-start" }}>
-            Pricing not yet confirmed — join the waitlist for founding member benefits
+            Pre-launch — paid membership is proposed for later and not yet available
           </span>
         </div>
       </div>
 
-      <div className="section">
+      <div className="section" id="join-form">
+        <div className="container">
+          <div className="card popup-card">
+            <div className="stack gap-6" style={{ textAlign: "center", marginBottom: 22 }}>
+              <h2 className="h3">Join the Community</h2>
+              <p className="text-2 small">
+                Tell us a little about you — we&rsquo;ll follow up with relevant updates and
+                invitations.
+              </p>
+            </div>
+            <CommunitySignupForm />
+          </div>
+        </div>
+      </div>
+
+      <div className="section section--alt">
         <div className="container">
           <div className="grid grid-2">
             <div className="card stack gap-14" style={{ padding: 32 }}>
@@ -61,15 +77,15 @@ export default function MembershipPage() {
                 <li className="small">✓ Member-only experiences &amp; circles</li>
                 <li className="small">✓ Partner benefits &amp; seasonal offers</li>
               </ul>
-              <a href="#waitlist-form" className="btn btn--primary" style={{ alignSelf: "flex-start", marginTop: 8 }}>
-                Join Membership Waitlist
+              <a href="#join-form" className="btn btn--primary" style={{ alignSelf: "flex-start", marginTop: 8 }}>
+                Join the Community
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="section section--alt">
+      <div className="section">
         <div className="container">
           <h2 className="h2" style={{ marginBottom: 24 }}>Compare what&rsquo;s included.</h2>
           <div className="table-wrap">
@@ -96,24 +112,6 @@ export default function MembershipPage() {
             Benefits shown for the Membership tier are proposed and subject to change before
             public launch.
           </p>
-        </div>
-      </div>
-
-      <div className="section" id="waitlist-form">
-        <div className="container">
-          <div className="grid grid-2" style={{ alignItems: "flex-start" }}>
-            <div className="stack gap-16">
-              <span className="eyebrow">Register Interest</span>
-              <h2 className="h2">Join the membership waitlist.</h2>
-              <p className="text-2">
-                Be first to know when Hive Membership opens — and lock in founding member
-                benefits.
-              </p>
-            </div>
-            <div className="card" style={{ padding: 30 }}>
-              <MembershipWaitlistForm />
-            </div>
-          </div>
         </div>
       </div>
 

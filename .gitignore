@@ -36,3 +36,6 @@ next-env.d.ts
 
 # Local Netlify folder
 .netlify
+
+# local-only waitlist submissions (dev fallback storage, not for production)
+/.data/

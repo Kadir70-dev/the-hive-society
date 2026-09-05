@@ -4,6 +4,7 @@ import Link from "next/link";
 import { mobileNav } from "@/data/navigation";
 import { CloseIcon } from "@/components/ui/Icons";
 import { LogoMark } from "@/components/ui/LogoMark";
+import { useCommunitySignupModal } from "@/components/forms/CommunitySignupModal";
 
 interface MobileNavProps {
   open: boolean;
@@ -12,6 +13,8 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ open, onClose, onOpenSignIn }: MobileNavProps) {
+  const { open: openSignupModal } = useCommunitySignupModal();
+
   if (!open) return null;
 
   return (
@@ -33,9 +36,16 @@ export function MobileNav({ open, onClose, onOpenSignIn }: MobileNavProps) {
         ))}
       </nav>
       <div className="mobile-nav__cta">
-        <Link href="/membership" className="btn btn--primary btn--block" onClick={onClose}>
-          Join the Hive
-        </Link>
+        <button
+          type="button"
+          className="btn btn--primary btn--block"
+          onClick={() => {
+            openSignupModal();
+            onClose();
+          }}
+        >
+          Join the Community
+        </button>
         <button className="btn btn--outline btn--block" onClick={onOpenSignIn}>
           Open App
         </button>

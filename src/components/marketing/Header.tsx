@@ -7,6 +7,7 @@ import { marketingNav } from "@/data/navigation";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { MobileNav } from "./MobileNav";
 import { SignInModal } from "./SignInModal";
+import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 
 export function Header() {
   const pathname = usePathname();
@@ -36,9 +37,7 @@ export function Header() {
             <button className="signin" onClick={() => setSignInOpen(true)}>
               Open App
             </button>
-            <Link href="/membership" className="btn btn--primary btn--sm">
-              Join the Hive
-            </Link>
+            <JoinCommunityButton className="btn btn--primary btn--sm" />
           </div>
           <button
             className="hamburger"

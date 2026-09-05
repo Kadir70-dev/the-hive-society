@@ -6,6 +6,7 @@ import { FeaturedExperiences } from "@/components/marketing/FeaturedExperiences"
 import { marketingExperiences } from "@/data/experiences";
 import { socialChannels } from "@/data/socials";
 import type { ExperienceCategory } from "@/data/types";
+import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -33,8 +34,8 @@ export default function HomePage() {
     <>
       <section className="hero">
         <Image
-          src="/images/real-photo-variant.jpg"
-          alt="Women sharing coffee together on the Corniche, Abu Dhabi"
+          src="/images/introhive.jpg"
+          alt="Women sharing Arabic coffee at a Hive gathering"
           fill
           sizes="100vw"
           style={{ objectFit: "cover" }}
@@ -241,15 +242,13 @@ export default function HomePage() {
         <div className="container">
           <div className="grid grid-2">
             <div className="card card--warm stack gap-16" style={{ padding: 36 }}>
-              <span className="eyebrow">Membership</span>
-              <h3 className="h3">More than access. A place to belong.</h3>
+              <span className="eyebrow">Community</span>
+              <h3 className="h3">Join our early UAE community.</h3>
               <p className="text-2 small">
-                Early access to gatherings, member-only circles, and priority booking — pricing to
-                be announced.
+                Coffee meetups, gatherings, networking and launch updates — free to join. Paid
+                membership is proposed for later, pricing to be announced.
               </p>
-              <Link href="/membership" className="btn btn--outline" style={{ alignSelf: "flex-start" }}>
-                Explore Membership
-              </Link>
+              <JoinCommunityButton className="btn btn--outline" style={{ alignSelf: "flex-start" }} />
             </div>
             <div className="card card--warm stack gap-16" style={{ padding: 36 }}>
               <span className="eyebrow">Host</span>
@@ -298,9 +297,7 @@ export default function HomePage() {
               <Link href="/explore" className="btn btn--on-dark">
                 Explore Gatherings
               </Link>
-              <Link href="/membership" className="btn btn--ghost-dark">
-                Join the Hive
-              </Link>
+              <JoinCommunityButton className="btn btn--ghost-dark" />
             </div>
           </div>
         </div>

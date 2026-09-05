@@ -4,7 +4,7 @@ export const marketingNav: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Explore", href: "/explore" },
   { label: "Community", href: "/community" },
-  { label: "Membership", href: "/membership" },
+  { label: "Join the Community", href: "/membership" },
   { label: "Host", href: "/host" },
   { label: "Partners", href: "/partners" },
   { label: "About", href: "/about" },
@@ -15,7 +15,7 @@ export const mobileNav: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Explore", href: "/explore" },
   { label: "Community", href: "/community" },
-  { label: "Membership", href: "/membership" },
+  { label: "Join the Community", href: "/membership" },
   { label: "Host an Activity", href: "/host" },
   { label: "Partners", href: "/partners" },
   { label: "About", href: "/about" },
@@ -25,7 +25,7 @@ export const mobileNav: NavLink[] = [
 export const footerDiscoverLinks: NavLink[] = [
   { label: "Explore", href: "/explore" },
   { label: "Community", href: "/community" },
-  { label: "Membership", href: "/membership" },
+  { label: "Join the Community", href: "/membership" },
   { label: "Host an Activity", href: "/host" },
 ];
 
