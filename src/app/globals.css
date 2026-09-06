@@ -646,7 +646,29 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
 
 /* ============ CMS EDIT MODE (admin-only; never rendered for public visitors) ============ */
-.cms-editable:hover{outline:1px dashed var(--accent-deep); outline-offset:3px; border-radius:2px}
+/* inline-block so a wrapped multi-line heading/paragraph gets one continuous
+   box instead of one outline fragment per line, while still sizing to its
+   content and flowing inline where it's nested inside a Link/button.
+   A single-tone outline all but disappears on busy hero photos / dark
+   sections, so this pairs a thin light halo with the gold ring — the halo
+   carries the contrast on dark/busy backgrounds, the gold ring stays the
+   visible brand marker everywhere else (box-shadow layers, so it doesn't
+   affect layout, same as outline did). */
+.cms-editable{
+  display:inline-block;
+  border-radius:3px;
+  box-shadow:
+    0 0 0 1.5px color-mix(in srgb, var(--accent-deep) 70%, transparent),
+    0 0 0 3px rgba(255,255,255,.5);
+  background:color-mix(in srgb, var(--accent-deep) 5%, transparent);
+  transition:box-shadow .12s ease, background-color .12s ease;
+}
+.cms-editable:hover{
+  box-shadow:
+    0 0 0 1.5px var(--accent-deep),
+    0 0 0 3px rgba(255,255,255,.65);
+  background:color-mix(in srgb, var(--accent-deep) 10%, transparent);
+}
 .cms-edit-badge{
   position:absolute; top:-10px; right:-10px; width:22px; height:22px; border-radius:50%;
   background:var(--accent-deep); color:var(--cream); font-size:.7rem; display:flex; align-items:center; justify-content:center;
