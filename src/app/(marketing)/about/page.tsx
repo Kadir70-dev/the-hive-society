@@ -36,8 +36,9 @@ export default async function AboutPage() {
         <EditableImage mediaKey="about.hero.image" src={heroImage.url} alt={heroImage.alt} objectPosition={heroImage.objectPosition} sizes="100vw" priority />
         <div className="bleed__overlay" />
         <div className="bleed__content">
-          <EditableLabel contentKey="about.hero.eyebrow" value={t("about.hero.eyebrow", "About")} className="eyebrow" style={{ color: "#fff" }} />
+          <EditableLabel hero contentKey="about.hero.eyebrow" value={t("about.hero.eyebrow", "About")} className="eyebrow" style={{ color: "#fff" }} />
           <EditableHeading
+            hero
             as="h1"
             contentKey="about.hero.title"
             value={t("about.hero.title", "Built in Abu Dhabi. Designed around how women actually gather here.")}

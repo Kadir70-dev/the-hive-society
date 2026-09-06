@@ -649,25 +649,52 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 /* inline-block so a wrapped multi-line heading/paragraph gets one continuous
    box instead of one outline fragment per line, while still sizing to its
    content and flowing inline where it's nested inside a Link/button.
-   A single-tone outline all but disappears on busy hero photos / dark
-   sections, so this pairs a thin light halo with the gold ring — the halo
-   carries the contrast on dark/busy backgrounds, the gold ring stays the
-   visible brand marker everywhere else (box-shadow layers, so it doesn't
-   affect layout, same as outline did). */
+   Three stacked rings so the box reads clearly against ANY background:
+     1. a thin light sliver right at the text edge (contrast on dark/busy photos)
+     2. a bold, fully-opaque gold ring (the primary always-visible marker)
+     3. a dark translucent outer ring (contrast on bright/light backgrounds —
+        this is what a single gold-only ring was missing on white/cream
+        surfaces and bright hero photos).
+   Layers are listed front-to-back, so light sits on top of gold on top of
+   dark, giving three visually distinct concentric bands. */
 .cms-editable{
   display:inline-block;
   border-radius:3px;
   box-shadow:
-    0 0 0 1.5px color-mix(in srgb, var(--accent-deep) 70%, transparent),
-    0 0 0 3px rgba(255,255,255,.5);
-  background:color-mix(in srgb, var(--accent-deep) 5%, transparent);
+    0 0 0 1px rgba(255,255,255,.75),
+    0 0 0 3px var(--accent-deep),
+    0 0 0 4.5px rgba(15,12,8,.45);
+  background:color-mix(in srgb, var(--accent-deep) 10%, transparent);
   transition:box-shadow .12s ease, background-color .12s ease;
 }
 .cms-editable:hover{
   box-shadow:
-    0 0 0 1.5px var(--accent-deep),
-    0 0 0 3px rgba(255,255,255,.65);
-  background:color-mix(in srgb, var(--accent-deep) 10%, transparent);
+    0 0 0 1px rgba(255,255,255,.9),
+    0 0 0 3px var(--accent-deep),
+    0 0 0 6px rgba(15,12,8,.6);
+  background:color-mix(in srgb, var(--accent-deep) 18%, transparent);
+}
+/* Hero text (home/about heroes, photo-bleed captions and headings) is
+   white/near-white by design and relies on the photo being dark behind it —
+   a light ring + light background wash (the plain variant above) sits right
+   on top of that white text and washes it out instead of framing it. So the
+   hero variant swaps to a solid dark backdrop instead: white text over a
+   near-opaque dark card reads reliably no matter how bright the photo is
+   underneath, the same technique the hero photos already use for their own
+   text-shadow/gradient overlay, just stronger and scoped to the edited text. */
+.cms-editable--hero{
+  background:rgba(12,9,6,.72);
+  box-shadow:
+    0 0 0 6px rgba(12,9,6,.72),
+    0 0 0 7.5px var(--accent-deep),
+    0 0 0 9px rgba(0,0,0,.4);
+}
+.cms-editable--hero:hover{
+  background:rgba(12,9,6,.85);
+  box-shadow:
+    0 0 0 6px rgba(12,9,6,.85),
+    0 0 0 7.5px var(--accent-deep),
+    0 0 0 10px rgba(0,0,0,.55);
 }
 .cms-edit-badge{
   position:absolute; top:-10px; right:-10px; width:22px; height:22px; border-radius:50%;

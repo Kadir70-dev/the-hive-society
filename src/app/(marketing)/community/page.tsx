@@ -178,6 +178,7 @@ export default async function CommunityPage() {
         <div className="bleed__overlay" />
         <div className="bleed__content bleed__content--center">
           <EditableHeading
+            hero
             as="h2"
             contentKey="community.closing.heading"
             value={t("community.closing.heading", "Ready to find your circle?")}

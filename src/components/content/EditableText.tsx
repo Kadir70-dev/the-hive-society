@@ -12,6 +12,9 @@ interface EditableTextProps {
   style?: CSSProperties;
   maxLength?: number;
   id?: string;
+  /** Boldest edit-mode box treatment, for text laid directly over a
+   * full-bleed hero photo where the normal box reads too faintly. */
+  hero?: boolean;
 }
 
 const fieldStyle: CSSProperties = {
@@ -47,6 +50,7 @@ export function EditableText({
   style,
   maxLength = 5000,
   id,
+  hero = false,
 }: EditableTextProps) {
   const { isAdmin, editMode } = useEditMode();
   const [current, setCurrent] = useState(value);
@@ -207,7 +211,7 @@ export function EditableText({
       }}
       title="Double-click to edit"
     >
-      <span className="cms-editable">{current}</span>
+      <span className={hero ? "cms-editable cms-editable--hero" : "cms-editable"}>{current}</span>
       <span
         className="cms-edit-badge"
         onClick={(e) => {

@@ -99,10 +99,11 @@ export default async function HomePage() {
           sizes="100vw"
           priority
         />
-        <EditableLabel contentKey="home.hero.kicker" value={t("home.hero.kicker", "Launching Soon in Abu Dhabi")} className="hero__kicker" />
+        <EditableLabel hero contentKey="home.hero.kicker" value={t("home.hero.kicker", "Launching Soon in Abu Dhabi")} className="hero__kicker" />
         <div className="hero__content">
-          <EditableHeading as="h1" contentKey="home.hero.title" value={t("home.hero.title", "No one has to show up alone.")} className="hero__title" />
+          <EditableHeading hero as="h1" contentKey="home.hero.title" value={t("home.hero.title", "No one has to show up alone.")} className="hero__title" />
           <EditableText
+            hero
             as="p"
             multiline
             contentKey="home.hero.lede"
@@ -144,7 +145,7 @@ export default async function HomePage() {
       <div className="bleed">
         <EditableImage mediaKey="home.bleed.tennis.image" src={tennisImage.url} alt={tennisImage.alt} objectPosition={tennisImage.objectPosition} sizes="100vw" />
         <div className="bleed__overlay" />
-        <EditableCaption contentKey="home.bleed.tennis.caption" value={t("home.bleed.tennis.caption", "Khalifa City, Abu Dhabi")} className="bleed__cap" />
+        <EditableCaption hero contentKey="home.bleed.tennis.caption" value={t("home.bleed.tennis.caption", "Khalifa City, Abu Dhabi")} className="bleed__cap" />
       </div>
 
       <section className="section section--alt">
@@ -181,7 +182,7 @@ export default async function HomePage() {
                     objectPosition={img.objectPosition}
                     sizes="(min-width: 640px) 33vw, 100vw"
                   />
-                  <EditableLabel contentKey={`${key}.label`} value={label} className="exp-card__label" />
+                  <EditableLabel hero contentKey={`${key}.label`} value={label} className="exp-card__label" />
                 </Link>
               );
             })}
