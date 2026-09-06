@@ -38,7 +38,7 @@ export function LoginForm() {
         return;
       }
 
-      router.push("/admin/community");
+      router.push("/");
       router.refresh();
     } catch {
       setError("Something went wrong. Please check your connection and try again.");

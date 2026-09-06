@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEditMode } from "./EditModeProvider";
 
 export function AdminToolbar() {
@@ -26,6 +27,12 @@ export function AdminToolbar() {
         fontSize: ".82rem",
       }}
     >
+      <Link
+        href="/admin/community"
+        style={{ color: "var(--on-dark)", fontWeight: 600, borderRight: "1px solid var(--on-dark-line)", paddingRight: 10 }}
+      >
+        Community
+      </Link>
       <span style={{ fontWeight: 600 }}>Edit Mode</span>
       <button
         type="button"
