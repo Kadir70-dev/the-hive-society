@@ -37,7 +37,7 @@ export function Header() {
             <button className="signin" onClick={() => setSignInOpen(true)}>
               Open App
             </button>
-            <JoinCommunityButton className="btn btn--primary btn--sm" />
+            <JoinCommunityButton className="btn btn--outline btn--sm" />
           </div>
           <button
             className="hamburger"

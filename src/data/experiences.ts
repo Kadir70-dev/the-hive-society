@@ -52,7 +52,7 @@ export const marketingExperiences: Experience[] = [
     going: 22,
     attendeeNames: ["Fatima", "Alia", "Maya", "Dana"],
     verified: true,
-    image: "/images/majlisnight.jpg",
+    image: "/images/gathering.jpg",
     description:
       "An evening majlis under the stars — music, mezze and easy conversation by the shore.",
   },

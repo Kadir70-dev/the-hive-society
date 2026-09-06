@@ -12,25 +12,26 @@ export const metadata: Metadata = {
 export default function MembershipPage() {
   return (
     <>
-      <div className="page-hero hex-texture">
-        <div className="container stack gap-14">
-          <span className="eyebrow">Join the Community</span>
-          <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
-            Join the Community.
-            <br />
-            Be part of it from day one.
-          </h1>
-          <p className="lede" style={{ color: "var(--on-dark-2)", maxWidth: "60ch" }}>
-            Join The Hive Society&rsquo;s early UAE community and stay connected for gatherings,
-            meetups, events and launch updates.
-          </p>
-          <span className="tag-proposed" style={{ alignSelf: "flex-start" }}>
-            Pre-launch — paid membership is proposed for later and not yet available
-          </span>
+      <div className="masthead section--dark hex-texture">
+        <div className="container">
+          <div className="split split--60-40" style={{ alignItems: "center" }}>
+            <div className="stack gap-14">
+              <span className="eyebrow">Join the Community</span>
+              <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
+                Be part of it from day one.
+              </h1>
+              <p className="lede">
+                Stay connected for gatherings, meetups, events and launch updates.
+              </p>
+            </div>
+            <span className="tag-proposed" style={{ justifySelf: "start" }}>
+              Pre-launch — paid membership is proposed for later and not yet available
+            </span>
+          </div>
         </div>
       </div>
 
-      <div className="section" id="join-form">
+      <div className="section section--intimate" id="join-form">
         <div className="container">
           <div className="card popup-card">
             <div className="stack gap-6" style={{ textAlign: "center", marginBottom: 22 }}>
@@ -62,9 +63,8 @@ export default function MembershipPage() {
                 Start Exploring
               </Link>
             </div>
-            <div className="card stack gap-14" style={{ padding: 32, borderColor: "var(--accent-deep)", position: "relative" }}>
-              <span className="tag-proposed" style={{ position: "absolute", top: 20, right: 20 }}>Proposed</span>
-              <span className="eyebrow">Premium Tier</span>
+            <div className="card card--warm stack gap-14" style={{ padding: 32, borderColor: "var(--accent-deep)" }}>
+              <span className="eyebrow">Premium Tier · Proposed</span>
               <h3 className="h3">Hive Membership</h3>
               <p className="text-2 small">
                 Priority and curation for women who want to make the most of every season. Price

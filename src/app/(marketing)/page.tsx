@@ -29,7 +29,7 @@ const VALUES = [
 
 const EXPERIENCES = [
   { label: "Coffee", image: "/images/coffee.jpg" },
-  { label: "Dinners", image: "/images/majlisnight.jpg" },
+  { label: "Dinners", image: "/images/a4-brunch.jpg" },
   { label: "Networking", image: "/images/a9-bookclub.jpg" },
   { label: "Wellness", image: "/images/gym.jpg" },
   { label: "Gatherings", image: "/images/gathering.jpg" },
@@ -48,11 +48,11 @@ export default function HomePage() {
     <>
       <section className="hero">
         <Image
-          src="/images/introhive.jpg"
-          alt="Women sharing Arabic coffee at a Hive gathering"
+          src="/images/a11-outdoor.jpg"
+          alt="Women walking together along the Abu Dhabi Corniche at sunset"
           fill
           sizes="100vw"
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", objectPosition: "center 30%" }}
           priority
         />
         <span className="hero__kicker">Launching Soon in Abu Dhabi</span>
@@ -65,13 +65,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section--intimate">
         <div className="container">
-          <div className="grid grid-2" style={{ alignItems: "start", gap: 56 }}>
-            <div className="stack gap-16">
-              <span className="eyebrow">Why The Hive</span>
-              <h2 className="h2">Belonging, not another app to browse.</h2>
-            </div>
+          <div className="split split--60-40">
+            <h2 className="display-xl" style={{ maxWidth: "11ch" }}>
+              Belonging, not another app to browse.
+            </h2>
             <div className="value-list">
               {VALUES.map((v) => (
                 <div className="value-item" key={v.mark}>
@@ -87,18 +86,27 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="bleed">
+        <Image
+          src="/images/tennis.jpg"
+          alt="Hive women playing tennis together at dusk"
+          fill
+          sizes="100vw"
+          style={{ objectFit: "cover" }}
+        />
+        <div className="bleed__overlay" />
+        <span className="bleed__cap">Khalifa City, Abu Dhabi</span>
+      </div>
+
       <section className="section section--alt">
         <div className="container">
           <div
             className="row wrap gap-16"
             style={{ justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}
           >
-            <div className="stack gap-14">
-              <span className="eyebrow">Community Experiences</span>
-              <h2 className="h2">Something for every kind of gathering.</h2>
-            </div>
-            <Link href="/explore" className="btn btn--outline">
-              Explore experiences
+            <h2 className="h2" style={{ maxWidth: "14ch" }}>Something for every kind of gathering.</h2>
+            <Link href="/explore" className="text-link">
+              Explore experiences →
             </Link>
           </div>
           <div className="exp-grid">
@@ -112,17 +120,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section--intimate">
         <div className="container">
-          <div className="stack gap-16" style={{ maxWidth: 560, marginBottom: 48 }}>
+          <div style={{ maxWidth: 460, marginBottom: 40 }}>
             <span className="eyebrow">How It Works</span>
-            <h2 className="h2">From first visit to real belonging.</h2>
+            <h2 className="h2" style={{ marginTop: 14 }}>From first visit to real belonging.</h2>
           </div>
-          <div className="grid grid-4">
+          <div className="rule-list rule-list--row rule-list--row-4">
             {STEPS.map((s) => (
-              <div className="stack gap-12" key={s.n} style={{ textAlign: "center" }}>
-                <div className="hex hex--lg" style={{ margin: "0 auto" }}>{s.n}</div>
-                <h3 className="h3" style={{ fontSize: "1.05rem" }}>{s.title}</h3>
+              <div className="rule-list__item" key={s.n}>
+                <span className="rule-list__num">{s.n}</span>
+                <h3 className="h3">{s.title}</h3>
                 <p className="small text-2">{s.body}</p>
               </div>
             ))}
@@ -130,44 +138,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section section--alt">
+      <section className="section section--expansive section--alt">
         <div className="container">
-          <div className="grid grid-2" style={{ alignItems: "center", gap: 56 }}>
+          <div className="split split--40-60" style={{ alignItems: "center" }}>
             <div className="stack gap-16">
               <span className="eyebrow">The Hive App</span>
-              <h2 className="h2">A live pre-launch preview.</h2>
-              <p className="text-2" style={{ maxWidth: "40ch" }}>
+              <p className="pull-quote">
                 The website and community form are live today. The app comes next.
               </p>
-              <Link href="/app/explore" className="btn btn--outline" style={{ alignSelf: "flex-start" }}>
-                Preview the app
+              <Link href="/app/explore" className="text-link">
+                Preview the app →
               </Link>
             </div>
-            <div className="phone-frame">
+            <div className="phone-frame phone-frame--lg" style={{ marginLeft: "auto", marginRight: "auto" }}>
               <div className="phone-frame__screen">
-                <Image src="/images/a7-padel.jpg" alt="A preview of an experience inside the Hive app" fill sizes="240px" style={{ objectFit: "cover" }} />
+                <Image
+                  src="/images/a7-padel.jpg"
+                  alt="A preview of an experience inside the Hive app"
+                  fill
+                  sizes="300px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="cta-banner hex-texture">
-            <h2 className="h2">Your next gathering starts here.</h2>
-            <p className="text-2" style={{ margin: "14px auto 28px", maxWidth: "40ch" }}>
-              No one has to show up alone.
-            </p>
-            <div className="row wrap gap-16" style={{ justifyContent: "center" }}>
-              <JoinCommunityButton className="btn btn--on-dark" />
-              <Link href="/explore" className="btn btn--ghost-dark">
-                Explore Experiences
-              </Link>
-            </div>
+      <div className="cta-banner cta-banner--bleed section--dark hex-texture">
+        <div className="container" style={{ textAlign: "center" }}>
+          <h2 className="display-xl" style={{ maxWidth: "16ch", margin: "0 auto" }}>
+            Your next gathering starts here.
+          </h2>
+          <p className="text-2" style={{ margin: "20px auto 32px", maxWidth: "40ch" }}>
+            No one has to show up alone.
+          </p>
+          <div className="row wrap gap-16" style={{ justifyContent: "center" }}>
+            <JoinCommunityButton className="btn btn--on-dark" />
+            <Link href="/explore" className="btn btn--ghost-dark">
+              Explore Experiences
+            </Link>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }

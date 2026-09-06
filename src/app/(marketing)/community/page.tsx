@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { circles } from "@/data/circles";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
@@ -8,6 +9,12 @@ export const metadata: Metadata = {
   description:
     "The Hive isn't just where you book an activity — it's where relationships and trusted circles grow.",
 };
+
+const STEPS = [
+  { n: "01", title: "Attend", body: "Show up to a gathering that fits your mood." },
+  { n: "02", title: "Reconnect", body: "See familiar faces at the next one — and the one after that." },
+  { n: "03", title: "Belong", body: "Your Hive grows every time you show up." },
+];
 
 const recurring = [
   { name: "Coffee & Conversations", cadence: "Tuesdays, weekly" },
@@ -19,74 +26,56 @@ const recurring = [
 export default function CommunityPage() {
   return (
     <>
-      <div className="page-hero hex-texture">
+      <div className="masthead section--dark hex-texture">
         <div className="container stack gap-14">
           <span className="eyebrow">Community</span>
-          <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
-            You come for a gathering.
-            <br />
-            You return for your Hive.
-          </h1>
-          <p className="lede" style={{ color: "var(--on-dark-2)" }}>
+          <p className="pull-quote" style={{ maxWidth: "18ch" }}>
+            You come for a gathering. You return for your Hive.
+          </p>
+          <p className="lede">
             The Hive isn&rsquo;t just where you book an activity — it&rsquo;s where relationships
             and trusted circles grow.
           </p>
         </div>
       </div>
 
-      <div className="section">
+      <div className="section section--intimate">
         <div className="container">
           <div
             className="row wrap gap-16"
-            style={{ justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}
+            style={{ justifyContent: "space-between", alignItems: "flex-end", marginBottom: 8 }}
           >
-            <div className="stack gap-14">
-              <span className="eyebrow">Your Circles</span>
-              <h2 className="h2">Community forms around what you love.</h2>
-            </div>
-            <span className="tag-proposed">Preview — sign in to see your circles</span>
+            <h2 className="h2" style={{ maxWidth: "16ch" }}>Community forms around what you love.</h2>
+            <span className="small text-3">Preview — sign in to see your circles</span>
           </div>
-          <div className="grid grid-3">
+          <div className="index-list" style={{ marginTop: 24 }}>
             {circles.map((circle) => (
-              <div className="circle-card stack gap-10" key={circle.slug}>
-                <div className="row" style={{ justifyContent: "space-between" }}>
-                  <h3 className="h3" style={{ fontSize: "1.05rem" }}>{circle.name}</h3>
-                  <span className="tag-proposed">Preview</span>
-                </div>
-                <p className="small text-2">
-                  {circle.members} women · {circle.cadence}
-                </p>
+              <div className="index-list__row" key={circle.slug}>
+                <span className="index-list__name">{circle.name}</span>
+                <span className="index-list__meta">{circle.members} women · {circle.cadence}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="section section--alt">
+      <div className="section section--alt section--intimate">
         <div className="container">
-          <div className="grid grid-3">
-            <div className="stack gap-12" style={{ textAlign: "center" }}>
-              <div className="hex hex--lg" style={{ margin: "0 auto" }}>01</div>
-              <h3 className="h3" style={{ fontSize: "1.1rem" }}>Attend</h3>
-              <p className="small text-2">Show up to a gathering that fits your mood.</p>
-            </div>
-            <div className="stack gap-12" style={{ textAlign: "center" }}>
-              <div className="hex hex--lg" style={{ margin: "0 auto" }}>02</div>
-              <h3 className="h3" style={{ fontSize: "1.1rem" }}>Reconnect</h3>
-              <p className="small text-2">See familiar faces at the next one — and the one after that.</p>
-            </div>
-            <div className="stack gap-12" style={{ textAlign: "center" }}>
-              <div className="hex hex--lg" style={{ margin: "0 auto" }}>03</div>
-              <h3 className="h3" style={{ fontSize: "1.1rem" }}>Belong</h3>
-              <p className="small text-2">Your Hive grows every time you show up.</p>
-            </div>
+          <div className="rule-list rule-list--row rule-list--row-3">
+            {STEPS.map((s) => (
+              <div className="rule-list__item" key={s.n}>
+                <span className="rule-list__num">{s.n}</span>
+                <h3 className="h3" style={{ fontSize: "1.1rem" }}>{s.title}</h3>
+                <p className="small text-2">{s.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       <div className="section">
         <div className="container">
-          <div className="grid grid-2" style={{ alignItems: "start" }}>
+          <div className="split split--40-60">
             <div className="stack gap-16">
               <span className="eyebrow">Recurring Gatherings</span>
               <h2 className="h2">Trusted circles that meet again and again.</h2>
@@ -95,19 +84,11 @@ export default function CommunityPage() {
                 a single night, it&rsquo;s a habit.
               </p>
             </div>
-            <div className="card" style={{ padding: 8 }}>
-              {recurring.map((r, i) => (
-                <div
-                  className="row"
-                  key={r.name}
-                  style={{
-                    justifyContent: "space-between",
-                    padding: "16px 18px",
-                    borderBottom: i < recurring.length - 1 ? "1px solid var(--line)" : "none",
-                  }}
-                >
-                  <span className="small" style={{ fontWeight: 600 }}>{r.name}</span>
-                  <span className="small text-3">{r.cadence}</span>
+            <div className="index-list">
+              {recurring.map((r) => (
+                <div className="index-list__row" key={r.name}>
+                  <span className="index-list__name" style={{ fontSize: ".98rem" }}>{r.name}</span>
+                  <span className="index-list__meta">{r.cadence}</span>
                 </div>
               ))}
             </div>
@@ -115,38 +96,37 @@ export default function CommunityPage() {
         </div>
       </div>
 
-      <div className="section section--alt">
+      <div className="section section--alt section--intimate">
         <div className="container">
-          <div className="grid grid-3">
-            <div className="stack gap-10">
-              <div className="badge">Verified organisers</div>
-              <p className="small text-2">Every host is reviewed before their gathering goes live.</p>
-            </div>
-            <div className="stack gap-10">
-              <div className="badge">Community guidelines</div>
-              <p className="small text-2">
-                Clear, warm expectations everyone agrees to.{" "}
-                <Link href="/community-guidelines" style={{ color: "var(--accent-deep)", fontWeight: 600 }}>
-                  Read them →
-                </Link>
-              </p>
-            </div>
-            <div className="stack gap-10">
-              <div className="badge">Safe reporting</div>
-              <p className="small text-2">Concerns are reviewed quickly and privately.</p>
-            </div>
+          <div className="row wrap gap-12">
+            <span className="badge">Verified organisers</span>
+            <span className="badge">Community guidelines</span>
+            <span className="badge">Safe reporting</span>
           </div>
+          <p className="small text-2" style={{ marginTop: 16, maxWidth: "60ch" }}>
+            Every host is reviewed before their gathering goes live, and concerns are reviewed
+            quickly and privately.{" "}
+            <Link href="/community-guidelines" style={{ color: "var(--accent-deep)", fontWeight: 600 }}>
+              Read our guidelines →
+            </Link>
+          </p>
         </div>
       </div>
 
-      <div className="section">
-        <div className="container">
-          <div className="cta-banner hex-texture">
-            <h2 className="h2">Ready to find your circle?</h2>
-            <div className="row wrap gap-16" style={{ justifyContent: "center", marginTop: 24 }}>
-              <Link href="/explore" className="btn btn--on-dark">Explore Gatherings</Link>
-              <JoinCommunityButton className="btn btn--ghost-dark" />
-            </div>
+      <div className="bleed">
+        <Image
+          src="/images/a8-wellness.jpg"
+          alt="A Hive wellness evening gathering"
+          fill
+          sizes="100vw"
+          style={{ objectFit: "cover" }}
+        />
+        <div className="bleed__overlay" />
+        <div className="bleed__content bleed__content--center">
+          <h2 className="h2" style={{ color: "#fff" }}>Ready to find your circle?</h2>
+          <div className="row wrap gap-16" style={{ justifyContent: "center", marginTop: 22 }}>
+            <Link href="/explore" className="btn btn--on-dark">Explore Gatherings</Link>
+            <JoinCommunityButton className="btn btn--ghost-dark" />
           </div>
         </div>
       </div>

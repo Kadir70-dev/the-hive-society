@@ -14,7 +14,6 @@ export function ExperienceCard({ experience, onSelect, featured }: ExperienceCar
       className="activity-card"
       style={{
         textAlign: "left",
-        border: "1px solid var(--line)",
         cursor: "pointer",
         padding: 0,
         font: "inherit",
