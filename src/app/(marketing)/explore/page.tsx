@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ExplorePage() {
   return (
     <>
-      <div className="page-open">
+      <div className="page-open hex-texture hex-texture--light">
         <div className="container stack gap-14" style={{ maxWidth: 560 }}>
           <span className="eyebrow">Explore</span>
           <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
@@ -22,7 +22,7 @@ export default function ExplorePage() {
           </p>
         </div>
       </div>
-      <div className="section section--tight">
+      <div className="section section--tight hex-texture hex-texture--light">
         <div className="container">
           <ExploreGrid experiences={marketingExperiences} />
         </div>

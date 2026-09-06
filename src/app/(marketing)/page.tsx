@@ -65,7 +65,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section section--intimate">
+      <section className="section section--intimate hex-texture hex-texture--light">
         <div className="container">
           <div className="split split--60-40">
             <h2 className="display-xl" style={{ maxWidth: "11ch" }}>
@@ -120,7 +120,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section section--intimate">
+      <section className="section section--intimate hex-texture hex-texture--light">
         <div className="container">
           <div style={{ maxWidth: 460, marginBottom: 40 }}>
             <span className="eyebrow">How It Works</span>
@@ -138,7 +138,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section section--expansive section--alt">
+      <section className="section section--expansive section--alt hex-texture hex-texture--light">
         <div className="container">
           <div className="split split--40-60" style={{ alignItems: "center" }}>
             <div className="stack gap-16">

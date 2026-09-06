@@ -36,7 +36,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="section section--intimate">
+      <div className="section section--intimate hex-texture hex-texture--light">
         <div className="container">
           <div className="split split--60-40">
             <PhotoTile
@@ -59,7 +59,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="section section--intimate">
+      <div className="section section--intimate hex-texture hex-texture--light">
         <div className="container">
           <span className="label-sm">Our Team</span>
           <div className="row wrap gap-32" style={{ marginTop: 20 }}>
@@ -81,7 +81,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="section section--alt section--intimate">
+      <div className="section section--alt section--intimate hex-texture hex-texture--light">
         <div className="container">
           <span className="eyebrow">Where We Gather</span>
           <h2 className="h2" style={{ margin: "14px 0 24px" }}>Across Abu Dhabi&rsquo;s neighbourhoods.</h2>
@@ -96,7 +96,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="section">
+      <div className="section hex-texture hex-texture--light">
         <div className="container">
           <h2 className="h2" style={{ marginBottom: 32, maxWidth: "16ch" }}>What every gathering strengthens.</h2>
           <div className="rule-list rule-list--row rule-list--row-3">

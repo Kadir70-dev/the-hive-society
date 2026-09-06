@@ -39,7 +39,7 @@ export default function CommunityPage() {
         </div>
       </div>
 
-      <div className="section section--intimate">
+      <div className="section section--intimate hex-texture hex-texture--light">
         <div className="container">
           <div
             className="row wrap gap-16"
@@ -73,7 +73,7 @@ export default function CommunityPage() {
         </div>
       </div>
 
-      <div className="section">
+      <div className="section hex-texture hex-texture--light">
         <div className="container">
           <div className="split split--40-60">
             <div className="stack gap-16">

@@ -31,7 +31,7 @@ export default function MembershipPage() {
         </div>
       </div>
 
-      <div className="section section--intimate" id="join-form">
+      <div className="section section--intimate hex-texture hex-texture--light" id="join-form">
         <div className="container">
           <div className="card popup-card">
             <div className="stack gap-6" style={{ textAlign: "center", marginBottom: 22 }}>
@@ -46,7 +46,7 @@ export default function MembershipPage() {
         </div>
       </div>
 
-      <div className="section section--alt">
+      <div className="section section--alt hex-texture hex-texture--light">
         <div className="container">
           <div className="grid grid-2">
             <div className="card stack gap-14" style={{ padding: 32 }}>
@@ -85,7 +85,7 @@ export default function MembershipPage() {
         </div>
       </div>
 
-      <div className="section">
+      <div className="section hex-texture hex-texture--light">
         <div className="container" style={{ maxWidth: 800 }}>
           <h2 className="h2" style={{ marginBottom: 8 }}>Membership questions.</h2>
           <div className="faq">
