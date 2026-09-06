@@ -31,26 +31,31 @@ Project Settings → API into `.env.local` for local dev, and into the
 existing Netlify site's environment variables for production. See
 `.env.example` for the exact variable names.
 
-### 3. Enable email OTP / magic link auth
+### 3. Admin login — username + password
 
-In Supabase Auth settings, make sure "Email" sign-in is enabled. No password
-is used — admins sign in via a one-time link sent to their email
-(`supabase.auth.signInWithOtp`).
+`/admin/login` uses Supabase Auth's email+password sign-in
+(`supabase.auth.signInWithPassword`), with a friendly "username" that maps to
+a real backing email via a small non-secret lookup table in
+`src/lib/admin/username.ts` (`USERNAME_EMAIL_MAP`). The password itself is
+never in source — it lives only in Supabase Auth, set via the Admin API:
 
-### 4. Invite Meera and Abdul as admins
+```js
+await admin.auth.admin.updateUserById(userId, { password: "..." });
+```
 
-1. Supabase dashboard → Authentication → Users → **Invite user**, for each
-   admin's real email address. This creates their `auth.users` row (the sign-in
-   form intentionally does not auto-create accounts — `shouldCreateUser: false`).
-2. Copy each new user's UUID, then run in the SQL editor:
+To add a new admin:
+1. Create their `auth.users` row (Admin API `createUser` or the dashboard's
+   Authentication → Users → **Invite user**, then set a password the same way).
+2. Add a `username -> email` entry in `USERNAME_EMAIL_MAP`.
+3. Insert their `admin_users` row:
 
    ```sql
    insert into public.admin_users (user_id, email)
-   values ('<uuid-from-step-1>', 'meera@thehivesociety.ae');
+   values ('<uuid-from-step-1>', '<their-email>');
    ```
 
-   Repeat for Abdul. Until this row exists, that person can request a
-   sign-in link but will be redirected to `/admin/not-authorized`.
+   Until this row exists, that person's username/password will authenticate
+   but they'll be redirected to `/admin/not-authorized`.
 
 ### Duplicate-submission handling
 

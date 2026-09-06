@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { LoginForm } from "./LoginForm";
-import { AuthHashHandler } from "./AuthHashHandler";
 
 export const metadata: Metadata = {
   title: "Admin Sign In",
@@ -15,13 +14,9 @@ export default function AdminLoginPage() {
           <div className="stack gap-8">
             <span className="eyebrow">The Hive Society</span>
             <h1 className="h3">Admin sign in</h1>
-            <p className="text-2 small">
-              Enter your admin email to receive a one-time sign-in link.
-            </p>
+            <p className="text-2 small">Sign in with your admin username and password.</p>
           </div>
-          <AuthHashHandler>
-            <LoginForm />
-          </AuthHashHandler>
+          <LoginForm />
         </div>
       </div>
     </div>
