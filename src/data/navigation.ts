@@ -8,6 +8,15 @@ export const marketingNav: NavLink[] = [
   { label: "Join the Community", href: "/membership" },
 ];
 
+/** content_key for each nav href's editable label — shared by Header + MobileNav. */
+export const navContentKeys: Record<string, string> = {
+  "/": "nav.home",
+  "/community": "nav.community",
+  "/explore": "nav.experiences",
+  "/about": "nav.about",
+  "/membership": "nav.join",
+};
+
 export const mobileNav: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Community", href: "/community" },

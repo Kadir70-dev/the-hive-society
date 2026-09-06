@@ -644,3 +644,32 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 .settings-row:last-child{border-bottom:0}
 
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
+
+/* ============ CMS EDIT MODE (admin-only; never rendered for public visitors) ============ */
+.cms-editable:hover{outline:1px dashed var(--accent-deep); outline-offset:3px; border-radius:2px}
+.cms-edit-badge{
+  position:absolute; top:-10px; right:-10px; width:22px; height:22px; border-radius:50%;
+  background:var(--accent-deep); color:var(--cream); font-size:.7rem; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:var(--shadow); opacity:0; transition:opacity .12s ease; z-index:5;
+}
+.cms-editable:hover + .cms-edit-badge, .cms-edit-badge:hover{opacity:1}
+.cms-edit-actions{display:inline-flex; gap:6px; margin-top:6px}
+.cms-edit-btn{
+  display:inline-flex; align-items:center; font-size:.72rem; font-weight:700; padding:4px 10px; border-radius:999px;
+  background:var(--surface); border:1px solid var(--line); color:var(--text); cursor:pointer;
+}
+.cms-edit-btn:hover{border-color:var(--accent-deep); color:var(--accent-deep)}
+.cms-edit-btn--save{background:var(--accent-deep); color:var(--cream); border-color:var(--accent-deep)}
+.cms-edit-btn[aria-disabled="true"]{opacity:.5; pointer-events:none}
+.cms-edit-error{display:block; font-size:.72rem; color:#b3261e; margin-top:4px}
+/* A small corner badge, not a full-container overlay — a full overlay would
+   sit on top of (and swallow clicks meant for) any text layered over the
+   same image, e.g. a hero heading over its background photo. */
+.cms-image-edit{
+  position:absolute; bottom:12px; right:12px; z-index:6; cursor:pointer;
+  display:inline-flex; align-items:center; padding:7px 14px; border-radius:999px;
+  background:rgba(34,30,24,.72); border:1px solid rgba(255,255,255,.35);
+  opacity:.85; transition:opacity .12s ease;
+}
+.cms-image-edit:hover, .cms-image-edit:focus-visible{opacity:1}
+.cms-image-edit__label{ color:var(--cream); font-size:.75rem; font-weight:700; }

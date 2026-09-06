@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { mobileNav } from "@/data/navigation";
+import { mobileNav, navContentKeys } from "@/data/navigation";
 import { CloseIcon } from "@/components/ui/Icons";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { useCommunitySignupModal } from "@/components/forms/CommunitySignupModal";
+import { EditableLabel } from "@/components/content/EditableText";
+import { useGlobalContent } from "@/components/content/GlobalContentProvider";
+import { resolve } from "@/lib/content/resolve";
 
 interface MobileNavProps {
   open: boolean;
@@ -14,6 +17,7 @@ interface MobileNavProps {
 
 export function MobileNav({ open, onClose, onOpenSignIn }: MobileNavProps) {
   const { open: openSignupModal } = useCommunitySignupModal();
+  const content = useGlobalContent();
 
   if (!open) return null;
 
@@ -29,11 +33,14 @@ export function MobileNav({ open, onClose, onOpenSignIn }: MobileNavProps) {
         </button>
       </div>
       <nav className="mobile-nav__links" aria-label="Mobile">
-        {mobileNav.map((item) => (
-          <Link key={item.href} href={item.href} onClick={onClose}>
-            {item.label}
-          </Link>
-        ))}
+        {mobileNav.map((item) => {
+          const key = navContentKeys[item.href];
+          return (
+            <Link key={item.href} href={item.href} onClick={onClose}>
+              {key ? <EditableLabel contentKey={key} value={resolve(content, key, item.label)} /> : item.label}
+            </Link>
+          );
+        })}
       </nav>
       <div className="mobile-nav__cta">
         <button
@@ -47,7 +54,7 @@ export function MobileNav({ open, onClose, onOpenSignIn }: MobileNavProps) {
           Join the Community
         </button>
         <button className="btn btn--outline btn--block" onClick={onOpenSignIn}>
-          Open App
+          <EditableLabel contentKey="nav.open_app" value={resolve(content, "nav.open_app", "Open App")} />
         </button>
       </div>
     </div>
