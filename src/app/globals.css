@@ -1,7 +1,7 @@
 /* ============ TOKENS ============ */
 :root{
   --sand:#EFE8DB; --cream:#FCF8F1; --white:#FFFFFF; --ink:#221E18;
-  --text-soft:#7C7264; --text-muted:#A99E8B; --honey:#9A6B2F; --honey-deep:#7E5622;
+  --text-soft:#7C7264; --text-muted:#756A56; --honey:#9A6B2F; --honey-deep:#7E5622;
   --trust:#2E4640; --border:#E6DCC9;
 
   --bg:var(--cream); --bg-alt:var(--sand); --surface:var(--white); --surface-2:#FBF6EC;
