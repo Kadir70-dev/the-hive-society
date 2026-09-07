@@ -151,22 +151,36 @@ export default async function HomePage() {
 
       <section className="section section--alt">
         <div className="container">
-          <div
-            className="row wrap gap-16"
-            style={{ justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}
-          >
-            <EditableHeading
-              as="h2"
-              contentKey="home.experiences.heading"
-              value={t("home.experiences.heading", "Something for every kind of gathering.")}
-              className="h2"
-              style={{ maxWidth: "14ch" }}
-            />
-            <Link href="/explore" className="text-link">
+          <div className="exp-heading">
+            <div className="exp-heading__copy">
+              <EditableLabel
+                contentKey="home.experiences.eyebrow"
+                value={t("home.experiences.eyebrow", "The Experience")}
+                className="eyebrow"
+              />
+              <EditableHeading
+                as="h2"
+                contentKey="home.experiences.heading"
+                value={t("home.experiences.heading", "Gather beautifully, your way.")}
+                className="exp-heading__title"
+              />
+            </div>
+            <Link href="/explore" className="exp-cta">
               <EditableLabel
                 contentKey="home.experiences.link_label"
-                value={t("home.experiences.link_label", "Explore experiences →")}
+                value={t("home.experiences.link_label", "Explore Experiences")}
               />
+              <span className="exp-cta__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
             </Link>
           </div>
         </div>
