@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 import { EditableText, EditableHeading, EditableLabel, EditableCaption } from "@/components/content/EditableText";
@@ -168,21 +169,46 @@ export default async function HomePage() {
               />
             </Link>
           </div>
-          <div className="exp-grid">
-            {EXPERIENCES.map((exp) => {
+        </div>
+        <div className="exp-marquee">
+          <div className="exp-marquee__track">
+            {[...EXPERIENCES, ...EXPERIENCES].map((exp, i) => {
               const key = `home.experiences.${exp.key}`;
               const label = t(`${key}.label`, exp.label);
               const img = resolveMedia(media, `${key}.image`, { url: exp.image, alt: label });
+              const isClone = i >= EXPERIENCES.length;
               return (
-                <Link href="/explore" className="exp-card" key={exp.key}>
-                  <EditableImage
-                    mediaKey={`${key}.image`}
-                    src={img.url}
-                    alt={label}
-                    objectPosition={img.objectPosition}
-                    sizes="(min-width: 640px) 33vw, 100vw"
-                  />
-                  <EditableLabel hero contentKey={`${key}.label`} value={label} className="exp-card__label" />
+                <Link
+                  href="/explore"
+                  className="exp-marquee__card"
+                  key={`${exp.key}-${i}`}
+                  aria-hidden={isClone ? true : undefined}
+                  tabIndex={isClone ? -1 : undefined}
+                >
+                  {isClone ? (
+                    <Image
+                      src={img.url}
+                      alt=""
+                      fill
+                      sizes="280px"
+                      priority
+                      style={{ objectFit: "cover", objectPosition: img.objectPosition }}
+                    />
+                  ) : (
+                    <EditableImage
+                      mediaKey={`${key}.image`}
+                      src={img.url}
+                      alt={label}
+                      objectPosition={img.objectPosition}
+                      sizes="280px"
+                      priority
+                    />
+                  )}
+                  {isClone ? (
+                    <span className="exp-marquee__label">{label}</span>
+                  ) : (
+                    <EditableLabel hero contentKey={`${key}.label`} value={label} className="exp-marquee__label" />
+                  )}
                 </Link>
               );
             })}

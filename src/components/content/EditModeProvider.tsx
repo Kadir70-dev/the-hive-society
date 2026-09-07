@@ -24,12 +24,13 @@ export function useEditMode() {
  * client-side flag for this. Anonymous visitors always get isAdmin=false and
  * never render any edit affordance, regardless of editMode state.
  *
- * Edit Mode defaults ON for an authenticated admin (so signing in lands
- * directly on an editable page) — the toggle still lets them switch to a
- * plain public-visitor preview whenever they want.
+ * Edit Mode defaults OFF, even for an authenticated admin, so ordinary
+ * browsing (including a hard refresh or a fresh URL, which remounts this
+ * provider) shows the plain public view — the CMS boundary boxes only ever
+ * appear once the admin deliberately flips the toggle on.
  */
 export function EditModeProvider({ isAdmin, children }: { isAdmin: boolean; children: ReactNode }) {
-  const [editMode, setEditMode] = useState(isAdmin);
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <EditModeContext.Provider value={{ isAdmin, editMode: isAdmin && editMode, setEditMode }}>
