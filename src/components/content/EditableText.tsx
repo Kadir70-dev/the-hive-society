@@ -17,19 +17,45 @@ interface EditableTextProps {
   hero?: boolean;
 }
 
-const fieldStyle: CSSProperties = {
+const fieldStyleBase: CSSProperties = {
   font: "inherit",
-  color: "inherit",
   lineHeight: "inherit",
   letterSpacing: "inherit",
   textAlign: "inherit",
+  // display:block (rather than the input/textarea default of inline-block)
+  // guarantees the Save/Cancel actions that follow always wrap onto their
+  // own line below the field, instead of sitting beside it when the field
+  // is short (e.g. small hero labels) and there's room left on the line.
+  display: "block",
   width: "100%",
-  background: "var(--surface)",
   border: "1px dashed var(--accent-deep)",
   borderRadius: 4,
   padding: "2px 4px",
   margin: 0,
   resize: "vertical",
+  outline: "none",
+  boxShadow: "none",
+  appearance: "none",
+  WebkitAppearance: "none",
+};
+
+// Editable fields must never fall back to the browser's native white
+// input/textarea background — on dark/photo sections the surrounding text
+// is white, and a white field would make it unreadable while typing. Rather
+// than guessing from section class names, we read the *actual* rendered
+// text color right before switching into edit mode and pick a field theme
+// that keeps that same color legible.
+const fieldThemeDark: CSSProperties = {
+  ...fieldStyleBase,
+  background: "rgba(20,16,12,0.82)",
+  color: "#fff",
+  caretColor: "#fff",
+};
+const fieldThemeLight: CSSProperties = {
+  ...fieldStyleBase,
+  background: "var(--surface-2)",
+  color: "var(--ink)",
+  caretColor: "var(--ink)",
 };
 
 /**
@@ -58,7 +84,10 @@ export function EditableText({
   const [draft, setDraft] = useState(value);
   const [status, setStatus] = useState<"idle" | "saving" | "error">("idle");
   const [error, setError] = useState("");
+  const [fieldOnDark, setFieldOnDark] = useState(false);
+  const [wrapperIsPositioned, setWrapperIsPositioned] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement & HTMLInputElement>(null);
+  const displayRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (editing) inputRef.current?.focus();
@@ -80,6 +109,23 @@ export function EditableText({
   }
 
   function startEditing() {
+    // Read the color this text is actually rendered with (inherited from
+    // the section, not guessed from a class name) so the editor field can
+    // match its own background/text to it instead of assuming light mode.
+    if (displayRef.current) {
+      const computed = getComputedStyle(displayRef.current);
+      const channels = computed.color.match(/[\d.]+/g)?.map(Number);
+      if (channels && channels.length >= 3) {
+        const luminance = (0.2126 * channels[0]! + 0.7152 * channels[1]! + 0.0722 * channels[2]!) / 255;
+        setFieldOnDark(luminance > 0.5);
+      }
+      // Some editable labels (hero kicker, photo captions) carry a class
+      // that positions THEM absolutely on the page. Forcing position:relative
+      // on top of that fights the class's own left/top/transform and blows
+      // the box out to full-page width. Only add relative positioning when
+      // the element wasn't already taken out of normal flow.
+      setWrapperIsPositioned(computed.position !== "static");
+    }
     setDraft(current);
     setError("");
     setStatus("idle");
@@ -131,7 +177,11 @@ export function EditableText({
       <Tag
         id={id}
         className={className}
-        style={{ ...style, position: "relative", display: "block" }}
+        style={{
+          ...style,
+          position: wrapperIsPositioned ? undefined : "relative",
+          display: "block",
+        }}
         onClick={(e: MouseEvent) => {
           // preventDefault too, not just stopPropagation — a <summary>
           // ancestor (FAQ accordions) toggles open/closed on its native
@@ -142,8 +192,13 @@ export function EditableText({
       >
         <InputTag
           ref={inputRef as never}
-          className={className}
-          style={fieldStyle}
+          // Deliberately NOT reusing the page's semantic `className` here —
+          // it's already inherited via `font: inherit` below, and reapplying
+          // it to the field would also reapply any position/left/transform
+          // that class carries (hero kicker, photo captions), which fights
+          // wrapperIsPositioned above and blows the field out to full width.
+          className={fieldOnDark ? "cms-field--dark" : "cms-field--light"}
+          style={fieldOnDark ? fieldThemeDark : fieldThemeLight}
           value={draft}
           maxLength={maxLength}
           disabled={status === "saving"}
@@ -201,6 +256,7 @@ export function EditableText({
 
   return (
     <Tag
+      ref={displayRef as never}
       id={id}
       className={className}
       style={{ ...style, position: "relative", cursor: "text" }}

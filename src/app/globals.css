@@ -708,6 +708,10 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
   background:var(--surface); border:1px solid var(--line); color:var(--text); cursor:pointer;
 }
 .cms-edit-btn:hover{border-color:var(--accent-deep); color:var(--accent-deep)}
+/* Active editor field placeholder colors — kept in sync with the inline
+   background/color pair chosen in EditableText's fieldThemeDark/Light. */
+.cms-field--dark::placeholder{color:rgba(255,255,255,.55)}
+.cms-field--light::placeholder{color:var(--text-3)}
 .cms-edit-btn--save{background:var(--accent-deep); color:var(--cream); border-color:var(--accent-deep)}
 .cms-edit-btn[aria-disabled="true"]{opacity:.5; pointer-events:none}
 .cms-edit-error{display:block; font-size:.72rem; color:#b3261e; margin-top:4px}
