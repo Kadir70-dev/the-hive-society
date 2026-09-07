@@ -45,6 +45,9 @@ export default function HostPage() {
         <div className="container">
           <span className="eyebrow">Who Can Host</span>
           <h2 className="h2" style={{ margin: "14px 0 28px" }}>If you bring people together, you belong here.</h2>
+          <p className="small text-2" style={{ margin: "-14px 0 20px" }}>
+            Hosting a gathering requires an active Hive Membership.
+          </p>
           <div className="pill-row">
             {WHO_CAN_HOST.map((who) => (
               <span className="area-chip" key={who}>{who}</span>

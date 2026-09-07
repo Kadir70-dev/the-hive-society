@@ -13,7 +13,7 @@ export const membershipFaqs: FAQ[] = [
   {
     question: "Do I need to be a member to book gatherings?",
     answer:
-      "No. Every woman can discover, join circles and book gatherings for free — membership adds priority and curation on top.",
+      "Yes — if you are hosting a gathering, you need to be a Hive Member. For simply joining or attending a gathering, membership is not required.",
   },
   {
     question: "What are founding member benefits?",

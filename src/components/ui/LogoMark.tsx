@@ -5,8 +5,8 @@ export function LogoMark() {
     <Image
       src="/images/hive-logo.png"
       alt=""
-      width={140}
-      height={156}
+      width={162}
+      height={140}
       className="logo__mark"
       priority
     />
