@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 import { EditableText, EditableHeading, EditableLabel, EditableCaption } from "@/components/content/EditableText";
@@ -37,13 +36,18 @@ const VALUES = [
   },
 ];
 
+/* Facility/category tiles — a solid brand color per category (see .cat-swatch
+   in globals.css) instead of a photo. `dark` picks the matching cms-editable
+   edit-mode ring: true for the cream-text swatches, false for the ink-text
+   ones, mirroring how EditableLabel's `hero` prop already pairs with text color
+   elsewhere on this page. */
 const EXPERIENCES = [
-  { key: "coffee", label: "Coffee", image: "/images/coffee.jpg" },
-  { key: "dinners", label: "Dinners", image: "/images/a4-brunch.jpg" },
-  { key: "networking", label: "Networking", image: "/images/a9-bookclub.jpg" },
-  { key: "wellness", label: "Wellness", image: "/images/gym.jpg" },
-  { key: "gatherings", label: "Gatherings", image: "/images/gathering.jpg" },
-  { key: "workshops", label: "Workshops", image: "/images/claypot.jpg" },
+  { key: "coffee", label: "Coffee", dark: true },
+  { key: "dinners", label: "Dinners", dark: true },
+  { key: "networking", label: "Networking", dark: true },
+  { key: "wellness", label: "Wellness", dark: false },
+  { key: "gatherings", label: "Gatherings", dark: false },
+  { key: "workshops", label: "Workshops", dark: false },
 ];
 
 const STEPS = [
@@ -189,39 +193,24 @@ export default async function HomePage() {
             {[...EXPERIENCES, ...EXPERIENCES].map((exp, i) => {
               const key = `home.experiences.${exp.key}`;
               const label = t(`${key}.label`, exp.label);
-              const img = resolveMedia(media, `${key}.image`, { url: exp.image, alt: label });
               const isClone = i >= EXPERIENCES.length;
               return (
                 <Link
                   href="/explore"
-                  className="exp-marquee__card"
+                  className={`exp-marquee__card cat-swatch cat-swatch--${exp.key} hex-texture hex-texture--subtle`}
                   key={`${exp.key}-${i}`}
                   aria-hidden={isClone ? true : undefined}
                   tabIndex={isClone ? -1 : undefined}
                 >
                   {isClone ? (
-                    <Image
-                      src={img.url}
-                      alt=""
-                      fill
-                      sizes="280px"
-                      priority
-                      style={{ objectFit: "cover", objectPosition: img.objectPosition }}
-                    />
-                  ) : (
-                    <EditableImage
-                      mediaKey={`${key}.image`}
-                      src={img.url}
-                      alt={label}
-                      objectPosition={img.objectPosition}
-                      sizes="280px"
-                      priority
-                    />
-                  )}
-                  {isClone ? (
                     <span className="exp-marquee__label">{label}</span>
                   ) : (
-                    <EditableLabel hero contentKey={`${key}.label`} value={label} className="exp-marquee__label" />
+                    <EditableLabel
+                      hero={exp.dark}
+                      contentKey={`${key}.label`}
+                      value={label}
+                      className="exp-marquee__label"
+                    />
                   )}
                 </Link>
               );

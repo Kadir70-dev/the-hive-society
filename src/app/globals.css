@@ -10,6 +10,18 @@
   --accent:var(--honey); --accent-deep:var(--honey-deep); --line:var(--border);
   --on-dark:var(--cream); --on-dark-2:#CDC0AC; --on-dark-line:#42392B;
   --trust-c:var(--trust);
+
+  /* Facility/category palette — one muted, premium tone per category,
+     consistent everywhere a category is shown (no photos, no per-instance
+     inline colors). Each pairs with a fixed on-color for guaranteed
+     WCAG AA contrast (>=4.5:1) rather than always defaulting to white/ink. */
+  --cat-coffee:#7A4A32;     --cat-coffee-on:var(--cream);
+  --cat-dinners:#7D525A;    --cat-dinners-on:var(--cream);
+  --cat-networking:#4A5533; --cat-networking-on:var(--cream);
+  --cat-wellness:#8FA894;   --cat-wellness-on:var(--ink);
+  --cat-workshops:#CDA06C;  --cat-workshops-on:var(--ink);
+  --cat-gatherings:#C9BB98; --cat-gatherings-on:var(--ink);
+
   --shadow: 0 1px 2px rgba(34,30,24,.04), 0 8px 24px -12px rgba(34,30,24,.18);
   --shadow-lg: 0 20px 48px -20px rgba(34,30,24,.28);
   --radius-s:10px; --radius-m:16px; --radius-l:24px;
@@ -218,6 +230,17 @@ img{max-width:100%}
    combine with .section--dark, which is for the dark variant only. */
 .hex-texture--light::before{opacity:.07}
 
+/* Category-to-color tokens, applied wherever a facility/category needs a
+   solid brand color instead of a photo. Add the base class plus exactly one
+   modifier — never set background/color inline per instance. */
+.cat-swatch{background:var(--cat-bg); color:var(--cat-on)}
+.cat-swatch--coffee{--cat-bg:var(--cat-coffee); --cat-on:var(--cat-coffee-on)}
+.cat-swatch--dinners{--cat-bg:var(--cat-dinners); --cat-on:var(--cat-dinners-on)}
+.cat-swatch--networking{--cat-bg:var(--cat-networking); --cat-on:var(--cat-networking-on)}
+.cat-swatch--wellness{--cat-bg:var(--cat-wellness); --cat-on:var(--cat-wellness-on)}
+.cat-swatch--workshops{--cat-bg:var(--cat-workshops); --cat-on:var(--cat-workshops-on)}
+.cat-swatch--gatherings{--cat-bg:var(--cat-gatherings); --cat-on:var(--cat-gatherings-on)}
+
 .avatars{display:flex; align-items:center}
 .avatar{
   width:30px; height:30px; border-radius:50%; background:var(--bg-alt); color:var(--accent-deep);
@@ -366,13 +389,16 @@ img{max-width:100%}
 }
 .exp-marquee__track{display:flex; gap:14px; width:max-content; animation:exp-marquee-scroll 44s linear infinite}
 .exp-marquee:hover .exp-marquee__track, .exp-marquee:focus-within .exp-marquee__track{animation-play-state:paused}
-.exp-marquee__card{position:relative; flex:0 0 auto; width:200px; aspect-ratio:3/4; border-radius:var(--radius-m); overflow:hidden; display:block}
-@media(min-width:640px){.exp-marquee__card{width:260px}}
-@media(min-width:1100px){.exp-marquee__card{width:300px}}
-.exp-marquee__card::after{content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(20,16,10,.78) 0%,rgba(20,16,10,.05) 55%)}
-.exp-marquee__card img{transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.exp-marquee__card:hover img{transform:scale(1.045)}
-.exp-marquee__label{position:absolute; left:16px; bottom:14px; z-index:1; color:#fff; font-family:var(--serif); font-weight:600; font-size:1.05rem; text-shadow:0 1px 6px rgba(0,0,0,.3)}
+.exp-marquee__card{
+  position:relative; flex:0 0 auto; width:200px; aspect-ratio:3/4; border-radius:var(--radius-m);
+  overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:20px;
+  border:1px solid rgba(0,0,0,.08); box-shadow:var(--shadow);
+  transition:transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s cubic-bezier(.16,1,.3,1), border-color .3s ease;
+}
+@media(min-width:640px){.exp-marquee__card{width:260px; padding:24px}}
+@media(min-width:1100px){.exp-marquee__card{width:300px; padding:28px}}
+.exp-marquee__card:hover{transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:rgba(0,0,0,.16)}
+.exp-marquee__label{position:relative; z-index:1; font-family:var(--serif); font-weight:600; font-size:1.05rem; letter-spacing:-.01em}
 @keyframes exp-marquee-scroll{from{transform:translateX(0)} to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion: reduce){.exp-marquee__track{animation:none; overflow-x:auto}}
 
