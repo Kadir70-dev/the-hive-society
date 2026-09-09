@@ -44,7 +44,7 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <EditableLabel as="span" contentKey="footer.copyright" value={t("footer.copyright", "© 2026 The Hive Society, Abu Dhabi, UAE")} />
-          <EditableLabel as="span" contentKey="footer.social_coming_soon" value={t("footer.social_coming_soon", "Instagram · TikTok · LinkedIn · YouTube — coming soon")} />
+          <EditableLabel as="span" contentKey="footer.social_coming_soon" value={t("footer.social_coming_soon", "Social channels — coming soon")} />
           <span>
             {footerLegalLinks.map((link, i) => (
               <span key={link.href}>

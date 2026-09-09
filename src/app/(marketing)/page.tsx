@@ -187,31 +187,34 @@ export default async function HomePage() {
               </span>
             </Link>
           </div>
-        </div>
-        <div className="exp-marquee">
-          <div className="exp-marquee__track">
-            {[...EXPERIENCES, ...EXPERIENCES].map((exp, i) => {
+          <div className="cat-grid" style={{ marginTop: 8 }}>
+            {EXPERIENCES.map((exp) => {
               const key = `home.experiences.${exp.key}`;
               const label = t(`${key}.label`, exp.label);
-              const isClone = i >= EXPERIENCES.length;
               return (
                 <Link
                   href="/explore"
-                  className={`exp-marquee__card cat-swatch cat-swatch--${exp.key} hex-texture hex-texture--subtle`}
-                  key={`${exp.key}-${i}`}
-                  aria-hidden={isClone ? true : undefined}
-                  tabIndex={isClone ? -1 : undefined}
+                  className={`cat-tile cat-swatch cat-swatch--${exp.key} hex-texture hex-texture--light`}
+                  key={exp.key}
                 >
-                  {isClone ? (
-                    <span className="exp-marquee__label">{label}</span>
-                  ) : (
+                  <span className="cat-tile__label">
                     <EditableLabel
                       hero={exp.dark}
                       contentKey={`${key}.label`}
                       value={label}
-                      className="exp-marquee__label"
                     />
-                  )}
+                    <span className="cat-tile__arrow" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
+                        <path
+                          d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                 </Link>
               );
             })}

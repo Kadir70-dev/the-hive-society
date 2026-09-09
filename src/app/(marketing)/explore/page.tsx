@@ -17,7 +17,8 @@ export default async function ExplorePage() {
   return (
     <>
       <div className="page-open hex-texture hex-texture--light">
-        <div className="container stack gap-14" style={{ maxWidth: 560 }}>
+        <div className="container">
+        <div className="stack gap-14" style={{ maxWidth: 560 }}>
           <EditableLabel contentKey="explore.hero.eyebrow" value={t("explore.hero.eyebrow", "Explore")} className="eyebrow" />
           <EditableHeading
             as="h1"
@@ -33,6 +34,7 @@ export default async function ExplorePage() {
             value={t("explore.hero.lede", "Discover what’s happening across Abu Dhabi this season.")}
             className="lede"
           />
+        </div>
         </div>
       </div>
       <div className="section section--tight hex-texture hex-texture--light">

@@ -31,12 +31,16 @@ interface CommunitySignupFormProps {
 export function CommunitySignupForm({ onClose }: CommunitySignupFormProps = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [consent, setConsent] = useState(false);
+  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [error, setError] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!consent) return;
+    if (!consent) {
+      setAttemptedSubmit(true);
+      return;
+    }
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -153,25 +157,25 @@ export function CommunitySignupForm({ onClose }: CommunitySignupFormProps = {}) 
           ))}
         </div>
       </fieldset>
-      <div className="form-grid cols-2">
-        <div className="field">
-          <label htmlFor="csHeard">How did you hear about us? (optional)</label>
-          <input id="csHeard" name="heardFrom" placeholder="Instagram, a friend..." />
-        </div>
+      <div className="field">
+        <label htmlFor="csHeard">How did you hear about us? (optional)</label>
+        <input id="csHeard" name="heardFrom" placeholder="Instagram, a friend..." />
       </div>
       <div className="field">
         <label htmlFor="csMessage">What are you looking for from the community? (optional)</label>
         <textarea id="csMessage" name="message" placeholder="Tell us what you're hoping to find here" />
       </div>
 
-      <label className="field" style={{ flexDirection: "row", alignItems: "flex-start", gap: 10 }}>
+      <label
+        className={`field consent-row${attemptedSubmit && !consent ? " is-missing" : ""}`}
+        style={{ flexDirection: "row", alignItems: "flex-start" }}
+      >
         <input
           type="checkbox"
           name="consent"
           required
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
-          style={{ marginTop: 3 }}
         />
         <span className="small text-2">
           I agree that The Hive Society may contact me about community updates, launch updates,
@@ -194,11 +198,17 @@ export function CommunitySignupForm({ onClose }: CommunitySignupFormProps = {}) 
           {error}
         </p>
       )}
+      {attemptedSubmit && !consent && (
+        <p className="small" role="alert" style={{ color: "var(--accent-deep)", textAlign: "center" }}>
+          Please accept the privacy agreement above to continue.
+        </p>
+      )}
 
       <button
         className="btn btn--primary btn--block"
         type="submit"
-        disabled={!consent || status === "submitting"}
+        onClick={() => setAttemptedSubmit(true)}
+        disabled={status === "submitting"}
       >
         {status === "submitting" ? "Submitting…" : "Join the Community"}
       </button>

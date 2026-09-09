@@ -5,7 +5,9 @@ export const marketingNav: NavLink[] = [
   { label: "Community", href: "/community" },
   { label: "Experiences", href: "/explore" },
   { label: "About", href: "/about" },
-  { label: "Join the Community", href: "/membership" },
+  // Short label here — the full "Join the Community" CTA already sits
+  // beside it as the header's primary button; repeating it read as clutter.
+  { label: "Join", href: "/membership" },
 ];
 
 /** content_key for each nav href's editable label — shared by Header + MobileNav. */
@@ -22,7 +24,7 @@ export const mobileNav: NavLink[] = [
   { label: "Community", href: "/community" },
   { label: "Experiences", href: "/explore" },
   { label: "About", href: "/about" },
-  { label: "Join the Community", href: "/membership" },
+  { label: "Join", href: "/membership" },
 ];
 
 export const footerDiscoverLinks: NavLink[] = [

@@ -24,6 +24,7 @@ export default async function AboutPage() {
   const heroImage = resolveMedia(media, "about.hero.image", {
     url: "/images/a10-creative.jpg",
     alt: "Women at a Hive creative workshop in Abu Dhabi",
+    objectPosition: "30% center",
   });
   const introImage = resolveMedia(media, "about.intro.image", {
     url: "/images/gathering.jpg",
@@ -92,14 +93,14 @@ export default async function AboutPage() {
               <div className="founder-photo" style={{ width: 64, height: 64, marginBottom: 0 }} />
               <div>
                 <EditableHeading as="h3" contentKey="about.team.founder.title" value={t("about.team.founder.title", "Founder & CEO")} className="h3" style={{ fontSize: "1.02rem" }} />
-                <EditableText as="p" multiline contentKey="about.team.founder.bio" value={t("about.team.founder.bio", "Placeholder — biography to be confirmed")} className="small text-3" />
+                <EditableText as="p" multiline contentKey="about.team.founder.bio" value={t("about.team.founder.bio", "Full introduction coming soon.")} className="small text-3" />
               </div>
             </div>
             <div className="row gap-16">
               <div className="founder-photo" style={{ width: 64, height: 64, marginBottom: 0 }} />
               <div>
                 <EditableHeading as="h3" contentKey="about.team.cofounder.title" value={t("about.team.cofounder.title", "Co-Founder & CTO")} className="h3" style={{ fontSize: "1.02rem" }} />
-                <EditableText as="p" multiline contentKey="about.team.cofounder.bio" value={t("about.team.cofounder.bio", "Placeholder — biography to be confirmed")} className="small text-3" />
+                <EditableText as="p" multiline contentKey="about.team.cofounder.bio" value={t("about.team.cofounder.bio", "Full introduction coming soon.")} className="small text-3" />
               </div>
             </div>
           </div>

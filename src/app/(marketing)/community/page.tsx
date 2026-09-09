@@ -98,6 +98,20 @@ export default async function CommunityPage() {
 
       <div className="section section--alt section--intimate">
         <div className="container">
+          <div style={{ maxWidth: 460, marginBottom: 36 }}>
+            <EditableLabel
+              contentKey="community.steps.eyebrow"
+              value={t("community.steps.eyebrow", "How Belonging Grows")}
+              className="eyebrow"
+            />
+            <EditableHeading
+              as="h2"
+              contentKey="community.steps.heading"
+              value={t("community.steps.heading", "Three visits, and it stops feeling new.")}
+              className="h2"
+              style={{ marginTop: 14 }}
+            />
+          </div>
           <div className="rule-list rule-list--row rule-list--row-3">
             {STEPS.map((s) => (
               <div className="rule-list__item" key={s.n}>

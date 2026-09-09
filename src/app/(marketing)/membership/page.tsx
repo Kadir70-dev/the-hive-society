@@ -19,7 +19,7 @@ export default async function MembershipPage() {
     <>
       <div className="masthead section--dark hex-texture">
         <div className="container">
-          <div className="split split--60-40" style={{ alignItems: "center" }}>
+          <div className="split split--60-40" style={{ alignItems: "start" }}>
             <div className="stack gap-14">
               <EditableLabel contentKey="membership.masthead.eyebrow" value={t("membership.masthead.eyebrow", "Join the Community")} className="eyebrow" />
               <EditableHeading
@@ -41,7 +41,7 @@ export default async function MembershipPage() {
               contentKey="membership.masthead.tag"
               value={t("membership.masthead.tag", "Pre-launch — paid membership is proposed for later and not yet available")}
               className="tag-proposed"
-              style={{ justifySelf: "start" }}
+              style={{ justifySelf: "start", marginTop: 10 }}
             />
           </div>
         </div>
