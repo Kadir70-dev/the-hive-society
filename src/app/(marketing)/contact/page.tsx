@@ -16,7 +16,7 @@ const CONTACT_CHANNELS = [
 export default function ContactPage() {
   return (
     <>
-      <div className="page-hero hex-texture">
+      <div className="page-hero">
         <div className="container stack gap-14">
           <span className="eyebrow">Contact</span>
           <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>

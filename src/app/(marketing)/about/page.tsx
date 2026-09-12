@@ -49,7 +49,7 @@ export default async function AboutPage() {
         </div>
       </div>
 
-      <div className="section section--intimate hex-texture hex-texture--light">
+      <div className="section section--intimate">
         <div className="container">
           <div className="split split--60-40">
             <div className="photo img-hover" style={{ position: "relative" }}>
@@ -85,7 +85,7 @@ export default async function AboutPage() {
         </div>
       </div>
 
-      <div className="section section--intimate hex-texture hex-texture--light">
+      <div className="section section--intimate">
         <div className="container">
           <EditableLabel contentKey="about.team.eyebrow" value={t("about.team.eyebrow", "Our Team")} className="label-sm" />
           <div className="row wrap gap-32" style={{ marginTop: 20 }}>
@@ -107,7 +107,7 @@ export default async function AboutPage() {
         </div>
       </div>
 
-      <div className="section section--alt section--intimate hex-texture hex-texture--light">
+      <div className="section section--alt section--intimate">
         <div className="container">
           <EditableLabel contentKey="about.neighbourhoods.eyebrow" value={t("about.neighbourhoods.eyebrow", "Where We Gather")} className="eyebrow" />
           <EditableHeading
@@ -133,7 +133,7 @@ export default async function AboutPage() {
         </div>
       </div>
 
-      <div className="section hex-texture hex-texture--light">
+      <div className="section">
         <div className="container">
           <EditableHeading
             as="h2"

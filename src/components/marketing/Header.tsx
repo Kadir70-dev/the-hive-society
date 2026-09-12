@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { marketingNav, navContentKeys } from "@/data/navigation";
-import { LogoMark } from "@/components/ui/LogoMark";
 import { MobileNav } from "./MobileNav";
 import { SignInModal } from "./SignInModal";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
@@ -22,8 +21,7 @@ export function Header() {
     <>
       <header className="site-header">
         <div className="header-inner">
-          <Link href="/" className="logo">
-            <LogoMark />
+          <Link href="/" className="logo logo--pill">
             The Hive Society
           </Link>
           <nav className="nav-desktop" aria-label="Primary">
@@ -44,7 +42,7 @@ export function Header() {
             <button className="signin" onClick={() => setSignInOpen(true)}>
               <EditableLabel contentKey="nav.open_app" value={resolve(globalContent, "nav.open_app", "Open App")} />
             </button>
-            <JoinCommunityButton className="btn btn--outline btn--sm" />
+            <JoinCommunityButton className="btn btn--primary btn--sm" />
           </div>
           <button
             className="hamburger"

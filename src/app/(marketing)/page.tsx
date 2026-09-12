@@ -1,79 +1,43 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
-import { EditableText, EditableHeading, EditableLabel, EditableCaption } from "@/components/content/EditableText";
+import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
 import { EditableImage } from "@/components/content/EditableImage";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
 import { getPageMedia, resolveMedia } from "@/lib/content/getPageMedia";
+import { PeopleIcon, SparkleIcon, LeafIcon, CompassIcon } from "@/components/ui/Icons";
 
 export const metadata: Metadata = {
   title: "Home",
-  description:
-    "A trusted women's community across the UAE — real gatherings, real connection. Launching soon in Abu Dhabi.",
+  description: "A private society for ambitious women who seek more.",
 };
 
-const VALUES = [
-  {
-    mark: "01",
-    titleKey: "home.why.1.title",
-    title: "Curated Events",
-    bodyKey: "home.why.1.body",
-    body: "Meaningful gatherings, not endless options.",
-  },
-  {
-    mark: "02",
-    titleKey: "home.why.2.title",
-    title: "Real women",
-    bodyKey: "home.why.2.body",
-    body: "See who's coming before you join.",
-  },
-  {
-    mark: "03",
-    titleKey: "home.why.3.title",
-    title: "Lasting connections",
-    bodyKey: "home.why.3.body",
-    body: "Friendships that go beyond the event.",
-  },
+const PILLARS = [
+  { key: "connections", title: "Real Connections", Icon: PeopleIcon },
+  { key: "experiences", title: "Unique Experiences", Icon: SparkleIcon },
+  { key: "growth", title: "Personal Growth", Icon: LeafIcon },
+  { key: "access", title: "Exclusive Access", Icon: CompassIcon },
 ];
 
-/* Facility/category tiles — a solid brand color per category (see .cat-swatch
-   in globals.css) instead of a photo. `dark` picks the matching cms-editable
-   edit-mode ring: true for the cream-text swatches, false for the ink-text
-   ones, mirroring how EditableLabel's `hero` prop already pairs with text color
-   elsewhere on this page. */
-const EXPERIENCES = [
-  { key: "coffee", label: "Coffee & Conversations", dark: true },
-  { key: "dinners", label: "Around the table", dark: true },
-  { key: "networking", label: "Networking", dark: true },
-  { key: "wellness", label: "Wellness", dark: false },
-  { key: "gatherings", label: "Socials", dark: false },
-  { key: "workshops", label: "Workshops", dark: false },
+const EXPERIENCE_CARDS = [
+  { key: "wellness", label: "Wellness", image: "a8-wellness.jpg", alt: "A Hive wellness gathering" },
+  { key: "travel", label: "Travel", image: "tennis.jpg", alt: "Hive women on an outdoor gathering" },
+  { key: "dining", label: "Dining", image: "a4-brunch.jpg", alt: "A Hive brunch gathering" },
 ];
 
-const STEPS = [
-  { n: "01", titleKey: "home.how.1.title", title: "Introduce", bodyKey: "home.how.1.body", body: "A quiet beginning." },
-  {
-    n: "02",
-    titleKey: "home.how.2.title",
-    title: "Curate",
-    bodyKey: "home.how.2.body",
-    body: "Thoughtfully considered.",
-  },
-  {
-    n: "03",
-    titleKey: "home.how.3.title",
-    title: "Invite",
-    bodyKey: "home.how.3.body",
-    body: "An invitation, when it feels right.",
-  },
-  {
-    n: "04",
-    titleKey: "home.how.4.title",
-    title: "Belong",
-    bodyKey: "home.how.4.body",
-    body: "Where connection becomes community.",
-  },
-];
+function ArrowIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path
+        d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export default async function HomePage() {
   const [content, media] = await Promise.all([getPageContent("home"), getPageMedia("home")]);
@@ -84,17 +48,17 @@ export default async function HomePage() {
     alt: "Women walking together along the Abu Dhabi Corniche at sunset",
     objectPosition: "center 30%",
   });
-  const tennisImage = resolveMedia(media, "home.bleed.tennis.image", {
-    url: "/images/tennis.jpg",
-    alt: "Hive women playing tennis together at dusk",
-  });
-  const appImage = resolveMedia(media, "home.app_preview.image", {
-    url: "/images/a7-padel.jpg",
-    alt: "A preview of an experience inside the Hive app",
+  const membershipImage = resolveMedia(media, "home.membership2.image", {
+    url: "/images/majlisnight.jpg",
+    alt: "An evening Hive gathering",
   });
 
   return (
     <>
+      {/* HERO — full-bleed photo, edge-to-edge. The floating header pill
+          (position:absolute, no flow height) sits directly on top of it —
+          the hero starts at the literal top of the page. Centered lockup:
+          label, headline, lede, cta, sitting in the upper-middle third. */}
       <section className="hero">
         <EditableImage
           mediaKey="home.hero.image"
@@ -104,198 +68,177 @@ export default async function HomePage() {
           sizes="100vw"
           priority
         />
-        <EditableLabel hero contentKey="home.hero.kicker" value={t("home.hero.kicker", "Soon in Abu Dhabi")} className="hero__kicker" />
         <div className="hero__content">
-          <EditableHeading hero as="h1" contentKey="home.hero.title" value={t("home.hero.title", "Find your Hive in Abu Dhabi")} className="hero__title" />
+          <EditableLabel
+            hero
+            contentKey="home.hero2.eyebrow"
+            value={t("home.hero2.eyebrow", "Soon in Abu Dhabi")}
+            className="hero__kicker"
+          />
+          <EditableHeading
+            hero
+            as="h1"
+            contentKey="home.hero2.title"
+            value={t("home.hero2.title", "Find your Hive in Abu Dhabi")}
+            className="hero__title"
+          />
           <EditableText
             hero
             as="p"
             multiline
-            contentKey="home.hero.lede"
-            value={t(
-              "home.hero.lede",
-              "Host or join gatherings, classes, and slow mornings"
-            )}
+            contentKey="home.hero2.lede"
+            value={t("home.hero2.lede", "Host or join gatherings, classes, and slow mornings")}
             className="hero__lede"
           />
-          <JoinCommunityButton className="btn btn--on-dark" />
+          <JoinCommunityButton className="btn btn--on-dark">
+            {t("home.hero2.cta_label", "Join The Hive")}
+            <span aria-hidden="true">→</span>
+          </JoinCommunityButton>
         </div>
       </section>
 
-      <section className="section section--intimate hex-texture hex-texture--light">
-        <div className="container">
-          <div className="split split--60-40">
+      {/* MORE THAN A CLUB — centered heading + short lede, then a row of
+          three portrait photo cards (bottom-left label, bottom-right arrow). */}
+      <section className="section section--intimate">
+        <div className="container" style={{ textAlign: "center" }}>
+          <div style={{ maxWidth: 560, margin: "0 auto" }}>
+            <EditableLabel
+              contentKey="home.about.eyebrow"
+              value={t("home.about.eyebrow", "The Hive Society")}
+              className="eyebrow"
+              style={{ justifyContent: "center" }}
+            />
             <EditableHeading
               as="h2"
-              contentKey="home.why.heading"
-              value={t("home.why.heading", "Belonging feels different here")}
-              className="display-xl"
-              style={{ maxWidth: "11ch" }}
+              contentKey="home.about.heading"
+              value={t("home.about.heading", "Belonging feels different here")}
+              className="h2"
+              style={{ marginTop: 14 }}
             />
-            <div className="value-list">
-              {VALUES.map((v) => (
-                <div className="value-item" key={v.mark}>
-                  <span className="value-item__mark">{v.mark}</span>
-                  <div>
-                    <EditableHeading as="h3" contentKey={v.titleKey} value={t(v.titleKey, v.title)} className="h3" />
-                    <EditableText as="p" multiline contentKey={v.bodyKey} value={t(v.bodyKey, v.body)} className="text-2 small" />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <EditableText
+              as="p"
+              multiline
+              contentKey="home.about.lede"
+              value={t("home.about.lede", "A private community for women who grow, connect and create more.")}
+              className="lede"
+              style={{ margin: "16px auto 0" }}
+            />
           </div>
         </div>
-      </section>
-
-      <div className="bleed">
-        <EditableImage mediaKey="home.bleed.tennis.image" src={tennisImage.url} alt={tennisImage.alt} objectPosition={tennisImage.objectPosition} sizes="100vw" />
-        <div className="bleed__overlay" />
-        <EditableCaption hero contentKey="home.bleed.tennis.caption" value={t("home.bleed.tennis.caption", "Khalifa City, Abu Dhabi")} className="bleed__cap" />
-      </div>
-
-      <section className="section section--alt">
-        <div className="container">
-          <div className="exp-heading">
-            <div className="exp-heading__copy">
-              <EditableLabel
-                contentKey="home.experiences.eyebrow"
-                value={t("home.experiences.eyebrow", "The Experience")}
-                className="eyebrow"
-              />
-              <EditableHeading
-                as="h2"
-                contentKey="home.experiences.heading"
-                value={t("home.experiences.heading", "Gather beautifully, your way.")}
-                className="exp-heading__title"
-              />
-            </div>
-            <Link href="/explore" className="exp-cta">
-              <EditableLabel
-                contentKey="home.experiences.link_label"
-                value={t("home.experiences.link_label", "Explore Experiences")}
-              />
-              <span className="exp-cta__arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path
-                    d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </Link>
-          </div>
-          <div className="cat-grid" style={{ marginTop: 8 }}>
-            {EXPERIENCES.map((exp) => {
-              const key = `home.experiences.${exp.key}`;
-              const label = t(`${key}.label`, exp.label);
+        <div className="container container--wide" style={{ marginTop: 48 }}>
+          <div className="grid grid-3" style={{ textAlign: "left" }}>
+            {EXPERIENCE_CARDS.map((card) => {
+              const cardImage = resolveMedia(media, `home.experiences2.${card.key}.image`, {
+                url: `/images/${card.image}`,
+                alt: card.alt,
+              });
               return (
-                <Link
-                  href="/explore"
-                  className={`cat-tile cat-swatch cat-swatch--${exp.key} hex-texture hex-texture--light`}
-                  key={exp.key}
-                >
-                  <span className="cat-tile__label">
+                <div className="photo img-hover" style={{ aspectRatio: "4/4.6" }} key={card.key}>
+                  <EditableImage
+                    mediaKey={`home.experiences2.${card.key}.image`}
+                    src={cardImage.url}
+                    alt={cardImage.alt}
+                    objectPosition={cardImage.objectPosition}
+                    sizes="(min-width: 900px) 30vw, 90vw"
+                  />
+                  <span className="photo__tag">
                     <EditableLabel
-                      hero={exp.dark}
-                      contentKey={`${key}.label`}
-                      value={label}
+                      contentKey={`home.experiences2.${card.key}.label`}
+                      value={t(`home.experiences2.${card.key}.label`, card.label)}
                     />
-                    <span className="cat-tile__arrow" aria-hidden="true">
-                      <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
-                        <path
-                          d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
                   </span>
-                </Link>
+                  <Link href="/explore" className="photo__arrow" aria-label="Explore experiences">
+                    <ArrowIcon />
+                  </Link>
+                </div>
               );
             })}
           </div>
         </div>
+        <div className="container" style={{ textAlign: "center" }}>
+          <Link href="/explore" className="text-link" style={{ marginTop: 40 }}>
+            <EditableLabel
+              contentKey="home.experiences2.button_label"
+              value={t("home.experiences2.button_label", "Explore Experiences")}
+            />
+            <ArrowIcon />
+          </Link>
+        </div>
       </section>
 
-      <section className="section section--intimate hex-texture hex-texture--light">
-        <div className="container">
-          <div style={{ maxWidth: 460, marginBottom: 40 }}>
-            <EditableLabel contentKey="home.how.eyebrow" value={t("home.how.eyebrow", "How It Works")} className="eyebrow" />
-            <EditableHeading
-              as="h2"
-              contentKey="home.how.heading"
-              value={t("home.how.heading", "From first visit to real belonging.")}
-              className="h2"
-              style={{ marginTop: 14 }}
-            />
-          </div>
-          <div className="rule-list rule-list--row rule-list--row-4">
-            {STEPS.map((s) => (
-              <div className="rule-list__item" key={s.n}>
-                <span className="rule-list__num">{s.n}</span>
-                <EditableHeading as="h3" contentKey={s.titleKey} value={t(s.titleKey, s.title)} className="h3" />
-                <EditableText as="p" multiline contentKey={s.bodyKey} value={t(s.bodyKey, s.body)} className="small text-2" />
+      {/* FEATURE BAND — large rounded-top, light-beige panel; contrast comes
+          from the surface shift + generous padding, never from a dark fill. */}
+      <div className="feature-band">
+        <div className="container" style={{ textAlign: "center" }}>
+          <EditableLabel
+            contentKey="home.pillars.eyebrow"
+            value={t("home.pillars.eyebrow", "Why Join")}
+            className="eyebrow"
+            style={{ justifyContent: "center" }}
+          />
+          <EditableHeading
+            as="h2"
+            contentKey="home.pillars.heading"
+            value={t("home.pillars.heading", "What Sets Us Apart")}
+            className="h2"
+            style={{ marginTop: 14 }}
+          />
+          <div className="feature-grid">
+            {PILLARS.map((p) => (
+              <div className="feature-item" key={p.key}>
+                <p.Icon className="feature-item__icon" />
+                <EditableHeading
+                  as="h3"
+                  contentKey={`home.about.pillar_${p.key}`}
+                  value={t(`home.about.pillar_${p.key}`, p.title)}
+                  className="h3"
+                />
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      <section className="section section--expansive section--alt hex-texture hex-texture--light">
+      {/* MEMBERSHIP — a very light, unboxed container: large photo on the
+          left, short copy and a primary CTA on the right. No dark background. */}
+      <section className="section section--alt">
         <div className="container">
-          <div className="split split--40-60" style={{ alignItems: "center" }}>
+          <div className="split split--60-40" style={{ alignItems: "center" }}>
+            <div className="photo img-hover" style={{ aspectRatio: "4/3" }}>
+              <EditableImage
+                mediaKey="home.membership2.image"
+                src={membershipImage.url}
+                alt={membershipImage.alt}
+                objectPosition={membershipImage.objectPosition}
+                sizes="(min-width: 900px) 55vw, 100vw"
+              />
+            </div>
             <div className="stack gap-16">
-              <EditableLabel contentKey="home.app.eyebrow" value={t("home.app.eyebrow", "The Hive App")} className="eyebrow" />
+              <EditableLabel
+                contentKey="home.membership2.eyebrow"
+                value={t("home.membership2.eyebrow", "Membership")}
+                className="eyebrow"
+              />
+              <EditableHeading
+                as="h2"
+                contentKey="home.membership2.heading"
+                value={t("home.membership2.heading", "Join The Hive")}
+                className="h2"
+              />
               <EditableText
                 as="p"
                 multiline
-                contentKey="home.app.quote"
-                value={t("home.app.quote", "The website and community form are live today. The app comes next.")}
-                className="pull-quote"
+                contentKey="home.membership2.body"
+                value={t("home.membership2.body", "A community built on trust, warmth and belonging.")}
+                className="text-2"
               />
-              <Link href="/app/explore" className="text-link">
-                <EditableLabel contentKey="home.app.link_label" value={t("home.app.link_label", "Preview the app →")} />
-              </Link>
-            </div>
-            <div className="phone-frame phone-frame--lg" style={{ marginLeft: "auto", marginRight: "auto" }}>
-              <div className="phone-frame__screen">
-                <EditableImage mediaKey="home.app_preview.image" src={appImage.url} alt={appImage.alt} objectPosition={appImage.objectPosition} sizes="300px" />
-              </div>
+              <JoinCommunityButton className="btn btn--primary" style={{ alignSelf: "flex-start", marginTop: 8 }}>
+                {t("home.membership2.button_label", "Join The Hive")}
+              </JoinCommunityButton>
             </div>
           </div>
         </div>
       </section>
-
-      <div className="cta-banner cta-banner--bleed section--dark hex-texture">
-        <div className="container" style={{ textAlign: "center" }}>
-          <EditableHeading
-            as="h2"
-            contentKey="home.cta.heading"
-            value={t("home.cta.heading", "Your next gathering starts here")}
-            className="display-xl"
-            style={{ maxWidth: "16ch", margin: "0 auto" }}
-          />
-          <EditableText
-            as="p"
-            multiline
-            contentKey="home.cta.subtext"
-            value={t("home.cta.subtext", "No one has to show up alone")}
-            className="text-2"
-            style={{ margin: "20px auto 32px", maxWidth: "40ch" }}
-          />
-          <div className="row wrap gap-16" style={{ justifyContent: "center" }}>
-            <JoinCommunityButton className="btn btn--on-dark" />
-            <Link href="/explore" className="btn btn--ghost-dark">
-              <EditableLabel contentKey="home.cta.secondary_label" value={t("home.cta.secondary_label", "Explore Experiences")} />
-            </Link>
-          </div>
-        </div>
-      </div>
     </>
   );
 }

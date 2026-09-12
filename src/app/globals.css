@@ -11,21 +11,25 @@
   --trust:var(--ink-deep); --border: color-mix(in srgb, var(--ink) 15%, var(--cream) 85%);
 
   --bg:var(--cream); --bg-alt:var(--sand); --surface:var(--sand); --surface-2:var(--cream);
-  --surface-dark:var(--ink-deep); --surface-dark-2: color-mix(in srgb, var(--ink-deep) 78%, black 22%);
+  /* "Dark section" tokens are kept (many components key off them) but now
+     resolve to LIGHT values — the brand deliberately stays on beige/cream
+     everywhere; no full-width burgundy/near-black section backgrounds. */
+  --surface-dark:var(--sand); --surface-dark-2:var(--cream);
   --text:var(--ink); --text-2:var(--text-soft); --text-3:var(--text-muted);
   --accent:var(--honey); --accent-deep:var(--honey-deep); --line:var(--border);
-  --on-dark:var(--cream); --on-dark-2: color-mix(in srgb, var(--cream) 72%, var(--ink-deep) 28%);
-  --on-dark-line: rgba(248,244,234,.18);
+  --on-dark:var(--ink); --on-dark-2:var(--text-soft);
+  --on-dark-line:var(--border);
+  --accent-on-dark:var(--accent-deep);
   --trust-c:var(--trust);
 
   /* Facility/category palette — one muted tone per category, all mixed
      from the same burgundy/ivory pair (no unrelated hues). Each pairs with
      a fixed on-color for guaranteed WCAG AA contrast (>=4.5:1). */
-  --cat-coffee:var(--ink-deep);       --cat-coffee-on:var(--cream);
-  --cat-dinners:var(--ink);           --cat-dinners-on:var(--cream);
-  --cat-networking: color-mix(in srgb, var(--ink-deep) 84%, black 16%); --cat-networking-on:var(--cream);
-  --cat-wellness: color-mix(in srgb, var(--ink) 25%, var(--cream) 75%);  --cat-wellness-on:var(--ink);
-  --cat-workshops: color-mix(in srgb, var(--ink) 15%, var(--cream) 85%); --cat-workshops-on:var(--ink);
+  --cat-coffee: color-mix(in srgb, var(--ink) 34%, var(--cream) 66%);     --cat-coffee-on:var(--ink);
+  --cat-dinners: color-mix(in srgb, var(--ink) 20%, var(--cream) 80%);   --cat-dinners-on:var(--ink);
+  --cat-networking: color-mix(in srgb, var(--ink) 28%, var(--cream) 72%); --cat-networking-on:var(--ink);
+  --cat-wellness: color-mix(in srgb, var(--ink) 15%, var(--cream) 85%);  --cat-wellness-on:var(--ink);
+  --cat-workshops: color-mix(in srgb, var(--ink) 24%, var(--cream) 76%); --cat-workshops-on:var(--ink);
   --cat-gatherings: color-mix(in srgb, var(--ink) 36%, var(--cream) 64%); --cat-gatherings-on:var(--ink);
 
   --shadow: 0 1px 2px rgba(43,15,23,.05), 0 8px 24px -12px rgba(43,15,23,.16);
@@ -33,8 +37,8 @@
   --radius-s:10px; --radius-m:16px; --radius-l:24px;
   --maxw:1180px;
   --sidebar-bg:var(--sand);
-  --serif: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --sans: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --serif: var(--font-cormorant), Georgia, 'Times New Roman', serif;
+  --sans: var(--font-cormorant), Georgia, 'Times New Roman', serif;
   color-scheme: light;
 }
 /* The Hive Society ships one deliberate, controlled look: the light warm
@@ -47,13 +51,13 @@
 html{-webkit-text-size-adjust:100%}
 body{
   margin:0; background:var(--bg); color:var(--text);
-  font-family:var(--sans); font-size:16px; line-height:1.6;
+  font-family:var(--sans); font-weight:400; font-size:17px; line-height:1.65;
   -webkit-font-smoothing:antialiased;
 }
 html, body{scrollbar-width:none; -ms-overflow-style:none}
 html::-webkit-scrollbar,
 body::-webkit-scrollbar{display:none; width:0; height:0}
-h1,h2,h3,h4{font-family:var(--serif); font-weight:600; margin:0; color:var(--text); text-wrap:balance; letter-spacing:-.01em}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:500; margin:0; color:var(--text); text-wrap:balance; letter-spacing:-.01em}
 p{margin:0}
 a{color:inherit; text-decoration:none}
 button{font-family:inherit; cursor:pointer}
@@ -64,6 +68,9 @@ img{max-width:100%}
 
 .container{max-width:var(--maxw); margin:0 auto; padding:0 24px}
 @media(min-width:900px){.container{padding:0 40px}}
+/* wider variant — for rows (like the 3-card grid) that should stretch closer
+   to the section's own edges instead of sharing the narrower text measure. */
+.container--wide{max-width:1440px}
 
 .section{padding:64px 0}
 @media(min-width:900px){.section{padding:96px 0}}
@@ -78,35 +85,36 @@ img{max-width:100%}
 .section--dark h1,.section--dark h2,.section--dark h3,.section--dark h4{color:var(--on-dark)}
 .section--dark p{color:var(--on-dark-2)}
 .section--dark .text-2,.section--dark .text-3,.section--dark .lede{color:var(--on-dark-2)}
-.section--dark .eyebrow{color:var(--accent)}
-.section--dark .eyebrow::after{background:var(--accent)}
-.section--dark .pull-quote,.section--dark .pull-quote::before{color:var(--accent)}
+.section--dark .eyebrow{color:var(--accent-on-dark)}
+.section--dark .eyebrow::after{background:var(--accent-on-dark)}
+.section--dark .pull-quote,.section--dark .pull-quote::before{color:var(--accent-on-dark)}
 .section--dark a:not(.btn){color:var(--on-dark)}
-.section--dark a:not(.btn):hover{color:var(--accent)}
-.section--dark .text-link{color:var(--on-dark); border-color:var(--accent)}
-.section--dark .text-link:hover{color:var(--accent)}
+.section--dark a:not(.btn):hover{color:var(--accent-on-dark)}
+.section--dark .text-link{color:var(--on-dark); border-color:var(--accent-on-dark)}
+.section--dark .text-link:hover{color:var(--accent-on-dark)}
 .section--dark hr,.section--dark .divider{background:var(--on-dark-line)}
 .section--dark .rule-list__item,.section--dark .index-list__row{border-color:var(--on-dark-line)}
-.section--dark .rule-list__num{color:var(--accent)}
-.section--dark .hex{background:var(--surface-dark-2); color:var(--accent)}
-.section--dark .badge{background:rgba(248,244,234,.14); color:var(--accent)}
-.section--dark .tag-proposed{background:rgba(248,244,234,.14); color:var(--accent)}
+.section--dark .rule-list__num{color:var(--accent-on-dark)}
+.section--dark .hex{background:var(--surface-dark-2); color:var(--accent-on-dark)}
+.section--dark .badge{background:rgba(100,28,44,.08); color:var(--accent-on-dark)}
+.section--dark .tag-proposed{background:rgba(107,31,50,.12); color:var(--accent-on-dark)}
 .section--dark .btn--outline{border-color:var(--on-dark-line); color:var(--on-dark)}
-.section--dark .btn--outline:hover{border-color:var(--accent); color:var(--accent)}
+.section--dark .btn--outline:hover{border-color:var(--accent-on-dark); color:var(--accent-on-dark)}
 .section--dark .chip,.section--dark .area-chip{background:var(--surface-dark-2); border-color:var(--on-dark-line); color:var(--on-dark-2)}
-.section--dark .chip:hover{border-color:var(--accent); color:var(--on-dark)}
+.section--dark .chip:hover{border-color:var(--accent-on-dark); color:var(--on-dark)}
 .section--surface{background:var(--surface)}
 
 .eyebrow{
   display:inline-flex; align-items:center; gap:10px;
-  font-family:var(--sans); font-size:12.5px; font-weight:700; letter-spacing:.16em;
+  font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:.18em;
   text-transform:uppercase; color:var(--accent-deep);
 }
-.section--dark .eyebrow{color:var(--accent)}
-.eyebrow::before{content:""; width:9px; height:9px; background:var(--accent);
-  clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%); flex:none;}
+.section--dark .eyebrow{color:var(--accent-on-dark)}
+.eyebrow::before{content:""; width:7px; height:7px; background:var(--accent);
+  border-radius:50%; flex:none;}
 .eyebrow::after{content:""; width:36px; height:1px; background:var(--accent-deep); opacity:.55}
-.section--dark .eyebrow::after{background:var(--accent)}
+.section--dark .eyebrow::before{background:var(--accent-on-dark)}
+.section--dark .eyebrow::after{background:var(--accent-on-dark)}
 
 .h1{font-size:clamp(2.6rem,6vw + .5rem,5.4rem); line-height:.98; letter-spacing:-.02em}
 .h2{font-size:clamp(2rem,3.6vw + .6rem,3.4rem); line-height:1.04; letter-spacing:-.015em}
@@ -135,20 +143,20 @@ img{max-width:100%}
 
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:14px 26px; border-radius:999px; font-size:.95rem; font-weight:600;
+  padding:14px 26px; border-radius:999px; font-size:1rem; font-weight:500; letter-spacing:.01em;
   border:1px solid transparent; transition:transform .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
-  white-space:nowrap;
+  white-space:nowrap; align-self:flex-start;
 }
 .btn:active{transform:scale(.98)}
 .btn:disabled{opacity:.5; cursor:not-allowed; transform:none}
 .btn--primary{background:var(--accent-deep); color:var(--cream); box-shadow:var(--shadow)}
-.btn--primary:hover{background:var(--accent)}
+.btn--primary:hover{background:color-mix(in srgb, var(--accent-deep) 85%, black 15%)}
 .btn--outline{background:transparent; border-color:var(--line); color:var(--text)}
 .btn--outline:hover{border-color:var(--accent-deep); color:var(--accent-deep)}
-.btn--on-dark{background:var(--accent); color:var(--ink)}
-.btn--on-dark:hover{background:var(--accent-deep); color:var(--cream)}
+.btn--on-dark{background:var(--bg); color:var(--ink)}
+.btn--on-dark:hover{background:var(--accent-on-dark)}
 .btn--ghost-dark{background:transparent; border-color:var(--on-dark-line); color:var(--on-dark)}
-.btn--ghost-dark:hover{border-color:var(--accent)}
+.btn--ghost-dark:hover{border-color:var(--on-dark)}
 .btn--block{width:100%}
 .btn--sm{padding:9px 18px; font-size:.85rem}
 
@@ -190,9 +198,9 @@ img{max-width:100%}
 .hex{
   width:52px; height:52px; display:flex; align-items:center; justify-content:center;
   background:var(--bg-alt); color:var(--accent-deep); font-family:var(--serif); font-weight:600; font-size:1.1rem;
-  clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%); flex:none;
+  border-radius:50%; flex:none;
 }
-.section--dark .hex{background:var(--surface-dark-2); color:var(--accent)}
+.section--dark .hex{background:var(--surface-dark-2); color:var(--accent-on-dark)}
 .hex--lg{width:64px;height:64px;font-size:1.3rem}
 .hex--sm{width:32px;height:32px;font-size:.75rem}
 
@@ -202,26 +210,18 @@ img{max-width:100%}
   background:linear-gradient(140deg, var(--surface-2) 0%, color-mix(in srgb, var(--accent) 30%, var(--bg-alt)) 60%, var(--accent-deep) 100%);
   display:flex; align-items:flex-end;
 }
-.photo::before{
-  content:""; position:absolute; inset:0; opacity:.14; mix-blend-mode:overlay; z-index:1;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpolygon points='15,1 45,1 60,26 45,51 15,51 0,26' fill='none' stroke='%23FFFFFF' stroke-width='1'/%3E%3C/svg%3E");
-}
-.photo::after{content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(18,8,12,.55),rgba(18,8,12,0) 55%)}
+.photo::after{content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(0deg,rgba(18,8,12,.55),rgba(18,8,12,0) 55%)}
 .photo__tag{position:relative; z-index:1; padding:14px 16px; font-size:.72rem; letter-spacing:.06em;
   text-transform:uppercase; color:var(--cream); font-weight:600}
+/* recurring "explore" affordance — a quiet circular arrow, always visible,
+   reused on every photo card rather than inventing a new icon per card. */
+.photo__arrow{
+  position:absolute; z-index:1; right:14px; bottom:14px; width:36px; height:36px; border-radius:50%;
+  background:rgba(248,244,234,.92); color:var(--accent-deep);
+  display:flex; align-items:center; justify-content:center;
+}
 .photo--hero{aspect-ratio:auto; min-height:340px; border-radius:var(--radius-l)}
 @media(min-width:960px){.photo--hero{min-height:auto; height:100%; border-radius:var(--radius-l) 0 0 var(--radius-l)}}
-
-.hex-texture{position:relative}
-.hex-texture::before{
-  content:""; position:absolute; inset:0; pointer-events:none; opacity:.35;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpolygon points='15,1 45,1 60,26 45,51 15,51 0,26' fill='none' stroke='%236B1F32' stroke-width='1'/%3E%3C/svg%3E");
-}
-.hex-texture--subtle::before{opacity:.1}
-/* light variant — same gold linework, washed almost to beige on cream/sand.
-   Foreground stays default (dark serif headings, normal body text) — never
-   combine with .section--dark, which is for the dark variant only. */
-.hex-texture--light::before{opacity:.05}
 
 /* Category-to-color tokens, applied wherever a facility/category needs a
    solid brand color instead of a photo. Add the base class plus exactly one
@@ -268,19 +268,28 @@ img{max-width:100%}
 }
 
 /* ============ HEADER ============ */
+/* ONE floating pill: the header itself takes no document-flow height
+   (position:absolute) so every page's first section — the full-bleed hero
+   on the homepage included — starts at the literal top of the page, with
+   this single cream pill (logo + nav + actions, one shared background)
+   floating directly on top of it. No separate logo/nav/cta containers. */
 .site-header{
-  position:sticky; top:0; z-index:40; background:rgba(248,244,234,.9); backdrop-filter:blur(12px) saturate(1.4);
-  border-bottom:1px solid var(--line);
+  position:absolute; top:0; left:0; right:0; z-index:40; padding-top:24px;
 }
-.header-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; gap:16px}
-@media(min-width:900px){.header-inner{padding:16px 40px}}
-.logo{display:flex; align-items:center; gap:9px; font-family:var(--serif); font-weight:600; font-size:1.25rem; line-height:1; white-space:nowrap; color:var(--text)}
+@media(min-width:900px){.site-header{padding-top:32px}}
+.header-inner{
+  max-width:min(90%, calc(var(--maxw) * .92)); margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  background:var(--sand); border-radius:999px; padding:10px 10px 10px 22px;
+}
+@media(min-width:900px){.header-inner{padding:12px 14px 12px 28px}}
+.logo{display:flex; align-items:center; gap:9px; font-family:var(--serif); font-weight:500; font-size:1.25rem; line-height:1; white-space:nowrap; color:var(--text); letter-spacing:.01em; flex:none}
 .logo__mark{height:36px; width:auto; flex:none; object-fit:contain; display:block; margin:0}
-.nav-desktop{display:none; align-items:center; gap:28px}
-.nav-desktop a{font-size:.92rem; font-weight:600; color:var(--text-2); padding:6px 0; border-bottom:2px solid transparent}
+.nav-desktop{display:none; align-items:center; gap:26px; justify-content:center; flex:1}
+.nav-desktop a{font-size:.95rem; font-weight:500; color:var(--text-2); padding:2px 0; border-bottom:2px solid transparent}
 .nav-desktop a:hover, .nav-desktop a[aria-current="page"]{color:var(--text); border-color:var(--accent)}
-.header-cta{display:none; align-items:center; gap:18px}
-.header-cta .signin{font-size:.88rem; font-weight:600; color:var(--text-2); background:none; border:0; padding:0}
+.header-cta{display:none; align-items:center; gap:16px; flex:none}
+.header-cta .signin{font-size:.92rem; font-weight:500; color:var(--text-2); background:none; border:0; padding:0}
 .header-cta .signin:hover{color:var(--text)}
 @media(min-width:980px){.nav-desktop{display:flex} .header-cta{display:flex}}
 .hamburger{display:flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:10px;
@@ -295,7 +304,7 @@ img{max-width:100%}
 .mobile-nav__top{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; border-bottom:1px solid var(--line)}
 .mobile-nav__close{width:42px; height:42px; border-radius:10px; border:1px solid var(--line); background:var(--surface); font-size:1.1rem}
 .mobile-nav__links{display:flex; flex-direction:column; padding:8px 24px}
-.mobile-nav__links a{padding:16px 0; font-family:var(--serif); font-size:1.4rem; border-bottom:1px solid var(--line); color:var(--text)}
+.mobile-nav__links a{padding:16px 0; font-family:var(--serif); font-weight:500; font-size:1.5rem; border-bottom:1px solid var(--line); color:var(--text)}
 .mobile-nav__cta{padding:24px; display:flex; flex-direction:column; gap:12px}
 
 /* ============ FOOTER ============ */
@@ -311,10 +320,10 @@ img{max-width:100%}
 .footer-links h4{color:var(--on-dark); font-family:var(--sans); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700; margin-bottom:14px}
 @media(max-width:699px){.footer-links{display:grid; grid-template-columns:1fr 1fr; gap:32px}}
 .footer-links a{display:block; color:var(--on-dark-2); font-size:.92rem; padding:5px 0}
-.footer-links a:hover{color:var(--accent)}
+.footer-links a:hover{color:var(--accent-on-dark)}
 .footer-bottom{border-top:1px solid var(--on-dark-line); padding-top:22px; display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:space-between; color:var(--on-dark-2); font-size:.78rem}
 .footer-bottom a{color:var(--on-dark-2)}
-.footer-bottom a:hover{color:var(--accent)}
+.footer-bottom a:hover{color:var(--accent-on-dark)}
 
 /* ============ CARDS: activity / circle / etc ============ */
 .activity-card{overflow:hidden; display:flex; flex-direction:column; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-l); box-shadow:var(--shadow)}
@@ -453,45 +462,48 @@ details.faq-item summary::after{content:"+"; font-size:1.3rem; color:var(--accen
 details.faq-item[open] summary::after{content:"–"}
 details.faq-item p{margin-top:12px; color:var(--text-2)}
 
-/* hero — full-bleed cinematic image. Kicker rides high; the headline block
-   sits in the lower third over a soft radial scrim so the copy stays
-   readable across any crop of the photo and the composition reads as
-   deliberate rather than two elements stranded at opposite edges. */
+/* hero — full-bleed cinematic image, edge-to-edge. The floating header pill
+   sits directly on top of it (see .site-header — position:absolute, so it
+   adds no document-flow height above the hero). */
 .hero{position:relative; height:100vh; height:100svh; min-height:600px; overflow:hidden}
 .hero::after{
   content:""; position:absolute; inset:0;
   background:
-    radial-gradient(115% 62% at 50% 80%, rgba(18,8,12,.6) 0%, rgba(18,8,12,.26) 44%, rgba(18,8,12,0) 74%),
-    linear-gradient(180deg,rgba(18,8,12,.44) 0%,rgba(18,8,12,0) 20%),
-    linear-gradient(0deg,rgba(18,8,12,.42) 0%,rgba(18,8,12,0) 30%);
+    radial-gradient(70% 46% at 50% 42%, rgba(18,8,12,.5) 0%, rgba(18,8,12,.22) 55%, rgba(18,8,12,0) 78%),
+    linear-gradient(180deg,rgba(18,8,12,.32) 0%,rgba(18,8,12,0) 26%),
+    linear-gradient(0deg,rgba(18,8,12,.3) 0%,rgba(18,8,12,0) 26%);
 }
 .hero__kicker{
-  position:absolute; z-index:1; top:11%; left:50%; transform:translateX(-50%);
-  color:#fff; font-weight:600; font-size:.72rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--accent); font-weight:600; font-size:.72rem; letter-spacing:.24em; text-transform:uppercase;
   text-align:center; white-space:nowrap;
-  text-shadow:0 0 14px rgba(255,255,255,.35), 0 0 26px rgba(139,74,92,.35), 0 1px 3px rgba(0,0,0,.4);
+  text-shadow:0 1px 2px rgba(248,244,234,.9), 0 0 18px rgba(248,244,234,.55);
 }
-@media(min-width:900px){.hero__kicker{top:13%; font-size:.78rem}}
+@media(min-width:900px){.hero__kicker{font-size:.78rem}}
+/* centered lockup — label, headline, lede, cta — sitting in the upper-middle
+   third of the photo rather than pinned to the bottom edge, so it reads as
+   one composed emblem instead of a caption glued to the hero's floor. */
 .hero__content{
-  position:absolute; z-index:1; left:50%; bottom:19%; transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:20px; text-align:center;
-  max-width:min(92vw,600px); padding:0 16px;
+  position:absolute; z-index:1; left:50%; top:42%; transform:translate(-50%,-50%);
+  display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center;
+  max-width:min(92vw,640px); padding:0 16px;
 }
-@media(min-width:900px){.hero__content{bottom:22%; gap:24px}}
+@media(min-width:900px){.hero__content{gap:22px}}
 .hero__title{
-  color:#fff; margin:0; line-height:1.08; max-width:16ch; letter-spacing:-.015em;
+  color:var(--accent-deep); margin:0; line-height:1.08; max-width:16ch; letter-spacing:-.015em;
   font-size:clamp(1.9rem,5.2vw + .4rem,2.6rem);
-  text-shadow:0 2px 18px rgba(0,0,0,.4), 0 1px 4px rgba(0,0,0,.35);
+  text-shadow:0 2px 4px rgba(248,244,234,.85), 0 0 30px rgba(248,244,234,.5);
 }
 @media(min-width:900px){.hero__title{font-size:clamp(2.2rem,2.4vw + 1.3rem,3.2rem)}}
 .hero__lede{
-  color:rgba(255,255,255,.9); font-size:1rem; line-height:1.55; max-width:42ch;
-  text-shadow:0 1px 10px rgba(0,0,0,.45);
+  color:var(--accent); font-size:1rem; line-height:1.55; max-width:42ch;
+  text-shadow:0 1px 3px rgba(248,244,234,.85), 0 0 16px rgba(248,244,234,.5);
 }
-.hero__content .btn{margin-top:4px}
-.page-hero{background:var(--surface-dark); color:var(--on-dark); padding:64px 0 56px}
+.hero__content .btn{margin-top:4px; align-self:center}
+.page-hero{background:var(--surface-dark); color:var(--on-dark); padding:112px 0 56px}
 .page-hero h1{color:var(--on-dark)}
-.page-hero .eyebrow{color:var(--accent)}
+.page-hero .eyebrow{color:var(--accent-on-dark)}
+.page-hero .eyebrow::before,.page-hero .eyebrow::after{background:var(--accent-on-dark)}
+.page-hero .lede{color:var(--on-dark-2)}
 
 /* asymmetric "featured" grid: first card spans two columns on desktop */
 .grid-feature{display:grid; gap:24px; grid-template-columns:1fr}
@@ -505,6 +517,10 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 
 /* cta banner */
 .cta-banner{border-radius:var(--radius-l); background:var(--surface-dark); color:var(--on-dark); padding:48px 32px; text-align:center}
+.cta-banner h1,.cta-banner h2,.cta-banner h3,.cta-banner h4{color:var(--on-dark)}
+.cta-banner p:not(.pull-quote){color:var(--on-dark-2)}
+.cta-banner .pull-quote{color:var(--accent-on-dark)}
+.cta-banner .pull-quote::before{color:var(--accent-on-dark)}
 @media(min-width:900px){.cta-banner{padding:72px 48px}}
 
 /* misc */
@@ -595,12 +611,23 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 @media(min-width:900px){.cta-banner--bleed{padding:130px 48px}}
 
 /* light, unboxed page opener — replaces the repeated dark page-hero banner */
-.page-open{padding:84px 0 48px}
+.page-open{padding:112px 0 48px}
 @media(min-width:900px){.page-open{padding:116px 0 60px}}
 
 /* dark full-bleed masthead — distinct structural shape from page-open and bleed--hero;
    pair with .section--dark hex-texture for the full premium treatment */
-.masthead{padding:92px 0 68px}
+.masthead{padding:116px 0 68px}
+
+/* full-bleed "feature band" — a large rounded-top panel that reads as a
+   distinct section without ever going dark: contrast comes from the subtle
+   shift to --surface-2 plus generous padding, never from a burgundy fill. */
+.feature-band{background:var(--surface-2); border-radius:var(--radius-l) var(--radius-l) 0 0; padding:72px 0 80px}
+@media(min-width:900px){.feature-band{padding:104px 0 112px}}
+.feature-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:44px 24px; margin-top:52px}
+@media(min-width:640px){.feature-grid{grid-template-columns:repeat(4,1fr); gap:48px 32px}}
+.feature-item{display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px}
+.feature-item__icon{color:var(--accent-deep); width:30px; height:30px}
+.feature-item h3{font-size:1.02rem}
 
 /* restrained hover: image scale, never on static full-bleed backdrops */
 .img-hover{overflow:hidden}
@@ -648,7 +675,7 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 .app-nav__item.is-active{background:var(--accent-deep); color:#fff; box-shadow:var(--shadow)}
 .app-sidebar__bottom{display:flex; flex-direction:column; gap:14px; margin-top:48px}
 .app-host-cta{display:flex; align-items:center; gap:10px; justify-content:center; background:var(--surface-dark); color:var(--on-dark); padding:15px 18px; border-radius:14px; font-weight:700; font-size:.92rem}
-.app-host-cta svg{color:var(--accent); width:18px; height:18px; flex:none}
+.app-host-cta svg{color:var(--accent-on-dark); width:18px; height:18px; flex:none}
 .app-sidebar__chapter{text-align:center; font-size:.78rem; color:var(--text-3)}
 .app-sidebar__mobile-toggle{display:none; background:none}
 
@@ -710,6 +737,8 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 .rail-card--dark{background:var(--surface-dark); border-color:var(--surface-dark)}
 .rail-card--dark h3{color:var(--on-dark)}
 .rail-card--dark p{color:var(--on-dark-2)}
+.rail-card--dark .rail-card__icon,.rail-card--dark .rail-card__link{color:var(--accent-on-dark)}
+.rail-card--dark .rail-card__label{color:var(--on-dark-2)}
 .rail-card__icon{width:22px; height:22px; color:var(--accent); margin-bottom:14px; display:block}
 .rail-card h3{font-family:var(--serif); font-size:1.15rem; font-weight:600; margin-bottom:8px}
 .rail-card p{color:var(--text-2); font-size:.88rem; line-height:1.55}

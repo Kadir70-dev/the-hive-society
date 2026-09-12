@@ -27,7 +27,7 @@ const BENEFITS = [
 export default function HostPage() {
   return (
     <>
-      <div className="page-hero hex-texture">
+      <div className="page-hero">
         <div className="container stack gap-14">
           <span className="eyebrow">Host an Activity</span>
           <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
@@ -37,7 +37,7 @@ export default function HostPage() {
             Host what you love. Build your community. Reach women across Abu Dhabi who are ready
             to show up.
           </p>
-          <a href="#host-form" className="btn btn--on-dark">Apply to Host</a>
+          <a href="#host-form" className="btn btn--primary">Apply to Host</a>
         </div>
       </div>
 

@@ -16,7 +16,7 @@ export default async function ExplorePage() {
 
   return (
     <>
-      <div className="page-open hex-texture hex-texture--light">
+      <div className="page-open">
         <div className="container">
         <div className="stack gap-14" style={{ maxWidth: 560 }}>
           <EditableLabel contentKey="explore.hero.eyebrow" value={t("explore.hero.eyebrow", "Explore")} className="eyebrow" />
@@ -37,14 +37,14 @@ export default async function ExplorePage() {
         </div>
         </div>
       </div>
-      <div className="section section--tight hex-texture hex-texture--light">
+      <div className="section section--tight">
         <div className="container">
           <ExploreGrid experiences={marketingExperiences} />
         </div>
       </div>
       <div className="section">
         <div className="container">
-          <div className="cta-banner section--dark hex-texture" style={{ textAlign: "center" }}>
+          <div className="cta-banner section--dark" style={{ textAlign: "center" }}>
             <EditableHeading
               as="p"
               contentKey="explore.cta.quote"
@@ -52,7 +52,7 @@ export default async function ExplorePage() {
               className="pull-quote"
               style={{ margin: "0 auto", maxWidth: "22ch" }}
             />
-            <Link href="/host" className="btn btn--on-dark" style={{ marginTop: 24 }}>
+            <Link href="/host" className="btn btn--primary" style={{ marginTop: 24 }}>
               <EditableLabel contentKey="explore.cta.button_label" value={t("explore.cta.button_label", "Host an Activity")} />
             </Link>
           </div>

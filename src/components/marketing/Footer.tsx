@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { footerCompanyLinks, footerDiscoverLinks, footerLegalLinks } from "@/data/navigation";
-import { LogoMark } from "@/components/ui/LogoMark";
 import { EditableText, EditableLabel } from "@/components/content/EditableText";
 import { useGlobalContent } from "@/components/content/GlobalContentProvider";
 import { resolve } from "@/lib/content/resolve";
@@ -12,12 +11,11 @@ export function Footer() {
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
 
   return (
-    <footer className="site-footer hex-texture hex-texture--subtle">
+    <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-top">
           <div className="footer-brand">
             <Link href="/" className="logo" style={{ color: "var(--on-dark)" }}>
-              <LogoMark />
               The Hive Society
             </Link>
             <EditableText as="p" contentKey="footer.tagline" value={t("footer.tagline", "Never show up alone")} className="footer-statement" />

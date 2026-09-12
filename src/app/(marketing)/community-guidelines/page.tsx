@@ -21,7 +21,7 @@ const PRINCIPLES = [
 export default function CommunityGuidelinesPage() {
   return (
     <>
-      <div className="page-hero hex-texture">
+      <div className="page-hero">
         <div className="container stack gap-14">
           <span className="eyebrow">Community Guidelines</span>
           <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
@@ -43,12 +43,12 @@ export default function CommunityGuidelinesPage() {
               </div>
             ))}
           </div>
-          <div className="cta-banner hex-texture" style={{ marginTop: 56 }}>
+          <div className="cta-banner" style={{ marginTop: 56 }}>
             <h2 className="h2" style={{ fontSize: "1.6rem" }}>Something doesn&rsquo;t feel right?</h2>
             <p className="text-2" style={{ marginTop: 10 }}>
               Reach our Support team directly — every report is reviewed personally.
             </p>
-            <Link href="/contact" className="btn btn--on-dark" style={{ marginTop: 20 }}>
+            <Link href="/contact" className="btn btn--primary" style={{ marginTop: 20 }}>
               Report a Concern
             </Link>
           </div>

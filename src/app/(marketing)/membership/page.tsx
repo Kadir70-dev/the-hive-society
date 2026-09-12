@@ -17,7 +17,7 @@ export default async function MembershipPage() {
 
   return (
     <>
-      <div className="masthead section--dark hex-texture">
+      <div className="masthead section--dark">
         <div className="container">
           <div className="split split--60-40" style={{ alignItems: "start" }}>
             <div className="stack gap-14">
@@ -47,7 +47,7 @@ export default async function MembershipPage() {
         </div>
       </div>
 
-      <div className="section section--intimate hex-texture hex-texture--light" id="join-form">
+      <div className="section section--intimate" id="join-form">
         <div className="container">
           <div className="card popup-card">
             <div className="stack gap-6" style={{ textAlign: "center", marginBottom: 22 }}>
@@ -65,7 +65,7 @@ export default async function MembershipPage() {
         </div>
       </div>
 
-      <div className="section section--alt hex-texture hex-texture--light">
+      <div className="section section--alt">
         <div className="container">
           <div className="grid grid-2">
             <div className="card stack gap-14" style={{ padding: 32 }}>
@@ -137,7 +137,7 @@ export default async function MembershipPage() {
         </div>
       </div>
 
-      <div className="section hex-texture hex-texture--light">
+      <div className="section">
         <div className="container" style={{ maxWidth: 800 }}>
           <EditableHeading
             as="h2"

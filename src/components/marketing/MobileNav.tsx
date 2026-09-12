@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { mobileNav, navContentKeys } from "@/data/navigation";
 import { CloseIcon } from "@/components/ui/Icons";
-import { LogoMark } from "@/components/ui/LogoMark";
 import { useCommunitySignupModal } from "@/components/forms/CommunitySignupModal";
 import { EditableLabel } from "@/components/content/EditableText";
 import { useGlobalContent } from "@/components/content/GlobalContentProvider";
@@ -25,7 +24,6 @@ export function MobileNav({ open, onClose, onOpenSignIn }: MobileNavProps) {
     <div className="mobile-nav">
       <div className="mobile-nav__top">
         <Link href="/" className="logo" onClick={onClose}>
-          <LogoMark />
           The Hive Society
         </Link>
         <button className="mobile-nav__close" onClick={onClose} aria-label="Close menu">

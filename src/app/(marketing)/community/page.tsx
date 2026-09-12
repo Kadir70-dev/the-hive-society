@@ -43,7 +43,7 @@ export default async function CommunityPage() {
 
   return (
     <>
-      <div className="masthead section--dark hex-texture">
+      <div className="masthead section--dark">
         <div className="container stack gap-14">
           <EditableLabel contentKey="community.masthead.eyebrow" value={t("community.masthead.eyebrow", "Community")} className="eyebrow" />
           <EditableHeading
@@ -66,7 +66,7 @@ export default async function CommunityPage() {
         </div>
       </div>
 
-      <div className="section section--intimate hex-texture hex-texture--light">
+      <div className="section section--intimate">
         <div className="container">
           <div
             className="row wrap gap-16"
@@ -124,7 +124,7 @@ export default async function CommunityPage() {
         </div>
       </div>
 
-      <div className="section hex-texture hex-texture--light">
+      <div className="section">
         <div className="container">
           <div className="split split--40-60">
             <div className="stack gap-16">

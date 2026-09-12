@@ -29,7 +29,7 @@ const OPPORTUNITIES = [
 export default function PartnersPage() {
   return (
     <>
-      <div className="page-hero hex-texture">
+      <div className="page-hero">
         <div className="container stack gap-14">
           <span className="eyebrow">Partners</span>
           <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
@@ -38,7 +38,7 @@ export default function PartnersPage() {
           <p className="lede" style={{ color: "var(--on-dark-2)", maxWidth: "58ch" }}>
             Reach women across Abu Dhabi through gatherings and brand experiences.
           </p>
-          <Link href="/contact" className="btn btn--on-dark">Partner With Us</Link>
+          <Link href="/contact" className="btn btn--primary">Partner With Us</Link>
         </div>
       </div>
 
@@ -73,9 +73,9 @@ export default function PartnersPage() {
 
       <div className="section">
         <div className="container">
-          <div className="cta-banner hex-texture">
+          <div className="cta-banner">
             <h2 className="h2">Let&rsquo;s build something together.</h2>
-            <Link href="/contact" className="btn btn--on-dark" style={{ marginTop: 20 }}>
+            <Link href="/contact" className="btn btn--primary" style={{ marginTop: 20 }}>
               Contact the Partnerships Team
             </Link>
           </div>
