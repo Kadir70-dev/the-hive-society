@@ -1,0 +1,18 @@
+/*
+ * Tailwind v4, Preflight intentionally OMITTED.
+ *
+ * globals.css already defines a deliberate reset (body/button/h1-h4/img,
+ * hidden scrollbars, prefers-reduced-motion) for the site's brand system.
+ * Tailwind's Preflight would override those. Importing only theme+utilities
+ * (skipping tailwindcss/preflight.css) keeps Tailwind's utility classes
+ * available for new components without touching any existing element style.
+ *
+ * Bonus safety net: these imports are scoped to the `theme`/`utilities`
+ * cascade layers. Per the CSS cascade-layers spec, unlayered rules (all of
+ * globals.css) always win over layered rules regardless of source order —
+ * so even a future accidental class collision can't override the existing
+ * design system from here.
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);

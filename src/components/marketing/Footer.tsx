@@ -5,14 +5,16 @@ import { footerCompanyLinks, footerDiscoverLinks, footerLegalLinks } from "@/dat
 import { EditableText, EditableLabel } from "@/components/content/EditableText";
 import { useGlobalContent } from "@/components/content/GlobalContentProvider";
 import { resolve } from "@/lib/content/resolve";
+import { FooterBackground } from "@/components/backgrounds/production/FooterBackground";
 
 export function Footer() {
   const content = useGlobalContent();
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
 
   return (
-    <footer className="site-footer">
-      <div className="footer-inner">
+    <footer className="site-footer" style={{ position: "relative" }}>
+      <FooterBackground />
+      <div className="footer-inner" style={{ position: "relative", zIndex: 1 }}>
         <div className="footer-top">
           <div className="footer-brand">
             <Link href="/" className="logo" style={{ color: "var(--on-dark)" }}>

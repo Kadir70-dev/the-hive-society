@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond } from "next/font/google";
 import { siteName, siteTagline, siteUrl } from "@/lib/site";
 import "./globals.css";
+import "./tailwind.css";
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],

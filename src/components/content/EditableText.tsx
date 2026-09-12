@@ -1,7 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type ElementType, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ElementType, type MouseEvent, type ReactNode, type Ref } from "react";
 import { useEditMode } from "./EditModeProvider";
+
+/**
+ * `as` is typed as the broad `ElementType`. Since @react-three/fiber globally
+ * augments `JSX.IntrinsicElements` with every three.js tag, TypeScript's
+ * generic-tag children inference for `<Tag>` (Tag: ElementType) collapses to
+ * `never` — an unrelated side effect of that dependency, not a real props
+ * mismatch. Casting once here keeps every `<Component>` usage below exactly
+ * as `<Tag>` behaved before, just outside that broken generic inference.
+ */
+type PolymorphicProps = Record<string, unknown> & { children?: ReactNode; ref?: Ref<HTMLElement> };
 
 interface EditableTextProps {
   contentKey: string;
@@ -78,6 +88,7 @@ export function EditableText({
   id,
   hero = false,
 }: EditableTextProps) {
+  const Component = Tag as unknown as (props: PolymorphicProps) => ReactNode;
   const { isAdmin, editMode } = useEditMode();
   const [current, setCurrent] = useState(value);
   const [editing, setEditing] = useState(false);
@@ -102,9 +113,9 @@ export function EditableText({
 
   if (!isAdmin || !editMode) {
     return (
-      <Tag id={id} className={className} style={style}>
+      <Component id={id} className={className} style={style}>
         {current}
-      </Tag>
+      </Component>
     );
   }
 
@@ -174,7 +185,7 @@ export function EditableText({
     // editing UI can render inside a real <button> (e.g. nav/CTA labels),
     // and nested <button> elements are invalid HTML that browsers mangle.
     return (
-      <Tag
+      <Component
         id={id}
         className={className}
         style={{
@@ -241,7 +252,7 @@ export function EditableText({
             {error}
           </span>
         )}
-      </Tag>
+      </Component>
     );
   }
 
@@ -255,7 +266,7 @@ export function EditableText({
   }
 
   return (
-    <Tag
+    <Component
       ref={displayRef as never}
       id={id}
       className={className}
@@ -279,7 +290,7 @@ export function EditableText({
       >
         ✎
       </span>
-    </Tag>
+    </Component>
   );
 }
 

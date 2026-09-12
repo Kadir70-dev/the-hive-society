@@ -6,6 +6,13 @@ import { EditableImage } from "@/components/content/EditableImage";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
 import { getPageMedia, resolveMedia } from "@/lib/content/getPageMedia";
 import { PeopleIcon, SparkleIcon, LeafIcon, CompassIcon } from "@/components/ui/Icons";
+import { RevealHeading } from "@/components/effects/RevealHeading";
+import { RevealPhotoCard } from "@/components/effects/RevealPhotoCard";
+import { ParallaxSection } from "@/components/effects/ParallaxSection";
+import { MagneticButton } from "@/components/effects/MagneticButton";
+import { MoreThanAClubBackground } from "@/components/backgrounds/production/MoreThanAClubBackground";
+import { WhatSetsUsApartBackground } from "@/components/backgrounds/production/WhatSetsUsApartBackground";
+import { ConstellationSoftPullVariant } from "@/components/backgrounds/interactive/ConstellationSoftPullVariant";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -75,13 +82,15 @@ export default async function HomePage() {
             value={t("home.hero2.eyebrow", "Soon in Abu Dhabi")}
             className="hero__kicker"
           />
-          <EditableHeading
-            hero
-            as="h1"
-            contentKey="home.hero2.title"
-            value={t("home.hero2.title", "Find your Hive in Abu Dhabi")}
-            className="hero__title"
-          />
+          <RevealHeading>
+            <EditableHeading
+              hero
+              as="h1"
+              contentKey="home.hero2.title"
+              value={t("home.hero2.title", "Find your Hive in Abu Dhabi")}
+              className="hero__title"
+            />
+          </RevealHeading>
           <EditableText
             hero
             as="p"
@@ -90,86 +99,95 @@ export default async function HomePage() {
             value={t("home.hero2.lede", "Host or join gatherings, classes, and slow mornings")}
             className="hero__lede"
           />
-          <JoinCommunityButton className="btn btn--on-dark">
-            {t("home.hero2.cta_label", "Join The Hive")}
-            <span aria-hidden="true">→</span>
-          </JoinCommunityButton>
+          <MagneticButton strength={0.18}>
+            <JoinCommunityButton className="btn btn--on-dark">
+              {t("home.hero2.cta_label", "Join The Hive")}
+              <span aria-hidden="true">→</span>
+            </JoinCommunityButton>
+          </MagneticButton>
         </div>
       </section>
 
       {/* MORE THAN A CLUB — centered heading + short lede, then a row of
-          three portrait photo cards (bottom-left label, bottom-right arrow). */}
-      <section className="section section--intimate">
-        <div className="container" style={{ textAlign: "center" }}>
-          <div style={{ maxWidth: 560, margin: "0 auto" }}>
-            <EditableLabel
-              contentKey="home.about.eyebrow"
-              value={t("home.about.eyebrow", "The Hive Society")}
-              className="eyebrow"
-              style={{ justifyContent: "center" }}
-            />
-            <EditableHeading
-              as="h2"
-              contentKey="home.about.heading"
-              value={t("home.about.heading", "Belonging feels different here")}
-              className="h2"
-              style={{ marginTop: 14 }}
-            />
-            <EditableText
-              as="p"
-              multiline
-              contentKey="home.about.lede"
-              value={t("home.about.lede", "A private community for women who grow, connect and create more.")}
-              className="lede"
-              style={{ margin: "16px auto 0" }}
-            />
+          three portrait photo cards (bottom-left label, bottom-right arrow).
+          Background: Flow + Soft Pull, behind everything (z-index:0), all
+          real content explicitly z-index:1 above it. */}
+      <section className="section section--intimate" style={{ position: "relative" }}>
+        <MoreThanAClubBackground />
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div className="container" style={{ textAlign: "center" }}>
+            <div style={{ maxWidth: 560, margin: "0 auto" }}>
+              <EditableLabel
+                contentKey="home.about.eyebrow"
+                value={t("home.about.eyebrow", "The Hive Society")}
+                className="eyebrow"
+                style={{ justifyContent: "center" }}
+              />
+              <EditableHeading
+                as="h2"
+                contentKey="home.about.heading"
+                value={t("home.about.heading", "Belonging feels different here")}
+                className="h2"
+                style={{ marginTop: 14 }}
+              />
+              <EditableText
+                as="p"
+                multiline
+                contentKey="home.about.lede"
+                value={t("home.about.lede", "A private community for women who grow, connect and create more.")}
+                className="lede"
+                style={{ margin: "16px auto 0" }}
+              />
+            </div>
           </div>
-        </div>
-        <div className="container container--wide" style={{ marginTop: 48 }}>
-          <div className="grid grid-3" style={{ textAlign: "left" }}>
-            {EXPERIENCE_CARDS.map((card) => {
-              const cardImage = resolveMedia(media, `home.experiences2.${card.key}.image`, {
-                url: `/images/${card.image}`,
-                alt: card.alt,
-              });
-              return (
-                <div className="photo img-hover" style={{ aspectRatio: "4/4.6" }} key={card.key}>
-                  <EditableImage
-                    mediaKey={`home.experiences2.${card.key}.image`}
-                    src={cardImage.url}
-                    alt={cardImage.alt}
-                    objectPosition={cardImage.objectPosition}
-                    sizes="(min-width: 900px) 30vw, 90vw"
-                  />
-                  <span className="photo__tag">
-                    <EditableLabel
-                      contentKey={`home.experiences2.${card.key}.label`}
-                      value={t(`home.experiences2.${card.key}.label`, card.label)}
+          <div className="container container--wide" style={{ marginTop: 48 }}>
+            <div className="grid grid-3" style={{ textAlign: "left" }}>
+              {EXPERIENCE_CARDS.map((card) => {
+                const cardImage = resolveMedia(media, `home.experiences2.${card.key}.image`, {
+                  url: `/images/${card.image}`,
+                  alt: card.alt,
+                });
+                return (
+                  <RevealPhotoCard className="photo img-hover" style={{ aspectRatio: "4/4.6" }} key={card.key}>
+                    <EditableImage
+                      mediaKey={`home.experiences2.${card.key}.image`}
+                      src={cardImage.url}
+                      alt={cardImage.alt}
+                      objectPosition={cardImage.objectPosition}
+                      sizes="(min-width: 900px) 30vw, 90vw"
                     />
-                  </span>
-                  <Link href="/explore" className="photo__arrow" aria-label="Explore experiences">
-                    <ArrowIcon />
-                  </Link>
-                </div>
-              );
-            })}
+                    <span className="photo__tag">
+                      <EditableLabel
+                        contentKey={`home.experiences2.${card.key}.label`}
+                        value={t(`home.experiences2.${card.key}.label`, card.label)}
+                      />
+                    </span>
+                    <Link href="/explore" className="photo__arrow" aria-label="Explore experiences">
+                      <ArrowIcon />
+                    </Link>
+                  </RevealPhotoCard>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <div className="container" style={{ textAlign: "center" }}>
-          <Link href="/explore" className="text-link" style={{ marginTop: 40 }}>
-            <EditableLabel
-              contentKey="home.experiences2.button_label"
-              value={t("home.experiences2.button_label", "Explore Experiences")}
-            />
-            <ArrowIcon />
-          </Link>
+          <div className="container" style={{ textAlign: "center" }}>
+            <Link href="/explore" className="text-link" style={{ marginTop: 40 }}>
+              <EditableLabel
+                contentKey="home.experiences2.button_label"
+                value={t("home.experiences2.button_label", "Explore Experiences")}
+              />
+              <ArrowIcon />
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* FEATURE BAND — large rounded-top, light-beige panel; contrast comes
-          from the surface shift + generous padding, never from a dark fill. */}
-      <div className="feature-band">
-        <div className="container" style={{ textAlign: "center" }}>
+          from the surface shift + generous padding, never from a dark fill.
+          Background: Orbit + Orbit Nudge. */}
+      <div className="feature-band" style={{ position: "relative" }}>
+        <WhatSetsUsApartBackground />
+        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
           <EditableLabel
             contentKey="home.pillars.eyebrow"
             value={t("home.pillars.eyebrow", "Why Join")}
@@ -183,7 +201,7 @@ export default async function HomePage() {
             className="h2"
             style={{ marginTop: 14 }}
           />
-          <div className="feature-grid">
+          <ParallaxSection speed={0.1} className="feature-grid">
             {PILLARS.map((p) => (
               <div className="feature-item" key={p.key}>
                 <p.Icon className="feature-item__icon" />
@@ -195,14 +213,17 @@ export default async function HomePage() {
                 />
               </div>
             ))}
-          </div>
+          </ParallaxSection>
         </div>
       </div>
 
       {/* MEMBERSHIP — a very light, unboxed container: large photo on the
-          left, short copy and a primary CTA on the right. No dark background. */}
-      <section className="section section--alt">
-        <div className="container">
+          left, short copy and a primary CTA on the right. No dark background.
+          Background: Constellation, with a very subtle Soft Pull on its
+          connectors only (nodes never move). */}
+      <section className="section section--alt" style={{ position: "relative" }}>
+        <ConstellationSoftPullVariant />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="split split--60-40" style={{ alignItems: "center" }}>
             <div className="photo img-hover" style={{ aspectRatio: "4/3" }}>
               <EditableImage
