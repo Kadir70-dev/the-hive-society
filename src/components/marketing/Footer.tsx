@@ -20,8 +20,8 @@ export function Footer() {
               <LogoMark />
               The Hive Society
             </Link>
-            <EditableText as="p" contentKey="footer.tagline" value={t("footer.tagline", "No one has to show up alone.")} className="footer-statement" />
-            <EditableText as="p" contentKey="footer.description" value={t("footer.description", "A social discovery and booking platform for women in the UAE.")} />
+            <EditableText as="p" contentKey="footer.tagline" value={t("footer.tagline", "Never show up alone")} className="footer-statement" />
+            <EditableText as="p" contentKey="footer.description" value={t("footer.description", "Discover and connect with women across the UAE.")} />
           </div>
           <div className="footer-links">
             <div>
@@ -44,7 +44,7 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <EditableLabel as="span" contentKey="footer.copyright" value={t("footer.copyright", "© 2026 The Hive Society, Abu Dhabi, UAE")} />
-          <EditableLabel as="span" contentKey="footer.social_coming_soon" value={t("footer.social_coming_soon", "Social channels — coming soon")} />
+          <EditableLabel as="span" contentKey="footer.social_coming_soon" value={t("footer.social_coming_soon", "Instagram · LinkedIn — coming soon")} />
           <span>
             {footerLegalLinks.map((link, i) => (
               <span key={link.href}>

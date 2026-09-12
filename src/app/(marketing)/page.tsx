@@ -16,23 +16,23 @@ const VALUES = [
   {
     mark: "01",
     titleKey: "home.why.1.title",
-    title: "Curated, not endless.",
+    title: "Curated Events",
     bodyKey: "home.why.1.body",
-    body: "Real gatherings picked with care — not another feed to scroll.",
+    body: "Meaningful gatherings, not endless options.",
   },
   {
     mark: "02",
     titleKey: "home.why.2.title",
-    title: "Real women, real rooms.",
+    title: "Real women",
     bodyKey: "home.why.2.body",
-    body: "See who's showing up before you decide to join them.",
+    body: "See who's coming before you join.",
   },
   {
     mark: "03",
     titleKey: "home.why.3.title",
-    title: "Belonging that continues.",
+    title: "Lasting connections",
     bodyKey: "home.why.3.body",
-    body: "The relationships outlast the event — that's the whole point.",
+    body: "Friendships that go beyond the event.",
   },
 ];
 
@@ -42,36 +42,36 @@ const VALUES = [
    ones, mirroring how EditableLabel's `hero` prop already pairs with text color
    elsewhere on this page. */
 const EXPERIENCES = [
-  { key: "coffee", label: "Coffee", dark: true },
-  { key: "dinners", label: "Dinners", dark: true },
+  { key: "coffee", label: "Coffee & Conversations", dark: true },
+  { key: "dinners", label: "Around the table", dark: true },
   { key: "networking", label: "Networking", dark: true },
   { key: "wellness", label: "Wellness", dark: false },
-  { key: "gatherings", label: "Gatherings", dark: false },
+  { key: "gatherings", label: "Socials", dark: false },
   { key: "workshops", label: "Workshops", dark: false },
 ];
 
 const STEPS = [
-  { n: "01", titleKey: "home.how.1.title", title: "Join", bodyKey: "home.how.1.body", body: "Tell us a little about you." },
+  { n: "01", titleKey: "home.how.1.title", title: "Introduce", bodyKey: "home.how.1.body", body: "A quiet beginning." },
   {
     n: "02",
     titleKey: "home.how.2.title",
-    title: "Review",
+    title: "Curate",
     bodyKey: "home.how.2.body",
-    body: "A brief, human check — not automatic.",
+    body: "Thoughtfully considered.",
   },
   {
     n: "03",
     titleKey: "home.how.3.title",
-    title: "Connect",
+    title: "Invite",
     bodyKey: "home.how.3.body",
-    body: "A relevant invitation, when there's a fit.",
+    body: "An invitation, when it feels right.",
   },
   {
     n: "04",
     titleKey: "home.how.4.title",
-    title: "Experience",
+    title: "Belong",
     bodyKey: "home.how.4.body",
-    body: "Show up, and keep showing up.",
+    body: "Where connection becomes community.",
   },
 ];
 
@@ -104,9 +104,9 @@ export default async function HomePage() {
           sizes="100vw"
           priority
         />
-        <EditableLabel hero contentKey="home.hero.kicker" value={t("home.hero.kicker", "Launching Soon in Abu Dhabi")} className="hero__kicker" />
+        <EditableLabel hero contentKey="home.hero.kicker" value={t("home.hero.kicker", "Soon in Abu Dhabi")} className="hero__kicker" />
         <div className="hero__content">
-          <EditableHeading hero as="h1" contentKey="home.hero.title" value={t("home.hero.title", "No one has to show up alone.")} className="hero__title" />
+          <EditableHeading hero as="h1" contentKey="home.hero.title" value={t("home.hero.title", "Find your Hive in Abu Dhabi")} className="hero__title" />
           <EditableText
             hero
             as="p"
@@ -114,7 +114,7 @@ export default async function HomePage() {
             contentKey="home.hero.lede"
             value={t(
               "home.hero.lede",
-              "A trusted women’s community across the UAE — built on real gatherings, not another app to browse."
+              "Host or join gatherings, classes, and slow mornings"
             )}
             className="hero__lede"
           />
@@ -128,7 +128,7 @@ export default async function HomePage() {
             <EditableHeading
               as="h2"
               contentKey="home.why.heading"
-              value={t("home.why.heading", "Belonging, not another app to browse.")}
+              value={t("home.why.heading", "Belonging feels different here")}
               className="display-xl"
               style={{ maxWidth: "11ch" }}
             />
@@ -276,7 +276,7 @@ export default async function HomePage() {
           <EditableHeading
             as="h2"
             contentKey="home.cta.heading"
-            value={t("home.cta.heading", "Your next gathering starts here.")}
+            value={t("home.cta.heading", "Your next gathering starts here")}
             className="display-xl"
             style={{ maxWidth: "16ch", margin: "0 auto" }}
           />
@@ -284,7 +284,7 @@ export default async function HomePage() {
             as="p"
             multiline
             contentKey="home.cta.subtext"
-            value={t("home.cta.subtext", "No one has to show up alone.")}
+            value={t("home.cta.subtext", "No one has to show up alone")}
             className="text-2"
             style={{ margin: "20px auto 32px", maxWidth: "40ch" }}
           />

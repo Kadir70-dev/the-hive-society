@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Partners",
   description:
-    "Reach a trusted, engaged community of women across Abu Dhabi through gatherings, brand experiences and curated activations.",
+    "Reach women across Abu Dhabi through gatherings and brand experiences.",
 };
 
 const WHO_WE_PARTNER_WITH = [
@@ -36,8 +36,7 @@ export default function PartnersPage() {
             Partner with The Hive Society.
           </h1>
           <p className="lede" style={{ color: "var(--on-dark-2)", maxWidth: "58ch" }}>
-            Reach a trusted, engaged community of women across Abu Dhabi through gatherings, brand
-            experiences and curated activations.
+            Reach women across Abu Dhabi through gatherings and brand experiences.
           </p>
           <Link href="/contact" className="btn btn--on-dark">Partner With Us</Link>
         </div>

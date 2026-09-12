@@ -47,7 +47,7 @@ const fieldStyleBase: CSSProperties = {
 // that keeps that same color legible.
 const fieldThemeDark: CSSProperties = {
   ...fieldStyleBase,
-  background: "rgba(20,16,12,0.82)",
+  background: "rgba(18,8,12,0.82)",
   color: "#fff",
   caretColor: "#fff",
 };

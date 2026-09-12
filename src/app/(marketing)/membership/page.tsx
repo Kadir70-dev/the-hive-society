@@ -21,11 +21,11 @@ export default async function MembershipPage() {
         <div className="container">
           <div className="split split--60-40" style={{ alignItems: "start" }}>
             <div className="stack gap-14">
-              <EditableLabel contentKey="membership.masthead.eyebrow" value={t("membership.masthead.eyebrow", "Join the Community")} className="eyebrow" />
+              <EditableLabel contentKey="membership.masthead.eyebrow" value={t("membership.masthead.eyebrow", "Join the Hive")} className="eyebrow" />
               <EditableHeading
                 as="h1"
                 contentKey="membership.masthead.title"
-                value={t("membership.masthead.title", "Be part of it from day one.")}
+                value={t("membership.masthead.title", "Be part of it")}
                 className="h1"
                 style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}
               />
@@ -33,13 +33,13 @@ export default async function MembershipPage() {
                 as="p"
                 multiline
                 contentKey="membership.masthead.lede"
-                value={t("membership.masthead.lede", "Stay connected for gatherings, meetups, events and launch updates.")}
+                value={t("membership.masthead.lede", "Get updates on Abu Dhabi events, meetups & launch news")}
                 className="lede"
               />
             </div>
             <EditableLabel
               contentKey="membership.masthead.tag"
-              value={t("membership.masthead.tag", "Pre-launch — paid membership is proposed for later and not yet available")}
+              value={t("membership.masthead.tag", "Membership coming soon")}
               className="tag-proposed"
               style={{ justifySelf: "start", marginTop: 10 }}
             />
@@ -51,12 +51,12 @@ export default async function MembershipPage() {
         <div className="container">
           <div className="card popup-card">
             <div className="stack gap-6" style={{ textAlign: "center", marginBottom: 22 }}>
-              <EditableHeading as="h2" contentKey="membership.form.title" value={t("membership.form.title", "Join the Community")} className="h3" />
+              <EditableHeading as="h2" contentKey="membership.form.title" value={t("membership.form.title", "Join the Hive")} className="h3" />
               <EditableText
                 as="p"
                 multiline
                 contentKey="membership.form.subtitle"
-                value={t("membership.form.subtitle", "Tell us a little about you — we’ll follow up with relevant updates and invitations.")}
+                value={t("membership.form.subtitle", "Get updates & invites")}
                 className="text-2 small"
               />
             </div>
@@ -75,7 +75,7 @@ export default async function MembershipPage() {
                 as="p"
                 multiline
                 contentKey="membership.community_tier.description"
-                value={t("membership.community_tier.description", "Everything you need to start exploring and meeting people, free.")}
+                value={t("membership.community_tier.description", "Explore, connect & enjoy - free")}
                 className="text-2 small"
               />
               <ul className="stack gap-10" style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
@@ -86,7 +86,7 @@ export default async function MembershipPage() {
                       contentKey={`membership.community_tier.feature_${n}`}
                       value={t(
                         `membership.community_tier.feature_${n}`,
-                        { "1": "Discover experiences", "2": "Join community circles", "3": "Save activities", "4": "Standard booking access" }[n]!
+                        { "1": "Discover experiences", "2": "Join circles", "3": "Save favorites", "4": "Book activities" }[n]!
                       )}
                     />
                   </li>
@@ -105,7 +105,7 @@ export default async function MembershipPage() {
                 contentKey="membership.premium_tier.description"
                 value={t(
                   "membership.premium_tier.description",
-                  "Priority and curation for women who want to make the most of every season. Price to be announced."
+                  "More access. More perks."
                 )}
                 className="text-2 small"
               />
@@ -118,11 +118,11 @@ export default async function MembershipPage() {
                       value={t(
                         `membership.premium_tier.feature_${n}`,
                         {
-                          "1": "Everything in Hive Community",
-                          "2": "Early access to selected gatherings",
+                          "1": "All community benefits",
+                          "2": "Early access",
                           "3": "Priority booking",
-                          "4": "Member-only experiences & circles",
-                          "5": "Partner benefits & seasonal offers",
+                          "4": "Member-only events",
+                          "5": "Special offers",
                         }[n]!
                       )}
                     />
@@ -130,7 +130,7 @@ export default async function MembershipPage() {
                 ))}
               </ul>
               <a href="#join-form" className="btn btn--primary" style={{ alignSelf: "flex-start", marginTop: 8 }}>
-                <EditableLabel contentKey="membership.premium_tier.button_label" value={t("membership.premium_tier.button_label", "Join the Community")} />
+                <EditableLabel contentKey="membership.premium_tier.button_label" value={t("membership.premium_tier.button_label", "Join the Hive")} />
               </a>
             </div>
           </div>

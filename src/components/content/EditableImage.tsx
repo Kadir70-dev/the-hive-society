@@ -128,7 +128,7 @@ export function EditableImage({ mediaKey, src, alt, objectPosition, sizes, prior
             position: "absolute",
             inset: 0,
             zIndex: 10,
-            background: "rgba(20,16,10,.72)",
+            background: "rgba(18,8,12,.72)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

@@ -26,7 +26,7 @@ export function SignInModal({ open, onClose }: SignInModalProps) {
           as="p"
           multiline
           contentKey="modal.signin.body"
-          value={t("modal.signin.body", "Full accounts are coming soon — until then, explore a live preview of the member experience.")}
+          value={t("modal.signin.body", "Full accounts are coming soon. For now, explore a live preview.")}
           className="text-2 small"
         />
         <Link href="/app/explore" className="btn btn--primary" onClick={onClose}>

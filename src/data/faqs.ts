@@ -7,16 +7,15 @@ export const membershipFaqs: FAQ[] = [
       "We're finalising membership details with our founding community. Waitlist members will be the first to know.",
   },
   {
-    question: "How much will it cost?",
+    question: "How much does it cost?",
     answer: "Pricing hasn't been confirmed yet. It will be shared with waitlist members before public launch.",
   },
   {
-    question: "Do I need to be a member to book gatherings?",
-    answer:
-      "Yes — if you are hosting a gathering, you need to be a Hive Member. For simply joining or attending a gathering, membership is not required.",
+    question: "Do I need to join to book?",
+    answer: "Yes, if you're hosting. Membership isn't required just to join or attend.",
   },
   {
-    question: "What are founding member benefits?",
+    question: "What do founding members get?",
     answer: "Early waitlist members will receive early access and preferred pricing once membership tiers are finalised.",
   },
 ];

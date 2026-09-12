@@ -6,7 +6,7 @@ import { getPageMedia, resolveMedia } from "@/lib/content/getPageMedia";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Built in Abu Dhabi. Designed around how women actually gather here.",
+  description: "Built in Abu Dhabi, for how women gather.",
 };
 
 const NEIGHBOURHOODS = ["Saadiyat", "Al Reem", "Yas", "Al Bateen", "Khalifa City", "Al Raha", "Corniche", "Al Maryah", "Hudayriyat"];
@@ -42,7 +42,7 @@ export default async function AboutPage() {
             hero
             as="h1"
             contentKey="about.hero.title"
-            value={t("about.hero.title", "Built in Abu Dhabi. Designed around how women actually gather here.")}
+            value={t("about.hero.title", "Built in Abu Dhabi, for how women gather.")}
             className="h1"
             style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)", marginTop: 14 }}
           />
@@ -76,7 +76,7 @@ export default async function AboutPage() {
                 contentKey="about.intro.paragraph"
                 value={t(
                   "about.intro.paragraph",
-                  "The Hive Society exists to close that gap: real gatherings, trusted faces, a community worth returning to."
+                  "Real gatherings. Trusted faces. A community worth returning to."
                 )}
                 className="text-2"
               />
@@ -126,7 +126,7 @@ export default async function AboutPage() {
             as="p"
             multiline
             contentKey="about.neighbourhoods.disclaimer"
-            value={t("about.neighbourhoods.disclaimer", "Venue names are not implied partners unless stated on the specific gathering.")}
+            value={t("about.neighbourhoods.disclaimer", "Venue names don't imply partnership unless stated on the gathering.")}
             className="small text-3"
             style={{ marginTop: 16 }}
           />

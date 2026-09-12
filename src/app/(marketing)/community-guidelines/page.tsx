@@ -11,7 +11,7 @@ const PRINCIPLES = [
   { title: "Privacy", desc: "What's shared in the group stays in the group." },
   { title: "No harassment", desc: "Zero tolerance, always." },
   { title: "No unsolicited promotion", desc: "Gatherings aren't a place to sell." },
-  { title: "No discrimination", desc: "Every background and background of faith is welcome." },
+  { title: "No discrimination", desc: "Every background and faith is welcome." },
   { title: "Consent", desc: "Photos, contact and conversation are always opt-in." },
   { title: "Respect venue rules", desc: "Every space has its own etiquette — follow it." },
   { title: "Show up responsibly", desc: "Cancel early if plans change, out of respect for others." },

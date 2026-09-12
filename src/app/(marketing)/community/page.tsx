@@ -10,7 +10,7 @@ import { getPageMedia, resolveMedia } from "@/lib/content/getPageMedia";
 export const metadata: Metadata = {
   title: "Community",
   description:
-    "The Hive isn't just where you book an activity — it's where relationships and trusted circles grow.",
+    "Not just where you book an activity — where trusted circles grow.",
 };
 
 const STEPS = [
@@ -59,7 +59,7 @@ export default async function CommunityPage() {
             contentKey="community.masthead.lede"
             value={t(
               "community.masthead.lede",
-              "The Hive isn’t just where you book an activity — it’s where relationships and trusted circles grow."
+              "Not just where you book an activity — where trusted circles grow."
             )}
             className="lede"
           />
@@ -141,7 +141,7 @@ export default async function CommunityPage() {
                 contentKey="community.recurring.paragraph"
                 value={t(
                   "community.recurring.paragraph",
-                  "Beyond one-off events, Hive circles gather on a rhythm — so belonging isn’t a single night, it’s a habit."
+                  "Hive circles meet on a rhythm — belonging isn’t one night, it’s a habit."
                 )}
                 className="text-2"
               />
@@ -171,7 +171,7 @@ export default async function CommunityPage() {
               contentKey="community.guidelines.paragraph"
               value={t(
                 "community.guidelines.paragraph",
-                "Every host is reviewed before their gathering goes live, and concerns are reviewed quickly and privately."
+                "Every host is reviewed before going live. Concerns are handled quickly and privately."
               )}
             />{" "}
             <Link href="/community-guidelines" style={{ color: "var(--accent-deep)", fontWeight: 600 }}>

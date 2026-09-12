@@ -49,7 +49,7 @@ export function CommunitySignupModalProvider({ children }: { children: ReactNode
       <Modal open={isOpen} onClose={close} labelledBy="community-signup-title">
         <div className="modal__body" ref={panelRef} tabIndex={-1} style={{ outline: "none" }}>
           <div className="stack gap-6" style={{ marginBottom: 22 }}>
-            <EditableHeading as="h3" contentKey="modal.join.title" value={t("modal.join.title", "Join the Community")} className="h3" id="community-signup-title" />
+            <EditableHeading as="h3" contentKey="modal.join.title" value={t("modal.join.title", "Join the Hive Society")} className="h3" id="community-signup-title" />
             <EditableText
               as="p"
               multiline
