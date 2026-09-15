@@ -382,6 +382,7 @@ img{max-width:100%}
 @media(min-width:1000px){.belonging-gallery{grid-template-columns:repeat(3,1fr); gap:24px}}
 @media(min-width:700px){.belonging-gallery__frame:nth-child(3n+2){margin-top:36px}}
 .belonging-gallery__frame{position:relative; aspect-ratio:4/5; border-radius:var(--radius-m); overflow:hidden; box-shadow:var(--shadow); background:var(--surface-2)}
+.belonging-gallery__frame:only-child{grid-column:1/-1; width:100%; max-width:340px; margin:0 auto}
 .belonging-gallery__frame img{object-fit:cover}
 
 /* category gallery — a calm, aligned grid of one flat brand colour per

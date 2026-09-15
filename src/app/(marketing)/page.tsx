@@ -28,8 +28,6 @@ const PILLARS = [
 
 const BELONGING_GALLERY = [
   { file: "belonging-04.png", alt: "Hive members mid-session in a sun-warmed Pilates studio" },
-  { file: "belonging-05.png", alt: "Hive members gathered for an evening salon beneath a crystal chandelier" },
-  { file: "belonging-06.png", alt: "Hands sharing pastries and coffee around a marble café table" },
 ];
 
 export default async function HomePage() {
