@@ -28,6 +28,15 @@ export function ExploreGrid({ experiences: initialExperiences }: ExploreGridProp
 
   const selected = experiences.find((e) => e.id === openId) ?? null;
 
+  function handleCardClick(id: string) {
+    if (isAdmin && editMode) {
+      const target = experiences.find((e) => e.id === id);
+      if (target) setFormTarget(target);
+      return;
+    }
+    setOpenId(id);
+  }
+
   function handleSaved(saved: Gathering) {
     const next = gatheringToExperience(saved);
     setExperiences((prev) => {
@@ -60,20 +69,10 @@ export function ExploreGrid({ experiences: initialExperiences }: ExploreGridProp
           <ExperienceCard
             key={experience.id}
             experience={experience}
-            onSelect={setOpenId}
+            onSelect={handleCardClick}
             adminOverlay={
               isAdmin && editMode ? (
-                <div
-                  className="cms-image-edit"
-                  style={{ bottom: "auto", top: 12 }}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Edit gathering: ${experience.title}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setFormTarget(experience);
-                  }}
-                >
+                <div className="cms-image-edit" style={{ bottom: "auto", top: 12 }}>
                   <span className="cms-image-edit__label">Edit</span>
                 </div>
               ) : null
