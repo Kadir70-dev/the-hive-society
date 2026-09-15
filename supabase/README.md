@@ -1,11 +1,13 @@
 # Supabase setup
 
-This project has two separate Supabase domains — don't mix their data models:
+This project has three separate Supabase domains — don't mix their data models:
 
 - **Community applications** (`0001_community_applications.sql`) — the Join
   the Community form backend.
 - **Website CMS** (`0002_site_cms.sql`) — editable text/images for the
   marketing site, covered in its own section below.
+- **Gatherings** (`0003_gatherings.sql`) — the Explore Gatherings cards,
+  covered in its own section below.
 
 ## Community applications
 
@@ -112,3 +114,35 @@ image" control. Nothing renders for anon visitors or non-admin accounts —
 verified via RLS, via the admin-session check in every API route, and via
 raw HTML inspection (no CMS markup at all in the response for a public
 request).
+
+## Gatherings
+
+### 1. Run the migration
+
+Run `migrations/0003_gatherings.sql` in the SQL editor. It creates
+`gatherings` — one row per card shown on the public `/explore` page (title,
+image, category, organiser, area, date/time/price labels, going count,
+attendee names, verified flag, description, publish state). Same RLS
+pattern as every other table here: enabled, zero anon/authenticated
+policies, service-role only. Reads go through
+`src/lib/content/getGatherings.ts` (falls back to the hardcoded
+`marketingExperiences` array in `src/data/experiences.ts` if the table is
+ever empty or unreachable); writes go through admin-checked API routes
+under `/api/admin/gatherings`. Images reuse the same `site-images` Storage
+bucket as the CMS above, under a `gatherings/` prefix.
+
+### 2. Seed the current cards
+
+```
+node supabase/scripts/seed_gatherings.mjs
+```
+
+Inserts the 11 cards that are already hardcoded today, so nothing visually
+changes on `/explore` the moment this table becomes the source of truth —
+safe to re-run any time (`ignoreDuplicates` on `slug`).
+
+### 3. Editing
+
+Admins get a "Gatherings" link in the same bottom-right toolbar as
+"Community". `/admin/gatherings` lists every card (including unpublished
+ones) with Add / Edit / Delete.

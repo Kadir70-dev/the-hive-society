@@ -33,6 +33,12 @@ export function AdminToolbar() {
       >
         Community
       </Link>
+      <Link
+        href="/admin/gatherings"
+        style={{ color: "var(--on-dark)", fontWeight: 600, borderRight: "1px solid var(--on-dark-line)", paddingRight: 10 }}
+      >
+        Gatherings
+      </Link>
       <span style={{ fontWeight: 600 }}>Edit Mode</span>
       <button
         type="button"

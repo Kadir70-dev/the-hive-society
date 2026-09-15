@@ -21,11 +21,6 @@ export default async function AboutPage() {
   const [content, media] = await Promise.all([getPageContent("about"), getPageMedia("about")]);
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
 
-  const heroImage = resolveMedia(media, "about.hero.image", {
-    url: "/images/a10-creative.jpg",
-    alt: "Women at a Hive creative workshop in Abu Dhabi",
-    objectPosition: "30% center",
-  });
   const introImage = resolveMedia(media, "about.intro.image", {
     url: "/images/gathering.jpg",
     alt: "Women sharing an evening gathering, Abu Dhabi",
@@ -33,19 +28,18 @@ export default async function AboutPage() {
 
   return (
     <>
-      <div className="bleed bleed--hero">
-        <EditableImage mediaKey="about.hero.image" src={heroImage.url} alt={heroImage.alt} objectPosition={heroImage.objectPosition} sizes="100vw" priority />
-        <div className="bleed__overlay" />
-        <div className="bleed__content">
-          <EditableLabel hero contentKey="about.hero.eyebrow" value={t("about.hero.eyebrow", "About")} className="eyebrow" style={{ color: "#fff" }} />
-          <EditableHeading
-            hero
-            as="h1"
-            contentKey="about.hero.title"
-            value={t("about.hero.title", "Built in Abu Dhabi, for how women gather.")}
-            className="h1"
-            style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)", marginTop: 14 }}
-          />
+      <div className="page-open">
+        <div className="container">
+          <div className="stack gap-14" style={{ maxWidth: 560 }}>
+            <EditableLabel contentKey="about.hero.eyebrow" value={t("about.hero.eyebrow", "About")} className="eyebrow" />
+            <EditableHeading
+              as="h1"
+              contentKey="about.hero.title"
+              value={t("about.hero.title", "Built in Abu Dhabi, for how women gather.")}
+              className="h1"
+              style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}
+            />
+          </div>
         </div>
       </div>
 

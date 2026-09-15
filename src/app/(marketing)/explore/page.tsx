@@ -1,9 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ExploreGrid } from "@/components/marketing/ExploreGrid";
-import { marketingExperiences } from "@/data/experiences";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
+import { getGatherings } from "@/lib/content/getGatherings";
 
 export const metadata: Metadata = {
   title: "Explore",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ExplorePage() {
-  const content = await getPageContent("explore");
+  const [content, experiences] = await Promise.all([getPageContent("explore"), getGatherings()]);
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
 
   return (
@@ -39,7 +39,7 @@ export default async function ExplorePage() {
       </div>
       <div className="section section--tight">
         <div className="container">
-          <ExploreGrid experiences={marketingExperiences} />
+          <ExploreGrid experiences={experiences} />
         </div>
       </div>
       <div className="section">
