@@ -6,9 +6,11 @@ interface ExperienceCardProps {
   experience: Experience;
   onSelect: (id: string) => void;
   featured?: boolean;
+  /** Rendered inside the photo area, e.g. an admin "Edit" control in Edit Mode. */
+  adminOverlay?: React.ReactNode;
 }
 
-export function ExperienceCard({ experience, onSelect, featured }: ExperienceCardProps) {
+export function ExperienceCard({ experience, onSelect, featured, adminOverlay }: ExperienceCardProps) {
   return (
     <button
       className="activity-card"
@@ -32,6 +34,7 @@ export function ExperienceCard({ experience, onSelect, featured }: ExperienceCar
         <span className="photo__tag">
           {experience.area}, Abu Dhabi
         </span>
+        {adminOverlay}
       </div>
       <div className="activity-card__body">
         <span className="activity-card__cat">

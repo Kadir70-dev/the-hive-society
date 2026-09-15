@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { GatheringForm } from "./GatheringForm";
-import type { Gathering } from "./types";
+import { GatheringForm } from "@/components/content/GatheringForm";
+import type { Gathering } from "@/data/gatherings";
 
 export function GatheringsClient() {
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
@@ -139,6 +139,10 @@ export function GatheringsClient() {
             setCreating(false);
           }}
           onSaved={handleSaved}
+          onDeleted={(id) => {
+            setGatherings((prev) => prev.filter((g) => g.id !== id));
+            setEditing(null);
+          }}
         />
       )}
     </div>

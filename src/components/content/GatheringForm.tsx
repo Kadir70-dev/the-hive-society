@@ -3,16 +3,17 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { Modal } from "@/components/ui/Modal";
-import { CATEGORIES, type Gathering } from "./types";
+import { GATHERING_CATEGORIES, type Gathering } from "@/data/gatherings";
 import type { ExperienceCategory } from "@/data/types";
 
 interface GatheringFormProps {
   gathering: Gathering | null; // null = creating a new one
   onClose: () => void;
   onSaved: (gathering: Gathering) => void;
+  onDeleted?: (id: string) => void;
 }
 
-export function GatheringForm({ gathering, onClose, onSaved }: GatheringFormProps) {
+export function GatheringForm({ gathering, onClose, onSaved, onDeleted }: GatheringFormProps) {
   const isNew = !gathering;
   const [title, setTitle] = useState(gathering?.title ?? "");
   const [slug, setSlug] = useState(gathering?.slug ?? "");
@@ -29,7 +30,7 @@ export function GatheringForm({ gathering, onClose, onSaved }: GatheringFormProp
   const [isPublished, setIsPublished] = useState(gathering?.is_published ?? true);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [status, setStatus] = useState<"idle" | "saving" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "saving" | "deleting" | "error">("idle");
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -79,6 +80,23 @@ export function GatheringForm({ gathering, onClose, onSaved }: GatheringFormProp
     }
   }
 
+  async function handleDelete() {
+    if (!gathering || !onDeleted) return;
+    if (!confirm(`Delete "${gathering.title}"? This can't be undone.`)) return;
+    setStatus("deleting");
+    setError("");
+    try {
+      const res = await fetch(`/api/admin/gatherings/${gathering.id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("failed");
+      onDeleted(gathering.id);
+    } catch {
+      setError("Could not delete that gathering.");
+      setStatus("error");
+    }
+  }
+
+  const busy = status === "saving" || status === "deleting";
+
   return (
     <Modal open onClose={onClose} labelledBy="gathering-form-title">
       <form className="modal__body stack gap-16" onSubmit={handleSubmit}>
@@ -113,7 +131,7 @@ export function GatheringForm({ gathering, onClose, onSaved }: GatheringFormProp
           <div className="field" style={{ flex: "1 1 160px" }}>
             <label htmlFor="gf-category">Category</label>
             <select id="gf-category" value={category} onChange={(e) => setCategory(e.target.value as typeof category)}>
-              {CATEGORIES.map((c) => (
+              {GATHERING_CATEGORIES.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
@@ -176,13 +194,20 @@ export function GatheringForm({ gathering, onClose, onSaved }: GatheringFormProp
           </p>
         )}
 
-        <div className="row gap-8">
-          <button type="submit" className="btn btn--primary btn--sm" disabled={status === "saving"}>
-            {status === "saving" ? "Saving…" : "Save"}
-          </button>
-          <button type="button" className="btn btn--outline btn--sm" disabled={status === "saving"} onClick={onClose}>
-            Cancel
-          </button>
+        <div className="row gap-8" style={{ justifyContent: "space-between" }}>
+          <div className="row gap-8">
+            <button type="submit" className="btn btn--primary btn--sm" disabled={busy}>
+              {status === "saving" ? "Saving…" : "Save"}
+            </button>
+            <button type="button" className="btn btn--outline btn--sm" disabled={busy} onClick={onClose}>
+              Cancel
+            </button>
+          </div>
+          {!isNew && onDeleted && (
+            <button type="button" className="btn btn--outline btn--sm" disabled={busy} onClick={() => void handleDelete()}>
+              {status === "deleting" ? "Deleting…" : "Delete"}
+            </button>
+          )}
         </div>
       </form>
     </Modal>
