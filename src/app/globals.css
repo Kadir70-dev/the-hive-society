@@ -90,8 +90,6 @@ img{max-width:100%}
 .section--dark .pull-quote,.section--dark .pull-quote::before{color:var(--accent-on-dark)}
 .section--dark a:not(.btn){color:var(--on-dark)}
 .section--dark a:not(.btn):hover{color:var(--accent-on-dark)}
-.section--dark .text-link{color:var(--on-dark); border-color:var(--accent-on-dark)}
-.section--dark .text-link:hover{color:var(--accent-on-dark)}
 .section--dark hr,.section--dark .divider{background:var(--on-dark-line)}
 .section--dark .rule-list__item,.section--dark .index-list__row{border-color:var(--on-dark-line)}
 .section--dark .rule-list__num{color:var(--accent-on-dark)}
@@ -213,13 +211,6 @@ img{max-width:100%}
 .photo::after{content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(0deg,rgba(18,8,12,.55),rgba(18,8,12,0) 55%)}
 .photo__tag{position:relative; z-index:1; padding:14px 16px; font-size:.72rem; letter-spacing:.06em;
   text-transform:uppercase; color:var(--cream); font-weight:600}
-/* recurring "explore" affordance — a quiet circular arrow, always visible,
-   reused on every photo card rather than inventing a new icon per card. */
-.photo__arrow{
-  position:absolute; z-index:1; right:14px; bottom:14px; width:36px; height:36px; border-radius:50%;
-  background:rgba(248,244,234,.92); color:var(--accent-deep);
-  display:flex; align-items:center; justify-content:center;
-}
 .photo--hero{aspect-ratio:auto; min-height:340px; border-radius:var(--radius-l)}
 @media(min-width:960px){.photo--hero{min-height:auto; height:100%; border-radius:var(--radius-l) 0 0 var(--radius-l)}}
 
@@ -381,6 +372,18 @@ img{max-width:100%}
 .exp-card img{transition:transform .6s cubic-bezier(.16,1,.3,1)}
 .exp-card:hover img{transform:scale(1.045)}
 
+/* belonging gallery — editorial photo mosaic directly beneath the intro
+   copy; a staggered rhythm (columns 2/4 dropped a touch) reads as curated
+   rather than a plain grid. Every frame keeps the source's native 4/5
+   portrait ratio, so object-fit:cover never crops or distorts it. */
+.belonging-gallery{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; align-items:start}
+@media(max-width:479px){.belonging-gallery{grid-template-columns:1fr}}
+@media(min-width:700px){.belonging-gallery{grid-template-columns:repeat(3,1fr); gap:20px}}
+@media(min-width:1000px){.belonging-gallery{grid-template-columns:repeat(3,1fr); gap:24px}}
+@media(min-width:700px){.belonging-gallery__frame:nth-child(3n+2){margin-top:36px}}
+.belonging-gallery__frame{position:relative; aspect-ratio:4/5; border-radius:var(--radius-m); overflow:hidden; box-shadow:var(--shadow); background:var(--surface-2)}
+.belonging-gallery__frame img{object-fit:cover}
+
 /* category gallery — a calm, aligned grid of one flat brand colour per
    category (see .cat-swatch). Deliberately still: a premium editorial set,
    not a scrolling ticker. */
@@ -474,9 +477,9 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
     linear-gradient(0deg,rgba(18,8,12,.3) 0%,rgba(18,8,12,0) 26%);
 }
 .hero__kicker{
-  color:var(--accent); font-weight:600; font-size:.72rem; letter-spacing:.24em; text-transform:uppercase;
+  color:#fff; font-weight:600; font-size:.72rem; letter-spacing:.24em; text-transform:uppercase;
   text-align:center; white-space:nowrap;
-  text-shadow:0 1px 2px rgba(248,244,234,.9), 0 0 18px rgba(248,244,234,.55);
+  text-shadow:0 1px 3px rgba(18,8,12,.55), 0 0 18px rgba(18,8,12,.35);
 }
 @media(min-width:900px){.hero__kicker{font-size:.78rem}}
 /* centered lockup — label, headline, lede, cta — sitting in the upper-middle
@@ -489,14 +492,14 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 }
 @media(min-width:900px){.hero__content{gap:22px}}
 .hero__title{
-  color:var(--accent-deep); margin:0; line-height:1.08; max-width:16ch; letter-spacing:-.015em;
+  color:#fff; margin:0; line-height:1.08; max-width:16ch; letter-spacing:-.015em;
   font-size:clamp(1.9rem,5.2vw + .4rem,2.6rem);
-  text-shadow:0 2px 4px rgba(248,244,234,.85), 0 0 30px rgba(248,244,234,.5);
+  text-shadow:0 2px 6px rgba(18,8,12,.6), 0 0 30px rgba(18,8,12,.4);
 }
 @media(min-width:900px){.hero__title{font-size:clamp(2.2rem,2.4vw + 1.3rem,3.2rem)}}
 .hero__lede{
-  color:var(--accent); font-size:1rem; line-height:1.55; max-width:42ch;
-  text-shadow:0 1px 3px rgba(248,244,234,.85), 0 0 16px rgba(248,244,234,.5);
+  color:rgba(255,255,255,.92); font-size:1rem; line-height:1.55; max-width:42ch;
+  text-shadow:0 1px 4px rgba(18,8,12,.6), 0 0 16px rgba(18,8,12,.4);
 }
 .hero__content .btn{margin-top:4px; align-self:center}
 .page-hero{background:var(--surface-dark); color:var(--on-dark); padding:112px 0 56px}
@@ -561,10 +564,6 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
   font-family:var(--serif); font-weight:600; letter-spacing:-.02em; line-height:.96;
   font-size:clamp(2.3rem,4.6vw + 1rem,4.4rem);
 }
-
-/* quiet text link — for actions that don't deserve a full pill button */
-.text-link{display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:.92rem; color:var(--text); border-bottom:1px solid var(--accent-deep); padding-bottom:2px; width:fit-content; transition:gap .18s ease, color .18s ease}
-.text-link:hover{gap:11px; color:var(--accent-deep)}
 
 /* numbered / process editorial list — replaces equal-width hex-icon card grids */
 .rule-list{display:grid; grid-template-columns:1fr; gap:0}

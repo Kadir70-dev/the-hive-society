@@ -9,16 +9,19 @@ const INK = "#6B1F32";
 const INK_DEEP = "#641C2C";
 
 /**
- * A thin curved line traveling slowly along its own path, like a soft snake
- * drifting diagonally across the section. The "travel" illusion comes from
- * a short dash against a long gap, with stroke-dashoffset looping by exactly
- * one dash-pattern length so the cycle is seamless — no jump, no reset.
+ * A thin curved line traveling continuously along its own path, like a soft
+ * snake drifting diagonally across the section. `stroke-dashoffset` loops by
+ * exactly one dash-pattern length so the cycle is seamless — no jump, no
+ * reset.
  *
- * That short-dash-long-gap pattern only reads as a line while it's moving:
- * frozen for prefers-reduced-motion, ~93% of the path is the invisible gap,
- * so the static fallback switches to a plain solid stroke instead — the
- * same curve, just drawn as a complete, standalone piece of line art rather
- * than a near-invisible fragment.
+ * The dash pattern is mostly solid (280 drawn / 50 gap — ~85% visible at any
+ * instant), not the short-dash/long-gap pattern an earlier version used: that
+ * one measurably animated (confirmed via direct `stroke-dashoffset`
+ * sampling) but visually read as static or nearly invisible, since ~93% of
+ * the path was gap at any given moment. A mostly-solid line with a small
+ * traveling notch reads as continuously flowing while still looking like a
+ * complete line. Frozen for prefers-reduced-motion, it switches to a plain
+ * solid stroke instead (no dasharray at all) for the same reason.
  */
 export function FlowVariant({ tier }: { tier: ResponsiveTier }) {
   const primaryRef = useRef<SVGPathElement>(null);
@@ -47,16 +50,16 @@ export function FlowVariant({ tier }: { tier: ResponsiveTier }) {
 
     if (primaryRef.current) {
       gsap.to(primaryRef.current, {
-        strokeDashoffset: -364,
-        duration: 22,
+        strokeDashoffset: -330,
+        duration: 14,
         ease: "none",
         repeat: -1,
       });
     }
     if (secondaryRef.current) {
       gsap.to(secondaryRef.current, {
-        strokeDashoffset: -420,
-        duration: 30,
+        strokeDashoffset: -360,
+        duration: 18,
         ease: "none",
         repeat: -1,
       });
@@ -73,7 +76,7 @@ export function FlowVariant({ tier }: { tier: ResponsiveTier }) {
         strokeWidth={1.6}
         strokeLinecap="round"
         strokeOpacity={0.18}
-        strokeDasharray={reduced ? undefined : "24 340"}
+        strokeDasharray={reduced ? undefined : "280 50"}
       />
       {showSecondary && (
         <path
@@ -84,7 +87,7 @@ export function FlowVariant({ tier }: { tier: ResponsiveTier }) {
           strokeWidth={1.2}
           strokeLinecap="round"
           strokeOpacity={0.1}
-          strokeDasharray={reduced ? undefined : "18 402"}
+          strokeDasharray={reduced ? undefined : "300 60"}
         />
       )}
     </svg>

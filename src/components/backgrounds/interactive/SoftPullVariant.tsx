@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "@/lib/animation/gsap";
+import { useEffect, useRef, useState } from "react";
+import { gsap, useGSAP } from "@/lib/animation/gsap";
 import { prefersReducedMotion } from "@/lib/animation/reducedMotion";
 import { usePointerPosition } from "@/lib/animation/usePointerPosition";
 import { useResponsiveTier } from "@/lib/animation/useResponsiveTier";
 
 const INK = "#6B1F32";
+const DASH = 280;
+const GAP = 50;
+const DASH_TOTAL = DASH + GAP;
 
 /** The path's 7 authored anchor/control points (M + 2×C), in viewBox units. */
 const BASE_POINTS = [
@@ -29,20 +32,25 @@ const EASE_IN = 0.09; // per-tick lerp while influenced — the "clearly noticea
 const EASE_OUT = 0.035; // per-tick lerp while relaxing — the "premium, unhurried" half
 
 /**
- * "Soft Pull" — nearby control points on a single flowing line lean gently
- * toward the pointer (linear distance falloff, clamped to a radius so only
- * the local area reacts) and ease back to their resting shape when the
- * pointer moves away or stops. No React re-renders on move: the path's `d`
- * attribute is written directly each tick, and the tick loop itself is
- * skipped entirely once every point has settled back within a fraction of
- * a unit of its base position, so an idle line costs nothing.
+ * "Soft Pull" — a continuously flowing line (ambient, always running, never
+ * dependent on the pointer) that ALSO leans gently toward the pointer when
+ * it's nearby.
  *
- * The reactive layer is mobile-disabled on purpose: on touch, `pointermove`
- * fires continuously *during a scroll gesture*, not just during a
- * deliberate hover the way it does with a mouse — reacting to that would
- * mean the line visibly bends every time someone scrolls past it, which is
- * both a distraction and unnecessary per-frame work on the device class
- * least able to spare it. Mobile always gets the calm static base line.
+ * An earlier version had no ambient motion at all — it sat perfectly still
+ * until touched, which is exactly backwards from "the background must
+ * already be moving even if the user does not touch or hover." The fix is
+ * a `stroke-dasharray`/`stroke-dashoffset` travel loop running independently
+ * of the pointer-driven control-point bending below (dashoffset animates a
+ * separate SVG property from the `d` attribute, so the two never conflict).
+ *
+ * The dash pattern is deliberately MOSTLY solid (280 drawn / 50 gap, ~85%
+ * visible at any instant) rather than the sparse short-dash/long-gap
+ * pattern an earlier pass used — that pattern measurably animated
+ * (confirmed via `stroke-dashoffset` sampling) but visually read as static
+ * or "nearly invisible," since ~93% of the path was gap at any moment. A
+ * mostly-solid line with a small traveling notch reads as continuously
+ * flowing while still looking like a complete line, not a scattering of
+ * fragments.
  */
 export function SoftPullVariant() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -51,7 +59,27 @@ export function SoftPullVariant() {
   const pointerRef = usePointerPosition(containerRef, svgRef);
   const offsets = useRef(BASE_POINTS.map(() => ({ x: 0, y: 0 })));
   const tier = useResponsiveTier();
+  // Starts false (matching the server's render) and corrects itself a frame
+  // after mount — same reasoning as FlowVariant's identical pattern.
+  const [reduced, setReduced] = useState(false);
 
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setReduced(prefersReducedMotion()));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  // Ambient dash-travel — always on, independent of the pointer.
+  useGSAP(() => {
+    if (reduced || !pathRef.current) return;
+    gsap.to(pathRef.current, {
+      strokeDashoffset: -DASH_TOTAL,
+      duration: 14,
+      ease: "none",
+      repeat: -1,
+    });
+  }, [reduced]);
+
+  // Pointer-driven control-point bending — independent of the tween above.
   useEffect(() => {
     if (prefersReducedMotion() || tier === "mobile") return;
 
@@ -111,7 +139,16 @@ export function SoftPullVariant() {
         aria-hidden
         focusable="false"
       >
-        <path ref={pathRef} d={basePath} fill="none" stroke={INK} strokeWidth={1.8} strokeLinecap="round" strokeOpacity={0.22} />
+        <path
+          ref={pathRef}
+          d={basePath}
+          fill="none"
+          stroke={INK}
+          strokeWidth={1.8}
+          strokeLinecap="round"
+          strokeOpacity={0.22}
+          strokeDasharray={reduced ? undefined : `${DASH} ${GAP}`}
+        />
       </svg>
     </div>
   );

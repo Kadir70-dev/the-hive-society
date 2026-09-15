@@ -1,0 +1,33 @@
+.section { position: relative; isolation: isolate; }
+.content { position: relative; z-index: 1; }
+.artwork { position: absolute; z-index: 0; overflow: hidden; pointer-events: none; color: #6b1f32; }
+.artwork svg { display: block; }
+.large { width: min(43vw, 540px); aspect-ratio: 4 / 3; right: max(24px, calc((100% - 1100px) / 2)); top: 68px; }
+.medium { width: min(34vw, 350px); aspect-ratio: 46 / 30; right: max(24px, calc((100% - 1050px) / 2)); top: 26px; }
+.small { width: min(28vw, 250px); aspect-ratio: 34 / 22; right: max(24px, calc((100% - 1000px) / 2)); top: 20px; opacity: .85; }
+.masthead .content > :last-child { max-width: 40ch; }
+
+@media (min-width: 700px) and (max-width: 999px) {
+  .large { width: 40vw; top: 135px; right: 16px; }
+  .medium { width: 32vw; top: 68px; right: 16px; }
+  .middle .content > :first-child { max-width: 55% !important; }
+  .lower .content { padding-right: 32%; }
+  .small { top: 50%; transform: translateY(-50%); }
+}
+
+@media (max-width: 699px) {
+  /* CSS covers server paint; hydration removes these branches from the DOM. */
+  .artwork [data-mobile-hidden] { display: none; }
+  .masthead { padding-bottom: 220px; }
+  .middle { padding-bottom: 205px; }
+  .lower { padding-bottom: 170px; }
+  .large { top: auto; bottom: 10px; right: 12px; width: min(100% - 24px, 320px); height: 200px; }
+  .medium { top: auto; bottom: 24px; right: 18px; width: 270px; height: 165px; }
+  .small { top: auto; bottom: 20px; right: 24px; width: 225px; height: 140px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artwork [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .artwork [data-edge] { opacity: 1 !important; stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
+  .artwork [data-ring], .artwork [data-flow] { opacity: 0 !important; }
+}

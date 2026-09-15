@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
@@ -26,25 +26,14 @@ const PILLARS = [
   { key: "access", title: "Exclusive Access", Icon: CompassIcon },
 ];
 
-const EXPERIENCE_CARDS = [
-  { key: "wellness", label: "Wellness", image: "a8-wellness.jpg", alt: "A Hive wellness gathering" },
-  { key: "travel", label: "Travel", image: "tennis.jpg", alt: "Hive women on an outdoor gathering" },
-  { key: "dining", label: "Dining", image: "a4-brunch.jpg", alt: "A Hive brunch gathering" },
+const BELONGING_GALLERY = [
+  { file: "belonging-01.png", alt: "A Hive member stretching through an outdoor yoga session in dappled sunlight" },
+  { file: "belonging-02.png", alt: "A Hive member holding a racket and ball courtside in tennis whites" },
+  { file: "belonging-03.png", alt: "Latte art on a sunlit café table, set for two" },
+  { file: "belonging-04.png", alt: "Hive members mid-session in a sun-warmed Pilates studio" },
+  { file: "belonging-05.png", alt: "Hive members gathered for an evening salon beneath a crystal chandelier" },
+  { file: "belonging-06.png", alt: "Hands sharing pastries and coffee around a marble café table" },
 ];
-
-function ArrowIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path
-        d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export default async function HomePage() {
   const [content, media] = await Promise.all([getPageContent("home"), getPageMedia("home")]);
@@ -108,8 +97,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* MORE THAN A CLUB — centered heading + short lede, then a row of
-          three portrait photo cards (bottom-left label, bottom-right arrow).
+      {/* MORE THAN A CLUB — centered heading + short lede, then the
+          belonging photo gallery (staggered editorial grid).
           Background: Flow + Soft Pull, behind everything (z-index:0), all
           real content explicitly z-index:1 above it. */}
       <section className="section section--intimate" style={{ position: "relative" }}>
@@ -140,44 +129,20 @@ export default async function HomePage() {
               />
             </div>
           </div>
-          <div className="container container--wide" style={{ marginTop: 48 }}>
-            <div className="grid grid-3" style={{ textAlign: "left" }}>
-              {EXPERIENCE_CARDS.map((card) => {
-                const cardImage = resolveMedia(media, `home.experiences2.${card.key}.image`, {
-                  url: `/images/${card.image}`,
-                  alt: card.alt,
-                });
-                return (
-                  <RevealPhotoCard className="photo img-hover" style={{ aspectRatio: "4/4.6" }} key={card.key}>
-                    <EditableImage
-                      mediaKey={`home.experiences2.${card.key}.image`}
-                      src={cardImage.url}
-                      alt={cardImage.alt}
-                      objectPosition={cardImage.objectPosition}
-                      sizes="(min-width: 900px) 30vw, 90vw"
-                    />
-                    <span className="photo__tag">
-                      <EditableLabel
-                        contentKey={`home.experiences2.${card.key}.label`}
-                        value={t(`home.experiences2.${card.key}.label`, card.label)}
-                      />
-                    </span>
-                    <Link href="/explore" className="photo__arrow" aria-label="Explore experiences">
-                      <ArrowIcon />
-                    </Link>
-                  </RevealPhotoCard>
-                );
-              })}
+          <div className="container container--wide" style={{ marginTop: 56 }}>
+            <div className="belonging-gallery">
+              {BELONGING_GALLERY.map((item) => (
+                <RevealPhotoCard className="belonging-gallery__frame img-hover" key={item.file}>
+                  <Image
+                    src={`/images/${item.file}`}
+                    alt={item.alt}
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 1000px) 23vw, (min-width: 700px) 32vw, 46vw"
+                  />
+                </RevealPhotoCard>
+              ))}
             </div>
-          </div>
-          <div className="container" style={{ textAlign: "center" }}>
-            <Link href="/explore" className="text-link" style={{ marginTop: 40 }}>
-              <EditableLabel
-                contentKey="home.experiences2.button_label"
-                value={t("home.experiences2.button_label", "Explore Experiences")}
-              />
-              <ArrowIcon />
-            </Link>
           </div>
         </div>
       </section>

@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { circles } from "@/data/circles";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
-import { EditableImage } from "@/components/content/EditableImage";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
-import { getPageMedia, resolveMedia } from "@/lib/content/getPageMedia";
+import { CommunityNetworkBackground } from "@/components/backgrounds/community/CommunityNetworkBackground";
+import { CLUSTER_LARGE, CLUSTER_MEDIUM, CLUSTER_SMALL } from "@/components/backgrounds/community/networkData";
+import networkStyles from "@/components/backgrounds/community/communityNetwork.module.css";
 
 export const metadata: Metadata = {
   title: "Community",
@@ -33,18 +34,14 @@ const recurring = [
 ];
 
 export default async function CommunityPage() {
-  const [content, media] = await Promise.all([getPageContent("community"), getPageMedia("community")]);
+  const content = await getPageContent("community");
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
-
-  const closingImage = resolveMedia(media, "community.closing.image", {
-    url: "/images/a8-wellness.jpg",
-    alt: "A Hive wellness evening gathering",
-  });
 
   return (
     <>
-      <div className="masthead section--dark">
-        <div className="container stack gap-14">
+      <div className={`masthead section--dark ${networkStyles.section} ${networkStyles.masthead}`}>
+        <CommunityNetworkBackground template={CLUSTER_LARGE} />
+        <div className={`container stack gap-14 ${networkStyles.content}`}>
           <EditableLabel contentKey="community.masthead.eyebrow" value={t("community.masthead.eyebrow", "Community")} className="eyebrow" />
           <EditableHeading
             as="p"
@@ -96,8 +93,9 @@ export default async function CommunityPage() {
         </div>
       </div>
 
-      <div className="section section--alt section--intimate">
-        <div className="container">
+      <div className={`section section--alt section--intimate ${networkStyles.section} ${networkStyles.middle}`}>
+        <CommunityNetworkBackground template={CLUSTER_MEDIUM} />
+        <div className={`container ${networkStyles.content}`}>
           <div style={{ maxWidth: 460, marginBottom: 36 }}>
             <EditableLabel
               contentKey="community.steps.eyebrow"
@@ -158,8 +156,9 @@ export default async function CommunityPage() {
         </div>
       </div>
 
-      <div className="section section--alt section--intimate">
-        <div className="container">
+      <div className={`section section--alt section--intimate ${networkStyles.section} ${networkStyles.lower}`}>
+        <CommunityNetworkBackground template={CLUSTER_SMALL} />
+        <div className={`container ${networkStyles.content}`}>
           <div className="row wrap gap-12">
             <EditableLabel contentKey="community.badges.1" value={t("community.badges.1", "Verified organisers")} className="badge" />
             <EditableLabel contentKey="community.badges.2" value={t("community.badges.2", "Community guidelines")} className="badge" />
@@ -181,29 +180,22 @@ export default async function CommunityPage() {
         </div>
       </div>
 
-      <div className="bleed">
-        <EditableImage
-          mediaKey="community.closing.image"
-          src={closingImage.url}
-          alt={closingImage.alt}
-          objectPosition={closingImage.objectPosition}
-          sizes="100vw"
-        />
-        <div className="bleed__overlay" />
-        <div className="bleed__content bleed__content--center">
-          <EditableHeading
-            hero
-            as="h2"
-            contentKey="community.closing.heading"
-            value={t("community.closing.heading", "Ready to find your circle?")}
-            className="h2"
-            style={{ color: "#fff" }}
-          />
-          <div className="row wrap gap-16" style={{ justifyContent: "center", marginTop: 22 }}>
-            <Link href="/explore" className="btn btn--on-dark">
-              <EditableLabel contentKey="community.closing.primary_label" value={t("community.closing.primary_label", "Explore Gatherings")} />
-            </Link>
-            <JoinCommunityButton className="btn btn--ghost-dark" />
+      <div className="section">
+        <div className="container">
+          <div className="cta-banner section--dark" style={{ textAlign: "center" }}>
+            <EditableHeading
+              hero
+              as="h2"
+              contentKey="community.closing.heading"
+              value={t("community.closing.heading", "Ready to find your circle?")}
+              className="h2"
+            />
+            <div className="row wrap gap-16" style={{ justifyContent: "center", marginTop: 22 }}>
+              <Link href="/explore" className="btn btn--on-dark">
+                <EditableLabel contentKey="community.closing.primary_label" value={t("community.closing.primary_label", "Explore Gatherings")} />
+              </Link>
+              <JoinCommunityButton className="btn btn--ghost-dark" />
+            </div>
           </div>
         </div>
       </div>
