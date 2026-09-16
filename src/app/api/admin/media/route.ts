@@ -5,7 +5,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { SITE_IMAGES_BUCKET } from "@/lib/content/getPageMedia";
 import { pathsForPageKey } from "@/lib/content/pagePaths";
 
-const KEY_RE = /^[a-z0-9_]+(\.[a-z0-9_]+)+$/i;
+const KEY_RE = /^[a-z0-9_-]+(\.[a-z0-9_-]+)+$/i;
 const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
