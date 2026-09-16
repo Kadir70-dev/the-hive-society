@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CommunitySignupForm } from "@/components/forms/CommunitySignupForm";
+import { MembershipCheckoutForm } from "@/components/forms/MembershipCheckoutForm";
 import { membershipFaqs } from "@/data/faqs";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
@@ -129,9 +130,9 @@ export default async function MembershipPage() {
                   </li>
                 ))}
               </ul>
-              <a href="#join-form" className="btn btn--primary" style={{ alignSelf: "flex-start", marginTop: 8 }}>
-                <EditableLabel contentKey="membership.premium_tier.button_label" value={t("membership.premium_tier.button_label", "Join the Hive")} />
-              </a>
+              <div style={{ marginTop: 8, width: "100%" }}>
+                <MembershipCheckoutForm />
+              </div>
             </div>
           </div>
         </div>

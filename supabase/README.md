@@ -8,6 +8,8 @@ This project has three separate Supabase domains — don't mix their data models
   marketing site, covered in its own section below.
 - **Gatherings** (`0003_gatherings.sql`) — the Explore Gatherings cards,
   covered in its own section below.
+- **Memberships** (`0004_memberships.sql`) — paid membership via Ziina,
+  covered in its own section below.
 
 ## Community applications
 
@@ -146,3 +148,70 @@ safe to re-run any time (`ignoreDuplicates` on `slug`).
 Admins get a "Gatherings" link in the same bottom-right toolbar as
 "Community". `/admin/gatherings` lists every card (including unpublished
 ones) with Add / Edit / Delete.
+
+## Memberships (Ziina)
+
+Paid membership on `/membership`, processed by [Ziina](https://ziina.com),
+the UAE payment app. Two plans, both defined as plain constants in
+`src/data/membershipPlans.ts` — edit the file and redeploy to change price
+or copy, no migration needed.
+
+**Important limitation:** Ziina's public API is a single-shot Payment
+Intent, not a subscription product — there is no documented way to save a
+card and auto-charge it again next cycle. "Monthly" therefore means: the
+member pays now, `members.current_period_end` is set 30 days out, and when
+it lapses someone (Meera, or a future reminder job) has to send them a fresh
+checkout link. It is not silent auto-renewal — don't market it as one.
+
+### 1. Run the migration
+
+Run `migrations/0004_memberships.sql` in the SQL editor. It creates
+`members` (one row per person who has started a checkout) and
+`membership_payments` (one row per Ziina Payment Intent — a monthly member
+accumulates one per cycle). Same RLS pattern as every other table here:
+enabled, zero anon/authenticated policies, service-role only.
+
+### 2. Get a Ziina API key
+
+Generate an access token at
+[docs.ziina.com/developers/custom-integration](https://docs.ziina.com/developers/custom-integration)
+(phone/OTP/email — instant, shown only once). Add it to `.env.local` and to
+the Netlify site's environment variables as `ZIINA_API_KEY`. Leave
+`ZIINA_TEST_MODE=true` until you're ready to take real payments — Ziina's
+test mode accepts any card and makes no real charge.
+
+### 3. Register the webhook
+
+```
+node supabase/scripts/register_ziina_webhook.mjs
+```
+
+Registers `https://<your-site>/api/webhooks/ziina` with Ziina and prints a
+signing secret — add that to `.env.local` / Netlify as
+`ZIINA_WEBHOOK_SECRET`. **The webhook, not the success-page redirect, is
+what marks a membership active** — anyone can hit the success URL without
+paying, so it only ever shows a status message, never grants membership
+itself.
+
+The exact webhook signature header wasn't available in Ziina's public docs
+at build time — `SIGNATURE_HEADER` in
+`src/app/api/webhooks/ziina/route.ts` is a best guess (`ziina-signature`).
+Send one test-mode payment, log the incoming request headers, and correct
+that constant if it doesn't match — everything else in the handler stays
+the same.
+
+### 4. Checking on members
+
+Admins get a "Members" link in the toolbar. `/admin/members` lists everyone
+who has started a checkout, their plan, status, renewal date, and full
+payment history, plus a manual "Mark active" override for the rare case a
+payment is confirmed in the Ziina dashboard but the webhook never arrived.
+
+### Not yet built
+
+A member-facing login so someone can see their own membership status
+without asking Meera — designed to reuse the existing Supabase Auth session
+helper (`src/lib/supabase/server.ts`) via a passwordless magic-link, same
+underlying mechanism as admin login just without the `admin_users`
+allow-list. Deliberately left for a follow-up pass once the payment flow
+above is live and confirmed working.
