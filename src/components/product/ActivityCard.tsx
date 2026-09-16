@@ -6,9 +6,11 @@ import type { Experience } from "@/data/types";
 interface ActivityCardProps {
   experience: Experience;
   onSelect: (id: string) => void;
+  /** Rendered inside the photo area, e.g. an admin "Edit" control in Edit Mode. */
+  adminOverlay?: React.ReactNode;
 }
 
-export function ActivityCard({ experience, onSelect }: ActivityCardProps) {
+export function ActivityCard({ experience, onSelect, adminOverlay }: ActivityCardProps) {
   return (
     <button className="event-card" onClick={() => onSelect(experience.id)}>
       <div className="event-card__photo">
@@ -24,6 +26,7 @@ export function ActivityCard({ experience, onSelect }: ActivityCardProps) {
           {experience.category}
         </span>
         <span className="event-card__pill event-card__pill--price">{experience.price}</span>
+        {adminOverlay}
       </div>
       <div className="event-card__body">
         <h3 className="event-card__title">{experience.title}</h3>

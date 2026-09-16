@@ -104,7 +104,8 @@ export function ExploreGrid({ experiences: initialExperiences }: ExploreGridProp
       <EventModal experience={selected} onClose={() => setOpenId(null)} />
       {formTarget && (
         <GatheringForm
-          gathering={formTarget === "new" ? null : experienceToGathering(formTarget)}
+          gathering={formTarget === "new" ? null : experienceToGathering(formTarget, "marketing")}
+          surface="marketing"
           onClose={() => setFormTarget(null)}
           onSaved={handleSaved}
           onDeleted={handleDeleted}

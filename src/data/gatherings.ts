@@ -5,6 +5,8 @@ export const GATHERING_CATEGORIES: ExperienceCategory[] = ["Move", "Gather", "Le
 /** Shape of a row in the `gatherings` Supabase table — the DB-backed source
  * for the public /explore page, editable via /admin/gatherings and inline
  * on /explore itself (see ExploreGrid.tsx). */
+export type GatheringSurface = "marketing" | "app";
+
 export interface Gathering {
   id: string;
   slug: string;
@@ -23,6 +25,7 @@ export interface Gathering {
   description: string;
   display_order: number;
   is_published: boolean;
+  surface: GatheringSurface;
 }
 
 export function gatheringToExperience(g: Gathering): Experience {
@@ -45,10 +48,12 @@ export function gatheringToExperience(g: Gathering): Experience {
 }
 
 /** Inverse of the above, used to seed the edit form when editing a card
- * inline from /explore, where only the public `Experience` shape is on
- * hand. `is_published` defaults true (the public page only ever shows
- * published rows) and `image_alt`/`display_order` aren't user-editable. */
-export function experienceToGathering(e: Experience): Gathering {
+ * inline from /explore or /app/explore, where only the public `Experience`
+ * shape is on hand. `is_published` defaults true (the public page only ever
+ * shows published rows) and `image_alt`/`display_order` aren't user-editable.
+ * `surface` must be passed explicitly by the caller — it decides which page
+ * a newly created gathering appears on (see AppExploreGrid vs ExploreGrid). */
+export function experienceToGathering(e: Experience, surface: GatheringSurface = "marketing"): Gathering {
   return {
     id: e.id,
     slug: e.slug,
@@ -67,5 +72,6 @@ export function experienceToGathering(e: Experience): Gathering {
     description: e.description,
     display_order: 0,
     is_published: true,
+    surface,
   };
 }

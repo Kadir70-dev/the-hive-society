@@ -4,9 +4,11 @@ import { requireAdminSession } from "@/lib/admin/session";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { SITE_IMAGES_BUCKET } from "@/lib/content/getPageMedia";
 import { pathsForPageKey } from "@/lib/content/pagePaths";
+import type { GatheringSurface } from "@/data/gatherings";
 import type { ExperienceCategory } from "@/data/types";
 
 const CATEGORIES: ExperienceCategory[] = ["Move", "Gather", "Learn", "Celebrate", "Unwind", "Explore"];
+const SURFACES: GatheringSurface[] = ["marketing", "app"];
 const ALLOWED_IMAGE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
@@ -88,6 +90,10 @@ export async function POST(req: NextRequest) {
   const description = String(form.get("description") ?? "").trim().slice(0, 2000);
   const isPublished = String(form.get("is_published") ?? "true") !== "false";
   const slugInput = slugify(String(form.get("slug") ?? "") || title);
+  const surfaceInput = String(form.get("surface") ?? "marketing");
+  const surface: GatheringSurface = SURFACES.includes(surfaceInput as GatheringSurface)
+    ? (surfaceInput as GatheringSurface)
+    : "marketing";
   const file = form.get("file");
 
   if (!title || !organiser || !area || !dateLabel || !priceLabel) {
@@ -124,7 +130,10 @@ export async function POST(req: NextRequest) {
   }
   const { data: pub } = admin.storage.from(SITE_IMAGES_BUCKET).getPublicUrl(storagePath);
 
-  const { count } = await admin.from("gatherings").select("id", { count: "exact", head: true });
+  const { count } = await admin
+    .from("gatherings")
+    .select("id", { count: "exact", head: true })
+    .eq("surface", surface);
 
   const { data: row, error: insertError } = await admin
     .from("gatherings")
@@ -144,6 +153,7 @@ export async function POST(req: NextRequest) {
       description,
       display_order: count ?? 0,
       is_published: isPublished,
+      surface,
       updated_by: session.userId,
     })
     .select("*")
@@ -154,7 +164,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Could not create gathering." }, { status: 500 });
   }
 
-  for (const path of pathsForPageKey("explore")) revalidatePath(path);
+  for (const path of pathsForPageKey(surface === "app" ? "app-explore" : "explore")) revalidatePath(path);
 
   return NextResponse.json({ gathering: row });
 }

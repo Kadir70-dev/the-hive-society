@@ -75,7 +75,7 @@ export function GatheringsClient() {
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ textAlign: "left", borderBottom: "1px solid var(--line)" }}>
-              {["", "Title", "Category", "Area", "Date", "Published", ""].map((h) => (
+              {["", "Title", "Surface", "Category", "Area", "Date", "Published", ""].map((h) => (
                 <th key={h} className="small text-2" style={{ padding: "12px 16px" }}>
                   {h}
                 </th>
@@ -85,14 +85,14 @@ export function GatheringsClient() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={7} className="small text-2" style={{ padding: 16 }}>
+                <td colSpan={8} className="small text-2" style={{ padding: 16 }}>
                   Loading…
                 </td>
               </tr>
             )}
             {!loading && gatherings.length === 0 && (
               <tr>
-                <td colSpan={7} className="small text-2" style={{ padding: 16 }}>
+                <td colSpan={8} className="small text-2" style={{ padding: 16 }}>
                   No gatherings yet.
                 </td>
               </tr>
@@ -106,6 +106,7 @@ export function GatheringsClient() {
                     </div>
                   </td>
                   <td style={{ padding: "12px 16px", fontWeight: 600 }}>{g.title}</td>
+                  <td style={{ padding: "12px 16px" }} className="small text-2">{g.surface === "app" ? "App" : "Marketing"}</td>
                   <td style={{ padding: "12px 16px" }} className="small text-2">{g.category}</td>
                   <td style={{ padding: "12px 16px" }} className="small text-2">{g.area}</td>
                   <td style={{ padding: "12px 16px" }} className="small text-2">{g.date_label}</td>

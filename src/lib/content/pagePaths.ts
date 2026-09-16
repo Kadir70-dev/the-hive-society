@@ -5,6 +5,7 @@ export const PAGE_PATHS: Record<string, string> = {
   membership: "/membership",
   about: "/about",
   explore: "/explore",
+  "app-explore": "/app/explore",
 };
 
 /** Every route that renders the shared marketing Header/Footer (nav, footer,

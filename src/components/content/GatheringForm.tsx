@@ -3,17 +3,20 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { Modal } from "@/components/ui/Modal";
-import { GATHERING_CATEGORIES, type Gathering } from "@/data/gatherings";
+import { GATHERING_CATEGORIES, type Gathering, type GatheringSurface } from "@/data/gatherings";
 import type { ExperienceCategory } from "@/data/types";
 
 interface GatheringFormProps {
   gathering: Gathering | null; // null = creating a new one
+  /** Which page a newly created gathering appears on. Ignored when editing
+   * an existing gathering — surface is fixed at creation. */
+  surface?: GatheringSurface;
   onClose: () => void;
   onSaved: (gathering: Gathering) => void;
   onDeleted?: (id: string) => void;
 }
 
-export function GatheringForm({ gathering, onClose, onSaved, onDeleted }: GatheringFormProps) {
+export function GatheringForm({ gathering, surface = "marketing", onClose, onSaved, onDeleted }: GatheringFormProps) {
   const isNew = !gathering;
   const [title, setTitle] = useState(gathering?.title ?? "");
   const [slug, setSlug] = useState(gathering?.slug ?? "");
@@ -48,6 +51,7 @@ export function GatheringForm({ gathering, onClose, onSaved, onDeleted }: Gather
     const form = new FormData();
     form.append("title", title);
     if (isNew && slug) form.append("slug", slug);
+    if (isNew) form.append("surface", surface);
     form.append("category", category);
     form.append("organiser", organiser);
     form.append("area", area);

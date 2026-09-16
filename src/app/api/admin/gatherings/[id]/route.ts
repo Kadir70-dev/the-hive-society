@@ -105,7 +105,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     return NextResponse.json({ error: "Could not update gathering." }, { status: 500 });
   }
 
-  for (const path of pathsForPageKey("explore")) revalidatePath(path);
+  for (const path of pathsForPageKey(row.surface === "app" ? "app-explore" : "explore")) revalidatePath(path);
 
   return NextResponse.json({ gathering: row });
 }
@@ -123,14 +123,19 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   }
 
   const admin = getSupabaseAdmin();
-  const { error } = await admin.from("gatherings").delete().eq("id", id);
+  const { data: deleted, error } = await admin
+    .from("gatherings")
+    .delete()
+    .eq("id", id)
+    .select("surface")
+    .maybeSingle();
 
   if (error) {
     console.error("[admin/gatherings/:id] delete failed");
     return NextResponse.json({ error: "Could not delete gathering." }, { status: 500 });
   }
 
-  for (const path of pathsForPageKey("explore")) revalidatePath(path);
+  for (const path of pathsForPageKey(deleted?.surface === "app" ? "app-explore" : "explore")) revalidatePath(path);
 
   return NextResponse.json({ ok: true });
 }

@@ -1,19 +1,44 @@
-import Image from "next/image";
+import { EditableImage } from "@/components/content/EditableImage";
+import { EditableLabel, EditableHeading } from "@/components/content/EditableText";
+import { resolveMedia } from "@/lib/content/getPageMedia";
+import type { ResolvedMedia } from "@/lib/content/types";
 
-export function AppHero() {
+interface AppHeroProps {
+  content: Record<string, string>;
+  media: Record<string, ResolvedMedia>;
+}
+
+export function AppHero({ content, media }: AppHeroProps) {
+  const t = (key: string, fallback: string) => content[key] ?? fallback;
+  const background = resolveMedia(media, "app-explore.hero.background", {
+    url: "/images/introhive.jpg",
+    alt: "Women sharing Arabic coffee at a Hive gathering",
+  });
+
   return (
     <div className="app-hero">
-      <Image
-        src="/images/introhive.jpg"
-        alt="Women sharing Arabic coffee at a Hive gathering"
-        fill
+      <EditableImage
+        mediaKey="app-explore.hero.background"
+        src={background.url}
+        alt={background.alt}
+        objectPosition={background.objectPosition}
         sizes="100vw"
-        style={{ objectFit: "cover" }}
         priority
       />
       <div className="app-hero__inner">
-        <span className="app-hero__tag">Abu Dhabi Chapter</span>
-        <h1 className="app-hero__headline">No one has to show up alone</h1>
+        <EditableLabel
+          contentKey="app-explore.hero.tag"
+          value={t("app-explore.hero.tag", "Abu Dhabi Chapter")}
+          className="app-hero__tag"
+          hero
+        />
+        <EditableHeading
+          as="h1"
+          contentKey="app-explore.hero.headline"
+          value={t("app-explore.hero.headline", "No one has to show up alone")}
+          className="app-hero__headline"
+          hero
+        />
       </div>
     </div>
   );
