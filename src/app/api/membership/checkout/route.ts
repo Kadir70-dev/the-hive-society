@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { createZiinaPaymentIntent } from "@/lib/ziina/client";
 import { MEMBERSHIP_PLANS, isMembershipPlanId } from "@/data/membershipPlans";
+import { getPageContent, resolve } from "@/lib/content/getPageContent";
 import { siteUrl } from "@/lib/site";
 
 function isValidEmail(email: string): boolean {
@@ -27,12 +28,22 @@ export async function POST(req: NextRequest) {
   }
 
   const plan = MEMBERSHIP_PLANS[planId];
+
+  // The admin can edit the live price from the Membership page (Edit Mode),
+  // so the actual charge must be read from site_content here rather than
+  // trusting the hardcoded default — this is the one place that determines
+  // what a member is really billed.
+  const content = await getPageContent("membership");
+  const amountRaw = resolve(content, "membership.plan.amount_aed", String(plan.amountAed));
+  const amountAed = Number(amountRaw) > 0 ? Number(amountRaw) : plan.amountAed;
+  const label = resolve(content, "membership.plan.label", plan.label);
+
   const admin = getSupabaseAdmin();
 
   const { data: member, error: memberError } = await admin
     .from("members")
     .upsert(
-      { email, full_name: fullName, plan: plan.id, amount_aed: plan.amountAed, status: "pending" },
+      { email, full_name: fullName, plan: plan.id, amount_aed: amountAed, status: "pending" },
       { onConflict: "email" }
     )
     .select("id")
@@ -46,10 +57,10 @@ export async function POST(req: NextRequest) {
   let intent;
   try {
     intent = await createZiinaPaymentIntent({
-      amountAed: plan.amountAed,
+      amountAed,
       successUrl: `${siteUrl}/membership/success?pi={PAYMENT_INTENT_ID}`,
       cancelUrl: `${siteUrl}/membership?canceled=1`,
-      message: `The Hive Society — ${plan.label}`,
+      message: `The Hive Society — ${label}`,
     });
   } catch (err) {
     console.error("[membership/checkout] Ziina intent creation failed", err);
@@ -60,7 +71,7 @@ export async function POST(req: NextRequest) {
     member_id: member.id,
     ziina_payment_intent_id: intent.id,
     plan: plan.id,
-    amount_aed: plan.amountAed,
+    amount_aed: amountAed,
     status: "pending",
   });
 

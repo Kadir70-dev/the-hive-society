@@ -1,4 +1,4 @@
-export type MembershipPlanId = "one_time" | "monthly";
+export type MembershipPlanId = "one_time";
 
 export interface MembershipPlan {
   id: MembershipPlanId;
@@ -16,15 +16,8 @@ export const MEMBERSHIP_PLANS: Record<MembershipPlanId, MembershipPlan> = {
     cadenceLabel: "one-time",
     description: "Pay once — membership never expires.",
   },
-  monthly: {
-    id: "monthly",
-    label: "Monthly Membership",
-    amountAed: 49,
-    cadenceLabel: "per month",
-    description: "Billed monthly — you'll get a fresh payment link each cycle, nothing auto-charges.",
-  },
 };
 
 export function isMembershipPlanId(value: unknown): value is MembershipPlanId {
-  return value === "one_time" || value === "monthly";
+  return value === "one_time";
 }

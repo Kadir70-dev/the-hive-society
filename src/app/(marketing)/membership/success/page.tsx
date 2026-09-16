@@ -37,7 +37,7 @@ export default async function MembershipSuccessPage({
     },
     pending: {
       title: "Almost there.",
-      body: "We're still confirming your payment with Ziina — this usually takes a few seconds. Refresh this page shortly, or check your email for confirmation.",
+      body: "We're still confirming your payment — this usually takes a few seconds. Refresh this page shortly, or check your email for confirmation.",
     },
     failed: {
       title: "That payment didn't go through.",

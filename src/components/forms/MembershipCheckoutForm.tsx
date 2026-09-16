@@ -1,14 +1,11 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { MEMBERSHIP_PLANS, type MembershipPlanId } from "@/data/membershipPlans";
 
-export function MembershipCheckoutForm() {
-  const [plan, setPlan] = useState<MembershipPlanId>("one_time");
+export function MembershipCheckoutForm({ amountAed }: { amountAed: number }) {
+  const plan = "one_time" as const;
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [error, setError] = useState("");
-
-  const selected = MEMBERSHIP_PLANS[plan];
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,20 +39,6 @@ export function MembershipCheckoutForm() {
 
   return (
     <form className="stack gap-14" onSubmit={handleSubmit}>
-      <div className="pill-row">
-        {(Object.values(MEMBERSHIP_PLANS)).map((p) => (
-          <button
-            key={p.id}
-            type="button"
-            className={`chip${plan === p.id ? " is-active" : ""}`}
-            onClick={() => setPlan(p.id)}
-          >
-            {p.label} — AED {p.amountAed}
-          </button>
-        ))}
-      </div>
-      <p className="small text-3">{selected.description}</p>
-
       <div className="field">
         <label htmlFor="mcFullName">Full name</label>
         <input id="mcFullName" name="fullName" required maxLength={120} />
@@ -72,7 +55,7 @@ export function MembershipCheckoutForm() {
       )}
 
       <button type="submit" className="btn btn--primary" disabled={status === "submitting"}>
-        {status === "submitting" ? "Redirecting to payment…" : `Pay AED ${selected.amountAed} with Ziina`}
+        {status === "submitting" ? "Redirecting to payment…" : `Pay AED ${amountAed}`}
       </button>
     </form>
   );

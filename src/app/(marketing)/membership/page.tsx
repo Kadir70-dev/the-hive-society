@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { CommunitySignupForm } from "@/components/forms/CommunitySignupForm";
 import { MembershipCheckoutForm } from "@/components/forms/MembershipCheckoutForm";
 import { membershipFaqs } from "@/data/faqs";
+import { MEMBERSHIP_PLANS } from "@/data/membershipPlans";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
 
@@ -15,6 +16,10 @@ export const metadata: Metadata = {
 export default async function MembershipPage() {
   const content = await getPageContent("membership");
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
+
+  const plan = MEMBERSHIP_PLANS.one_time;
+  const planAmountRaw = t("membership.plan.amount_aed", String(plan.amountAed));
+  const planAmountAed = Number(planAmountRaw) > 0 ? Number(planAmountRaw) : plan.amountAed;
 
   return (
     <>
@@ -130,8 +135,30 @@ export default async function MembershipPage() {
                   </li>
                 ))}
               </ul>
+              <div className="stack gap-4" style={{ marginTop: 8 }}>
+                <EditableLabel
+                  contentKey="membership.plan.label"
+                  value={t("membership.plan.label", plan.label)}
+                  className="h4"
+                />
+                <EditableText
+                  as="p"
+                  multiline
+                  contentKey="membership.plan.description"
+                  value={t("membership.plan.description", plan.description)}
+                  className="text-2 small"
+                />
+                <div className="small text-3" style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                  AED{" "}
+                  <EditableLabel
+                    contentKey="membership.plan.amount_aed"
+                    value={planAmountRaw}
+                    className="h3"
+                  />
+                </div>
+              </div>
               <div style={{ marginTop: 8, width: "100%" }}>
-                <MembershipCheckoutForm />
+                <MembershipCheckoutForm amountAed={planAmountAed} />
               </div>
             </div>
           </div>
