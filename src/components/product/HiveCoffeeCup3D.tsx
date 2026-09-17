@@ -9,13 +9,14 @@ import { prefersReducedMotion, onReducedMotionChange } from "@/lib/animation/red
 const MODEL_URL = "/models/hive-coffee-cup.glb";
 const AUTO_ROTATE_SPEED = 2.1; // ~ -0.22 rad/s, matches three.js's "seconds per orbit at 60fps" scale
 const REDUCED_MOTION_SPIN_FACTOR = 0.3; // crawl, don't freeze, under prefers-reduced-motion
-const TARGET_HEIGHT = 2.05; // normalized scene height — camera math stays valid regardless of raw model size
+const TARGET_HEIGHT = 1.80; // normalized scene height — reduced from 2.05 so the tilted lid clears the frame
+const DOWN_SHIFT = 0.12; // nudges the model down within the frame, adding headroom above the lid
 
 // Camera starts at a 26° azimuth for a 3/4 view (not a flat front-on shot)
 // and a 70° polar angle (a gentle downward look, per three.js convention
 // where 90° is dead-on eye-level and 0° is straight down) so the lid and
 // cup rim are visible by default, not just the side wall.
-const ORBIT_DISTANCE = 5.3;
+const ORBIT_DISTANCE = 5.5;
 const INITIAL_POLAR_DEG = 70;
 const INITIAL_AZIMUTH_DEG = 26;
 const LEAN_TILT_DEG = 7; // slight static lean to the left, product-shot style
@@ -43,6 +44,7 @@ function useAutoFramedScene(source: THREE.Object3D) {
     model.position.sub(center);
     const scale = size.y > 0 ? TARGET_HEIGHT / size.y : 1;
     model.scale.setScalar(scale);
+    model.position.y -= DOWN_SHIFT;
     return model;
   }, [source]);
 }
@@ -56,7 +58,7 @@ function HiveCupModel() {
 /** Placeholder shown until public/models/hive-coffee-cup.glb loads (or if it errors). */
 function FallbackCup() {
   return (
-    <group>
+    <group scale={0.878} position={[0, -DOWN_SHIFT / 0.878, 0]}>
       <mesh position={[0, -0.15, 0]}>
         <cylinderGeometry args={[0.55, 0.42, 1.7, 24]} />
         <meshStandardMaterial color="#f8f4ea" roughness={0.75} />
@@ -116,7 +118,7 @@ export function HiveCoffeeCup3D() {
             <HiveCupModel />
           </ModelErrorBoundary>
         </group>
-        <ContactShadows position={[0, -1.03, 0]} opacity={0.38} scale={4} blur={2.6} far={1.4} color="#160d09" />
+        <ContactShadows position={[0, -1.02, 0]} opacity={0.38} scale={4} blur={2.6} far={1.4} color="#160d09" />
       </Suspense>
       <OrbitControls
         makeDefault
