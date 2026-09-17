@@ -10,6 +10,7 @@ import { RevealHeading } from "@/components/effects/RevealHeading";
 import { RevealPhotoCard } from "@/components/effects/RevealPhotoCard";
 import { ParallaxSection } from "@/components/effects/ParallaxSection";
 import { MagneticButton } from "@/components/effects/MagneticButton";
+import { HiveCoffeeCup3D } from "@/components/product/HiveCoffeeCup3D";
 import { MoreThanAClubBackground } from "@/components/backgrounds/production/MoreThanAClubBackground";
 import { WhatSetsUsApartBackground } from "@/components/backgrounds/production/WhatSetsUsApartBackground";
 import { ConstellationSoftPullVariant } from "@/components/backgrounds/interactive/ConstellationSoftPullVariant";
@@ -91,6 +92,43 @@ export default async function HomePage() {
               <span aria-hidden="true">→</span>
             </JoinCommunityButton>
           </MagneticButton>
+        </div>
+      </section>
+
+      {/* PRIVILEGE OF GOOD COMPANY — copy on the left, a 360°-rotating
+          3D product (public/models/coffee-box.glb) on the right, staged
+          on a transparent overflow:visible canvas so it reads as floating
+          past the section rather than boxed in a photo frame. */}
+      <section className="section">
+        <div className="container">
+          <div className="split split--40-60" style={{ alignItems: "center" }}>
+            <div className="stack gap-16">
+              <EditableLabel
+                contentKey="home.coffee.eyebrow"
+                value={t("home.coffee.eyebrow", "Good Mornings")}
+                className="eyebrow"
+              />
+              <EditableHeading
+                as="h2"
+                contentKey="home.coffee.heading"
+                value={t("home.coffee.heading", "The privilege of good company")}
+                className="h2"
+              />
+              <EditableText
+                as="p"
+                multiline
+                contentKey="home.coffee.body"
+                value={t(
+                  "home.coffee.body",
+                  "Slow mornings, cold coffee, and the people who make both worth showing up for."
+                )}
+                className="text-2"
+              />
+            </div>
+            <div className="product-stage">
+              <HiveCoffeeCup3D />
+            </div>
+          </div>
         </div>
       </section>
 

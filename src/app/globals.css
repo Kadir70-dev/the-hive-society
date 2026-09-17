@@ -564,6 +564,13 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
   .split--70-30{grid-template-columns:2fr 1fr}
 }
 
+/* 3D product stage — deliberately not `.photo`: no clip, no fill background.
+   Lets the rendered model float past its own bounding box for a
+   coming-out-of-the-screen feel instead of sitting flat behind a frame. */
+.product-stage{position:relative; width:100%; max-width:420px; margin-inline:auto; aspect-ratio:3/4; min-height:280px; overflow:visible}
+@media(min-width:600px){.product-stage{max-width:440px}}
+@media(min-width:960px){.product-stage{aspect-ratio:4/5; max-width:480px}}
+
 /* oversized editorial statement — one per page, not paired with a subhead every time */
 .display-xl{
   font-family:var(--serif); font-weight:600; letter-spacing:-.02em; line-height:.96;
