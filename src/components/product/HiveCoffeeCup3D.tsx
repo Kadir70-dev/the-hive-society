@@ -106,7 +106,7 @@ export function HiveCoffeeCup3D() {
     <Canvas
       dpr={[1, 1.75]}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
-      style={{ width: "100%", height: "100%", touchAction: "pan-y" }}
+      style={{ width: "100%", height: "100%", touchAction: "none" }}
     >
       <PerspectiveCamera makeDefault fov={27} position={START_POSITION} />
       <StudioLighting />
@@ -130,7 +130,7 @@ export function HiveCoffeeCup3D() {
         rotateSpeed={0.6}
         minPolarAngle={THREE.MathUtils.degToRad(32)}
         maxPolarAngle={THREE.MathUtils.degToRad(95)}
-        touches={{ ONE: undefined, TWO: THREE.TOUCH.ROTATE }}
+        touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.ROTATE }}
       />
     </Canvas>
   );
