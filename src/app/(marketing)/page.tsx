@@ -111,7 +111,7 @@ export default async function HomePage() {
               <EditableHeading
                 as="h2"
                 contentKey="home.coffee.heading"
-                value={t("home.coffee.heading", "The privilege of good company")}
+                value={t("home.coffee.heading", "Where good mornings begin")}
                 className="h2"
               />
               <EditableText
