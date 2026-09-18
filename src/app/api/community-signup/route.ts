@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { sendJoinNotification } from "@/lib/email/sendJoinNotification";
 
 const EMIRATES = [
   "Abu Dhabi",
@@ -122,6 +123,16 @@ export async function POST(req: NextRequest) {
     interestCount: interests.length,
     hasArea: Boolean(area),
     submittedAt: new Date().toISOString(),
+  });
+
+  await sendJoinNotification("New community signup — The Hive Society", {
+    Name: fullName,
+    Email: email,
+    Mobile: mobile,
+    Emirate: emirate,
+    ...(area ? { Area: area } : {}),
+    ...(interests.length ? { Interests: interests.join(", ") } : {}),
+    ...(message ? { Message: message } : {}),
   });
 
   return NextResponse.json({ success: true, applicationId: inserted.id });

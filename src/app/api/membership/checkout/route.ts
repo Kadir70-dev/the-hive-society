@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { sendJoinNotification } from "@/lib/email/sendJoinNotification";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
 
   const { data: plan, error: planError } = await admin
     .from("membership_plans")
-    .select("id, key, amount_aed")
+    .select("id, key, name, amount_aed")
     .eq("key", planKey)
     .eq("is_active", true)
     .maybeSingle();
@@ -57,6 +58,13 @@ export async function POST(req: NextRequest) {
     console.error("[membership/checkout] member upsert failed");
     return NextResponse.json({ error: "Could not submit your membership. Please try again." }, { status: 500 });
   }
+
+  await sendJoinNotification(`New ${plan.name} membership request — The Hive Society`, {
+    Name: fullName,
+    Email: email,
+    Plan: plan.name,
+    Amount: `AED ${plan.amount_aed}/mo`,
+  });
 
   return NextResponse.json({ redirectUrl: `/membership/success?plan=${plan.key}` });
 }
