@@ -5,7 +5,11 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { pathsForPageKey } from "@/lib/content/pagePaths";
 import { pageKeyForContentKey } from "@/lib/content/keys";
 
-const KEY_RE = /^[a-z0-9_]+(\.[a-z0-9_]+)+$/i;
+// Hyphens are allowed because content-key prefixes mirror page keys like
+// "app-explore" (see PAGE_PATHS in src/lib/content/pagePaths.ts and
+// pageKeyForContentKey in src/lib/content/keys.ts) — e.g. AppHero.tsx's
+// "app-explore.hero.tag" was always a legal key, just rejected here.
+const KEY_RE = /^[a-z0-9_-]+(\.[a-z0-9_-]+)+$/i;
 
 export async function PATCH(req: NextRequest) {
   let session;

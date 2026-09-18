@@ -4,6 +4,7 @@ import { MembershipCheckoutForm } from "@/components/forms/MembershipCheckoutFor
 import { membershipFaqs } from "@/data/faqs";
 import { getMembershipPlans } from "@/lib/content/getMembershipPlans";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
+import { EditablePlanValue, EditablePlanFeatures } from "@/components/content/EditablePlanField";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
 
 export const metadata: Metadata = {
@@ -79,19 +80,13 @@ export default async function MembershipPage() {
                     : { padding: 32 }
                 }
               >
-                <span className="eyebrow">{plan.name}</span>
+                <EditablePlanValue planId={plan.id} field="name" value={plan.name} as="span" className="eyebrow" />
                 <h3 className="h3">
-                  AED {plan.amountAed}
+                  AED <EditablePlanValue planId={plan.id} field="amount_aed" value={plan.amountAed} as="span" />
                   <span className="small text-2">/mo</span>
                 </h3>
-                <p className="text-2 small">{plan.tagline}</p>
-                <ul className="stack gap-10" style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
-                  {plan.features.map((feature) => (
-                    <li className="small" key={feature}>
-                      ✓ {feature}
-                    </li>
-                  ))}
-                </ul>
+                <EditablePlanValue planId={plan.id} field="tagline" value={plan.tagline} as="p" className="text-2 small" />
+                <EditablePlanFeatures planId={plan.id} features={plan.features} />
                 <div style={{ marginTop: 8, width: "100%" }}>
                   <MembershipCheckoutForm planKey={plan.key} amountAed={plan.amountAed} />
                 </div>
