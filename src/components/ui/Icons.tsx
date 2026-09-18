@@ -134,6 +134,16 @@ export function CloseIcon(props: IconProps) {
   );
 }
 
+export function InstagramIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17" cy="7" r="0.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 import type { ExperienceCategory } from "@/data/types";
 
 export function CategoryIcon({ category, ...props }: { category: ExperienceCategory } & IconProps) {

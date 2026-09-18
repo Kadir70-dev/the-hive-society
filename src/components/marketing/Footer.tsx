@@ -6,6 +6,7 @@ import { EditableText, EditableLabel } from "@/components/content/EditableText";
 import { useGlobalContent } from "@/components/content/GlobalContentProvider";
 import { resolve } from "@/lib/content/resolve";
 import { FooterBackground } from "@/components/backgrounds/production/FooterBackground";
+import { InstagramIcon } from "@/components/ui/Icons";
 
 export function Footer() {
   const content = useGlobalContent();
@@ -44,8 +45,14 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <EditableLabel as="span" contentKey="footer.copyright" value={t("footer.copyright", "© 2026 The Hive Society, Abu Dhabi, UAE")} />
-          <a href="https://www.instagram.com/thehivesociety.ae" target="_blank" rel="noopener noreferrer">
-            Instagram
+          <a
+            href="https://www.instagram.com/thehivesociety.ae"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="The Hive Society on Instagram"
+            style={{ display: "inline-flex", alignItems: "center" }}
+          >
+            <InstagramIcon width={20} height={20} />
           </a>
           <span>
             {footerLegalLinks.map((link, i) => (
