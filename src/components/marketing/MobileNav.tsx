@@ -51,12 +51,9 @@ export function MobileNav({ open, onClose, onOpenSignIn }: MobileNavProps) {
         >
           Join the Community
         </button>
-        {/* Member login temporarily hidden — code kept in place to re-enable later. */}
-        {false && (
-          <button className="btn btn--outline btn--block" onClick={onOpenSignIn}>
-            <EditableLabel contentKey="nav.open_app" value={resolve(content, "nav.open_app", "Open App")} />
-          </button>
-        )}
+        <button className="btn btn--outline btn--block" onClick={onOpenSignIn}>
+          <EditableLabel contentKey="nav.open_app" value={resolve(content, "nav.open_app", "Open App")} />
+        </button>
       </div>
     </div>
   );

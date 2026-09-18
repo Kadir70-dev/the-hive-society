@@ -39,12 +39,9 @@ export function Header() {
             })}
           </nav>
           <div className="header-cta">
-            {/* Member login temporarily hidden — code kept in place to re-enable later. */}
-            {false && (
-              <button className="signin" onClick={() => setSignInOpen(true)}>
-                <EditableLabel contentKey="nav.open_app" value={resolve(globalContent, "nav.open_app", "Open App")} />
-              </button>
-            )}
+            <button className="signin" onClick={() => setSignInOpen(true)}>
+              <EditableLabel contentKey="nav.open_app" value={resolve(globalContent, "nav.open_app", "Open App")} />
+            </button>
             <JoinCommunityButton className="btn btn--primary btn--sm" />
           </div>
           <button
