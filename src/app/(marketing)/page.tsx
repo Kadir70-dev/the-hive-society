@@ -98,39 +98,42 @@ export default async function HomePage() {
       {/* PRIVILEGE OF GOOD COMPANY — copy on the left, a 360°-rotating
           3D product (public/models/coffee-box.glb) on the right, staged
           on a transparent overflow:visible canvas so it reads as floating
-          past the section rather than boxed in a photo frame. */}
-      <section className="section">
-        <div className="container">
-          <div className="split split--40-60" style={{ alignItems: "center" }}>
-            <div className="stack gap-16">
-              <EditableLabel
-                contentKey="home.coffee.eyebrow"
-                value={t("home.coffee.eyebrow", "Good Mornings")}
-                className="eyebrow"
-              />
-              <EditableHeading
-                as="h2"
-                contentKey="home.coffee.heading"
-                value={t("home.coffee.heading", "Where good mornings begin")}
-                className="h2"
-              />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="home.coffee.body"
-                value={t(
-                  "home.coffee.body",
-                  "Slow mornings, cold coffee, and the people who make both worth showing up for."
-                )}
-                className="text-2"
-              />
-            </div>
-            <div className="product-stage">
-              <HiveCoffeeCup3D />
+          past the section rather than boxed in a photo frame.
+          Temporarily disabled — re-enable by flipping `false` below to `true`. */}
+      {false && (
+        <section className="section">
+          <div className="container">
+            <div className="split split--40-60" style={{ alignItems: "center" }}>
+              <div className="stack gap-16">
+                <EditableLabel
+                  contentKey="home.coffee.eyebrow"
+                  value={t("home.coffee.eyebrow", "Good Mornings")}
+                  className="eyebrow"
+                />
+                <EditableHeading
+                  as="h2"
+                  contentKey="home.coffee.heading"
+                  value={t("home.coffee.heading", "Where good mornings begin")}
+                  className="h2"
+                />
+                <EditableText
+                  as="p"
+                  multiline
+                  contentKey="home.coffee.body"
+                  value={t(
+                    "home.coffee.body",
+                    "Slow mornings, cold coffee, and the people who make both worth showing up for."
+                  )}
+                  className="text-2"
+                />
+              </div>
+              <div className="product-stage">
+                <HiveCoffeeCup3D />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* MORE THAN A CLUB — centered heading + short lede, then the
           belonging photo gallery (staggered editorial grid).
