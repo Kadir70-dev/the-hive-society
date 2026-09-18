@@ -12,7 +12,7 @@ export async function GET() {
   const admin = getSupabaseAdmin();
   const { data, error } = await admin
     .from("members")
-    .select("*, membership_payments(*)")
+    .select("*, membership_payments(*), membership_plans(key, name, amount_aed, cadence)")
     .order("created_at", { ascending: false });
 
   if (error) {

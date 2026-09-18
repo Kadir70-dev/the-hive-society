@@ -10,16 +10,31 @@ interface Payment {
   created_at: string;
 }
 
+interface PlanRef {
+  key: string;
+  name: string;
+  amount_aed: number;
+  cadence: "monthly" | "annual";
+}
+
 interface Member {
   id: string;
   email: string;
   full_name: string;
   plan: "one_time" | "monthly";
+  plan_id: string | null;
   status: "pending" | "active" | "expired" | "canceled";
   amount_aed: number;
   current_period_end: string | null;
   created_at: string;
   membership_payments: Payment[];
+  membership_plans: PlanRef | null;
+}
+
+interface AvailablePlan {
+  id: string;
+  key: string;
+  name: string;
 }
 
 function formatDate(iso: string | null) {
@@ -36,19 +51,28 @@ const STATUS_COLOR: Record<Member["status"], string> = {
 
 export function MembersClient() {
   const [members, setMembers] = useState<Member[]>([]);
+  const [availablePlans, setAvailablePlans] = useState<AvailablePlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [planDraft, setPlanDraft] = useState<Record<string, string>>({});
 
   const load = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/admin/members");
-      if (!res.ok) throw new Error("failed");
-      const body = await res.json();
-      setMembers(body.members ?? []);
+      const [membersRes, plansRes] = await Promise.all([
+        fetch("/api/admin/members"),
+        fetch("/api/admin/membership-plans"),
+      ]);
+      if (!membersRes.ok) throw new Error("failed");
+      const membersBody = await membersRes.json();
+      setMembers(membersBody.members ?? []);
+      if (plansRes.ok) {
+        const plansBody = await plansRes.json();
+        setAvailablePlans(plansBody.plans ?? []);
+      }
     } catch {
       setError("Could not load members. Please refresh.");
     } finally {
@@ -61,22 +85,36 @@ export function MembersClient() {
     void load();
   }, [load]);
 
-  async function markActive(id: string) {
+  async function updateMember(id: string, patch: Record<string, unknown>) {
     setSavingId(id);
     try {
       const res = await fetch(`/api/admin/members/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "active" }),
+        body: JSON.stringify(patch),
       });
       if (!res.ok) throw new Error("failed");
       const body = await res.json();
-      setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, status: body.member.status } : m)));
+      setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, ...body.member } : m)));
     } catch {
       setError("Could not update that member.");
     } finally {
       setSavingId(null);
     }
+  }
+
+  function markActive(id: string) {
+    return updateMember(id, { status: "active" });
+  }
+
+  function cancelMember(id: string) {
+    return updateMember(id, { status: "canceled" });
+  }
+
+  function reassignPlan(id: string) {
+    const planId = planDraft[id];
+    if (!planId) return Promise.resolve();
+    return updateMember(id, { plan_id: planId });
   }
 
   const activeCount = members.filter((m) => m.status === "active").length;
@@ -106,7 +144,7 @@ export function MembersClient() {
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ textAlign: "left", borderBottom: "1px solid var(--line)" }}>
-              {["Name", "Email", "Plan", "Amount", "Status", "Joined", "Renews", ""].map((h) => (
+              {["Name", "Email", "Tier", "Amount", "Status", "Joined", "Renews", ""].map((h) => (
                 <th key={h} className="small text-2" style={{ padding: "12px 16px" }}>
                   {h}
                 </th>
@@ -138,7 +176,9 @@ export function MembersClient() {
                   >
                     <td style={{ padding: "12px 16px", fontWeight: 600 }}>{m.full_name}</td>
                     <td style={{ padding: "12px 16px" }} className="small text-2">{m.email}</td>
-                    <td style={{ padding: "12px 16px" }} className="small text-2">{m.plan === "one_time" ? "One-time" : "Monthly"}</td>
+                    <td style={{ padding: "12px 16px" }} className="small text-2">
+                      {m.membership_plans?.name ?? (m.plan === "one_time" ? "One-time" : "Monthly")}
+                    </td>
                     <td style={{ padding: "12px 16px" }} className="small text-2">AED {m.amount_aed}</td>
                     <td style={{ padding: "12px 16px" }}>
                       <span className="small" style={{ color: STATUS_COLOR[m.status], fontWeight: 600, textTransform: "capitalize" }}>
@@ -148,35 +188,76 @@ export function MembersClient() {
                     <td style={{ padding: "12px 16px" }} className="small text-2">{formatDate(m.created_at)}</td>
                     <td style={{ padding: "12px 16px" }} className="small text-2">{formatDate(m.current_period_end)}</td>
                     <td style={{ padding: "12px 16px" }}>
-                      {m.status !== "active" && (
-                        <button
-                          type="button"
-                          className="btn btn--outline btn--sm"
-                          disabled={savingId === m.id}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            void markActive(m.id);
-                          }}
-                        >
-                          {savingId === m.id ? "Saving…" : "Mark active"}
-                        </button>
-                      )}
+                      <div className="row gap-8">
+                        {m.status !== "active" && (
+                          <button
+                            type="button"
+                            className="btn btn--outline btn--sm"
+                            disabled={savingId === m.id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              void markActive(m.id);
+                            }}
+                          >
+                            {savingId === m.id ? "Saving…" : "Mark active"}
+                          </button>
+                        )}
+                        {m.status !== "canceled" && (
+                          <button
+                            type="button"
+                            className="btn btn--outline btn--sm"
+                            disabled={savingId === m.id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              void cancelMember(m.id);
+                            }}
+                          >
+                            {savingId === m.id ? "Saving…" : "Cancel"}
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                   {expandedId === m.id && (
                     <tr key={`${m.id}-detail`} style={{ borderBottom: "1px solid var(--line)", background: "var(--bg-alt)" }}>
                       <td colSpan={8} style={{ padding: "12px 16px" }}>
-                        <div className="stack gap-6">
-                          <span className="small text-2" style={{ fontWeight: 600 }}>Payment history</span>
-                          {m.membership_payments.length === 0 && <span className="small text-3">No payments recorded.</span>}
-                          {m.membership_payments.map((p) => (
-                            <div key={p.id} className="row gap-16 small text-2">
-                              <span className="mono">{p.ziina_payment_intent_id}</span>
-                              <span>AED {p.amount_aed}</span>
-                              <span style={{ textTransform: "capitalize" }}>{p.status}</span>
-                              <span>{formatDate(p.created_at)}</span>
-                            </div>
-                          ))}
+                        <div className="stack gap-16">
+                          <div className="row gap-8" style={{ alignItems: "center" }} onClick={(e) => e.stopPropagation()}>
+                            <span className="small text-2" style={{ fontWeight: 600 }}>Reassign tier:</span>
+                            <select
+                              value={planDraft[m.id] ?? m.plan_id ?? ""}
+                              onChange={(e) => setPlanDraft((prev) => ({ ...prev, [m.id]: e.target.value }))}
+                            >
+                              <option value="" disabled>
+                                Select a plan
+                              </option>
+                              {availablePlans.map((p) => (
+                                <option key={p.id} value={p.id}>
+                                  {p.name}
+                                </option>
+                              ))}
+                            </select>
+                            <button
+                              type="button"
+                              className="btn btn--outline btn--sm"
+                              disabled={savingId === m.id || !planDraft[m.id] || planDraft[m.id] === m.plan_id}
+                              onClick={() => void reassignPlan(m.id)}
+                            >
+                              {savingId === m.id ? "Saving…" : "Save"}
+                            </button>
+                          </div>
+                          <div className="stack gap-6">
+                            <span className="small text-2" style={{ fontWeight: 600 }}>Payment history</span>
+                            {m.membership_payments.length === 0 && <span className="small text-3">No payments recorded.</span>}
+                            {m.membership_payments.map((p) => (
+                              <div key={p.id} className="row gap-16 small text-2">
+                                <span className="mono">{p.ziina_payment_intent_id}</span>
+                                <span>AED {p.amount_aed}</span>
+                                <span style={{ textTransform: "capitalize" }}>{p.status}</span>
+                                <span>{formatDate(p.created_at)}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </td>
                     </tr>

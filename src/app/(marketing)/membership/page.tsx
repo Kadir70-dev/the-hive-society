@@ -1,9 +1,8 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { CommunitySignupForm } from "@/components/forms/CommunitySignupForm";
 import { MembershipCheckoutForm } from "@/components/forms/MembershipCheckoutForm";
 import { membershipFaqs } from "@/data/faqs";
-import { MEMBERSHIP_PLANS } from "@/data/membershipPlans";
+import { getMembershipPlans } from "@/lib/content/getMembershipPlans";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
 
@@ -14,12 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function MembershipPage() {
-  const content = await getPageContent("membership");
+  const [content, plans] = await Promise.all([getPageContent("membership"), getMembershipPlans()]);
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
-
-  const plan = MEMBERSHIP_PLANS.one_time;
-  const planAmountRaw = t("membership.plan.amount_aed", String(plan.amountAed));
-  const planAmountAed = Number(planAmountRaw) > 0 ? Number(planAmountRaw) : plan.amountAed;
 
   return (
     <>
@@ -74,93 +69,34 @@ export default async function MembershipPage() {
       <div className="section section--alt">
         <div className="container">
           <div className="grid grid-2">
-            <div className="card stack gap-14" style={{ padding: 32 }}>
-              <EditableLabel contentKey="membership.community_tier.eyebrow" value={t("membership.community_tier.eyebrow", "Community Access")} className="eyebrow" />
-              <EditableHeading as="h3" contentKey="membership.community_tier.title" value={t("membership.community_tier.title", "Hive Community")} className="h3" />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="membership.community_tier.description"
-                value={t("membership.community_tier.description", "Explore, connect & enjoy - free")}
-                className="text-2 small"
-              />
-              <ul className="stack gap-10" style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
-                {["1", "2", "3", "4"].map((n) => (
-                  <li className="small" key={n}>
-                    ✓{" "}
-                    <EditableLabel
-                      contentKey={`membership.community_tier.feature_${n}`}
-                      value={t(
-                        `membership.community_tier.feature_${n}`,
-                        { "1": "Discover experiences", "2": "Join circles", "3": "Save favorites", "4": "Book activities" }[n]!
-                      )}
-                    />
-                  </li>
-                ))}
-              </ul>
-              <Link href="/explore" className="btn btn--outline" style={{ alignSelf: "flex-start", marginTop: 8 }}>
-                <EditableLabel contentKey="membership.community_tier.button_label" value={t("membership.community_tier.button_label", "Start Exploring")} />
-              </Link>
-            </div>
-            <div className="card card--warm stack gap-14" style={{ padding: 32, borderColor: "var(--accent-deep)" }}>
-              <EditableLabel contentKey="membership.premium_tier.eyebrow" value={t("membership.premium_tier.eyebrow", "Premium Tier · Proposed")} className="eyebrow" />
-              <EditableHeading as="h3" contentKey="membership.premium_tier.title" value={t("membership.premium_tier.title", "Hive Membership")} className="h3" />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="membership.premium_tier.description"
-                value={t(
-                  "membership.premium_tier.description",
-                  "More access. More perks."
-                )}
-                className="text-2 small"
-              />
-              <ul className="stack gap-10" style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
-                {["1", "2", "3", "4", "5"].map((n) => (
-                  <li className="small" key={n}>
-                    ✓{" "}
-                    <EditableLabel
-                      contentKey={`membership.premium_tier.feature_${n}`}
-                      value={t(
-                        `membership.premium_tier.feature_${n}`,
-                        {
-                          "1": "All community benefits",
-                          "2": "Early access",
-                          "3": "Priority booking",
-                          "4": "Member-only events",
-                          "5": "Special offers",
-                        }[n]!
-                      )}
-                    />
-                  </li>
-                ))}
-              </ul>
-              <div className="stack gap-4" style={{ marginTop: 8 }}>
-                <EditableLabel
-                  contentKey="membership.plan.label"
-                  value={t("membership.plan.label", plan.label)}
-                  className="h4"
-                />
-                <EditableText
-                  as="p"
-                  multiline
-                  contentKey="membership.plan.description"
-                  value={t("membership.plan.description", plan.description)}
-                  className="text-2 small"
-                />
-                <div className="small text-3" style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-                  AED{" "}
-                  <EditableLabel
-                    contentKey="membership.plan.amount_aed"
-                    value={planAmountRaw}
-                    className="h3"
-                  />
+            {plans.map((plan) => (
+              <div
+                key={plan.key}
+                className={plan.key === "create" ? "card card--warm stack gap-14" : "card stack gap-14"}
+                style={
+                  plan.key === "create"
+                    ? { padding: 32, borderColor: "var(--accent-deep)" }
+                    : { padding: 32 }
+                }
+              >
+                <span className="eyebrow">{plan.name}</span>
+                <h3 className="h3">
+                  AED {plan.amountAed}
+                  <span className="small text-2">/mo</span>
+                </h3>
+                <p className="text-2 small">{plan.tagline}</p>
+                <ul className="stack gap-10" style={{ listStyle: "none", padding: 0, marginTop: 8 }}>
+                  {plan.features.map((feature) => (
+                    <li className="small" key={feature}>
+                      ✓ {feature}
+                    </li>
+                  ))}
+                </ul>
+                <div style={{ marginTop: 8, width: "100%" }}>
+                  <MembershipCheckoutForm planKey={plan.key} amountAed={plan.amountAed} />
                 </div>
               </div>
-              <div style={{ marginTop: 8, width: "100%" }}>
-                <MembershipCheckoutForm amountAed={planAmountAed} />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1,23 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { createZiinaPaymentIntent } from "@/lib/ziina/client";
-import { MEMBERSHIP_PLANS, isMembershipPlanId } from "@/data/membershipPlans";
-import { getPageContent, resolve } from "@/lib/content/getPageContent";
-import { siteUrl } from "@/lib/site";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// No payment gateway is called here. Ziina (the site's only gateway) has no
+// subscriptions/recurring-billing API, so JOIN/CREATE signups are recorded
+// as 'pending' members for an admin to activate manually from
+// /admin/members — see supabase/migrations/0006_membership_tiers.sql for
+// the plan data this reads.
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "Invalid request." }, { status: 400 });
 
-  const planId = body.plan;
+  const planKey = typeof body.plan === "string" ? body.plan : "";
   const fullName = typeof body.fullName === "string" ? body.fullName.trim().slice(0, 120) : "";
   const email = typeof body.email === "string" ? body.email.trim().slice(0, 200).toLowerCase() : "";
 
-  if (!isMembershipPlanId(planId)) {
+  if (!planKey) {
     return NextResponse.json({ error: "Invalid plan." }, { status: 400 });
   }
   if (!fullName) {
@@ -27,58 +28,35 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Please provide a valid email." }, { status: 400 });
   }
 
-  const plan = MEMBERSHIP_PLANS[planId];
-
-  // The admin can edit the live price from the Membership page (Edit Mode),
-  // so the actual charge must be read from site_content here rather than
-  // trusting the hardcoded default — this is the one place that determines
-  // what a member is really billed.
-  const content = await getPageContent("membership");
-  const amountRaw = resolve(content, "membership.plan.amount_aed", String(plan.amountAed));
-  const amountAed = Number(amountRaw) > 0 ? Number(amountRaw) : plan.amountAed;
-  const label = resolve(content, "membership.plan.label", plan.label);
-
   const admin = getSupabaseAdmin();
 
-  const { data: member, error: memberError } = await admin
-    .from("members")
-    .upsert(
-      { email, full_name: fullName, plan: plan.id, amount_aed: amountAed, status: "pending" },
-      { onConflict: "email" }
-    )
-    .select("id")
+  const { data: plan, error: planError } = await admin
+    .from("membership_plans")
+    .select("id, key, amount_aed")
+    .eq("key", planKey)
+    .eq("is_active", true)
     .maybeSingle();
 
-  if (memberError || !member) {
+  if (planError || !plan) {
+    return NextResponse.json({ error: "Invalid plan." }, { status: 400 });
+  }
+
+  const { error: memberError } = await admin.from("members").upsert(
+    {
+      email,
+      full_name: fullName,
+      plan: "monthly",
+      plan_id: plan.id,
+      amount_aed: plan.amount_aed,
+      status: "pending",
+    },
+    { onConflict: "email" }
+  );
+
+  if (memberError) {
     console.error("[membership/checkout] member upsert failed");
-    return NextResponse.json({ error: "Could not start checkout. Please try again." }, { status: 500 });
+    return NextResponse.json({ error: "Could not submit your membership. Please try again." }, { status: 500 });
   }
 
-  let intent;
-  try {
-    intent = await createZiinaPaymentIntent({
-      amountAed,
-      successUrl: `${siteUrl}/membership/success?pi={PAYMENT_INTENT_ID}`,
-      cancelUrl: `${siteUrl}/membership?canceled=1`,
-      message: `The Hive Society — ${label}`,
-    });
-  } catch (err) {
-    console.error("[membership/checkout] Ziina intent creation failed", err);
-    return NextResponse.json({ error: "Payment could not be started. Please try again shortly." }, { status: 502 });
-  }
-
-  const { error: paymentError } = await admin.from("membership_payments").insert({
-    member_id: member.id,
-    ziina_payment_intent_id: intent.id,
-    plan: plan.id,
-    amount_aed: amountAed,
-    status: "pending",
-  });
-
-  if (paymentError) {
-    console.error("[membership/checkout] payment row insert failed");
-    return NextResponse.json({ error: "Could not start checkout. Please try again." }, { status: 500 });
-  }
-
-  return NextResponse.json({ redirectUrl: intent.redirect_url });
+  return NextResponse.json({ redirectUrl: `/membership/success?plan=${plan.key}` });
 }

@@ -10,6 +10,7 @@ const NAV_ICONS = {
   explore: CompassIcon,
   hive: PeopleIcon,
   messages: ChatIcon,
+  creator: SparkleIcon,
   profile: UserIcon,
 };
 

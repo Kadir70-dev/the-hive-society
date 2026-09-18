@@ -2,8 +2,13 @@
 
 import { useState, type FormEvent } from "react";
 
-export function MembershipCheckoutForm({ amountAed }: { amountAed: number }) {
-  const plan = "one_time" as const;
+interface MembershipCheckoutFormProps {
+  planKey: string;
+  amountAed: number;
+  ctaLabel?: string;
+}
+
+export function MembershipCheckoutForm({ planKey, amountAed, ctaLabel }: MembershipCheckoutFormProps) {
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [error, setError] = useState("");
 
@@ -19,7 +24,7 @@ export function MembershipCheckoutForm({ amountAed }: { amountAed: number }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          plan,
+          plan: planKey,
           fullName: form.get("fullName"),
           email: form.get("email"),
         }),
@@ -40,12 +45,12 @@ export function MembershipCheckoutForm({ amountAed }: { amountAed: number }) {
   return (
     <form className="stack gap-14" onSubmit={handleSubmit}>
       <div className="field">
-        <label htmlFor="mcFullName">Full name</label>
-        <input id="mcFullName" name="fullName" required maxLength={120} />
+        <label htmlFor={`mcFullName-${planKey}`}>Full name</label>
+        <input id={`mcFullName-${planKey}`} name="fullName" required maxLength={120} />
       </div>
       <div className="field">
-        <label htmlFor="mcEmail">Email</label>
-        <input id="mcEmail" name="email" type="email" required maxLength={200} />
+        <label htmlFor={`mcEmail-${planKey}`}>Email</label>
+        <input id={`mcEmail-${planKey}`} name="email" type="email" required maxLength={200} />
       </div>
 
       {status === "error" && (
@@ -55,7 +60,7 @@ export function MembershipCheckoutForm({ amountAed }: { amountAed: number }) {
       )}
 
       <button type="submit" className="btn btn--primary" disabled={status === "submitting"}>
-        {status === "submitting" ? "Redirecting to payment…" : `Pay AED ${amountAed}`}
+        {status === "submitting" ? "Submitting…" : ctaLabel ?? `Join for AED ${amountAed}/mo`}
       </button>
     </form>
   );

@@ -22,12 +22,34 @@ async function getPaymentStatus(paymentIntentId: string): Promise<"completed" | 
   }
 }
 
+const PLAN_NAMES: Record<string, string> = { join: "JOIN", create: "CREATE" };
+
 export default async function MembershipSuccessPage({
   searchParams,
 }: {
-  searchParams: Promise<{ pi?: string }>;
+  searchParams: Promise<{ pi?: string; plan?: string }>;
 }) {
-  const { pi } = await searchParams;
+  const { pi, plan } = await searchParams;
+
+  if (plan) {
+    const planName = PLAN_NAMES[plan] ?? "Hive";
+    return (
+      <div className="section">
+        <div className="container" style={{ maxWidth: 480 }}>
+          <div className="card stack gap-16" style={{ padding: 32, textAlign: "center" }}>
+            <h1 className="h3">You&apos;re on the list.</h1>
+            <p className="text-2 small">
+              We&apos;ve got your {planName} membership request — we&apos;ll confirm it and follow up shortly.
+            </p>
+            <Link href="/membership" className="btn btn--outline" style={{ alignSelf: "center" }}>
+              Back to Membership
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const status = pi ? await getPaymentStatus(pi) : "unknown";
 
   const copy = {

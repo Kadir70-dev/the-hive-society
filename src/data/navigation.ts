@@ -49,12 +49,13 @@ export const footerLegalLinks: NavLink[] = [
 export interface AppNavItem {
   label: string;
   href: string;
-  key: "explore" | "hive" | "messages" | "profile";
+  key: "explore" | "hive" | "messages" | "profile" | "creator";
 }
 
 export const productNav: AppNavItem[] = [
   { label: "Explore", href: "/app/explore", key: "explore" },
   { label: "My Hive", href: "/app/hive", key: "hive" },
   { label: "Messages", href: "/app/messages", key: "messages" },
+  { label: "Creator Studio", href: "/app/creator", key: "creator" },
   { label: "Profile", href: "/app/profile", key: "profile" },
 ];

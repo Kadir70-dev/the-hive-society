@@ -45,6 +45,12 @@ export function AdminToolbar() {
       >
         Members
       </Link>
+      <Link
+        href="/admin/membership-plans"
+        style={{ color: "var(--on-dark)", fontWeight: 600, borderRight: "1px solid var(--on-dark-line)", paddingRight: 10 }}
+      >
+        Plans
+      </Link>
       <span style={{ fontWeight: 600 }}>Edit Mode</span>
       <button
         type="button"
