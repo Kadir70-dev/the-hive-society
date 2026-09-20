@@ -16,7 +16,7 @@ const MAX_BYTES = 8 * 1024 * 1024;
 export async function POST(req: NextRequest) {
   let session;
   try {
-    session = await requireAdminSession();
+    session = await requireAdminSession(req);
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

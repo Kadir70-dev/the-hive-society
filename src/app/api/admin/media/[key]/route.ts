@@ -10,7 +10,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ ke
   const { key: mediaKey } = await params;
 
   try {
-    await requireAdminSession();
+    await requireAdminSession(req);
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
