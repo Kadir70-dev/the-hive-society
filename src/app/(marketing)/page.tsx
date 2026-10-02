@@ -49,8 +49,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* HERO — full-bleed photo, edge-to-edge. The floating header pill
       <span className="home-type" hidden />
+      {/* HERO — full-bleed photo, edge-to-edge. The floating header pill
           (position:absolute, no flow height) sits directly on top of it —
           the hero starts at the literal top of the page. Centered lockup:
           label, headline, lede, cta, sitting in the upper-middle third. */}
