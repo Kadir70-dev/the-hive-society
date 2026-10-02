@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond } from "next/font/google";
+import { Cormorant_Garamond, Playfair_Display } from "next/font/google";
 import { siteName, siteTagline, siteUrl } from "@/lib/site";
 import "./globals.css";
 import "./tailwind.css";
@@ -8,6 +8,14 @@ const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-cormorant",
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -34,7 +42,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cormorantGaramond.variable}>
+    <html lang="en" className={`${cormorantGaramond.variable} ${playfair.variable}`}>
       <body>{children}</body>
     </html>
   );
