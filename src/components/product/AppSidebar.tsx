@@ -24,12 +24,12 @@ export function AppSidebar() {
         <Link href="/" className="app-sidebar__brand">
           The Hive<span>.</span>
         </Link>
-        <button className="app-sidebar__mobile-toggle" aria-label="Toggle menu" onClick={() => setOpen((v) => !v)}>
+        <button type="button" className="app-sidebar__mobile-toggle" aria-label="Toggle menu" aria-expanded={open} aria-controls="app-navigation-panel" onClick={() => setOpen((v) => !v)}>
           <MenuIcon />
         </button>
       </div>
 
-      <div className="app-sidebar__panel">
+      <div className="app-sidebar__panel" id="app-navigation-panel">
         <div>
           <p className="app-sidebar__tagline">No one has to show up alone</p>
           <nav className="app-nav" aria-label="Product">
@@ -41,6 +41,7 @@ export function AppSidebar() {
                   key={item.href}
                   href={item.href}
                   className={`app-nav__item${isActive ? " is-active" : ""}`}
+                  aria-current={isActive ? "page" : undefined}
                   onClick={() => setOpen(false)}
                 >
                   <Icon />

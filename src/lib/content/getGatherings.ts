@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { marketingExperiences, appExperiences } from "@/data/experiences";
 import { gatheringToExperience, type Gathering, type GatheringSurface } from "@/data/gatherings";
@@ -12,11 +13,10 @@ const FALLBACKS: Record<GatheringSurface, Experience[]> = {
 /**
  * Fetches the published Explore Gatherings cards from the DB for one
  * surface — the public marketing page (default) or the in-app catalogue.
- * Falls back to the matching hardcoded array on any failure or if that
- * surface has no rows yet — nothing goes blank while the table is being
- * set up.
+ * Falls back to the matching hardcoded array if the database is unavailable.
+ * A successful empty result stays empty, so unpublishing all events works.
  */
-export async function getGatherings(surface: GatheringSurface = "marketing"): Promise<Experience[]> {
+export const getGatherings = cache(async (surface: GatheringSurface = "marketing"): Promise<Experience[]> => {
   try {
     const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
@@ -26,10 +26,15 @@ export async function getGatherings(surface: GatheringSurface = "marketing"): Pr
       .eq("surface", surface)
       .order("display_order", { ascending: true });
 
-    if (error || !data || data.length === 0) return FALLBACKS[surface];
+    if (error || !data) return FALLBACKS[surface];
 
     return (data as Gathering[]).map(gatheringToExperience);
   } catch {
     return FALLBACKS[surface];
   }
-}
+});
+
+export const getGatheringBySlug = cache(async (slug: string): Promise<Experience | undefined> => {
+  const [app, marketing] = await Promise.all([getGatherings("app"), getGatherings("marketing")]);
+  return [...app, ...marketing].find((experience) => experience.slug === slug);
+});

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Modal } from "@/components/ui/Modal";
 import { AvatarStack } from "@/components/ui/AvatarStack";
 import { VerifiedBadge } from "@/components/ui/Badge";
+import { SaveGatheringButton } from "./SaveGatheringButton";
 import type { Experience } from "@/data/types";
 
 interface EventModalProps {
@@ -13,8 +14,6 @@ interface EventModalProps {
 }
 
 export function EventModal({ experience, onClose }: EventModalProps) {
-  const [reserved, setReserved] = useState(false);
-
   if (!experience) return null;
 
   return (
@@ -67,27 +66,14 @@ export function EventModal({ experience, onClose }: EventModalProps) {
           <div className="icebreaker">&quot;Hi everyone, looking forward to meeting you.&quot;</div>
           <div className="icebreaker">&quot;Is this beginner friendly?&quot;</div>
           <span className="small text-3">
-            Preset icebreakers unlock in the group chat once you book — messaging is limited to
-            attendees and moderated by the host.
+            Event chats are coming soon. You&rsquo;ll be able to meet other attendees before the gathering.
           </span>
         </div>
 
-        {!reserved ? (
-          <button className="btn btn--primary btn--block" onClick={() => setReserved(true)}>
-            Reserve Your Place
-          </button>
-        ) : (
-          <div className="success-panel">
-            <div className="hex">✓</div>
-            <h3 className="h3" style={{ fontSize: "1.1rem" }}>
-              You&rsquo;re in!
-            </h3>
-            <p className="small text-2">
-              Your place at {experience.title} is reserved. The pre-event chat unlocks 48 hours
-              before.
-            </p>
-          </div>
-        )}
+        <SaveGatheringButton key={experience.slug} slug={experience.slug} />
+        <Link href={`/app/experiences/${experience.slug}`} className="btn btn--outline btn--block">
+          View gathering details
+        </Link>
       </div>
     </Modal>
   );

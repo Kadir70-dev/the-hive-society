@@ -1,13 +1,16 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { circles } from "@/data/circles";
+import { SavedGatherings } from "@/components/product/SavedGatherings";
+import { getGatherings } from "@/lib/content/getGatherings";
 
 export const metadata: Metadata = {
   title: "My Hive — The Hive App",
 };
 
-export default function MyHivePage() {
+export default async function MyHivePage() {
   const suggested = circles.slice(0, 3);
+  const [app, marketing] = await Promise.all([getGatherings("app"), getGatherings("marketing")]);
 
   return (
     <div className="app-content" style={{ paddingTop: 44 }}>
@@ -17,20 +20,15 @@ export default function MyHivePage() {
       </div>
 
       <div className="stack gap-32">
+        <SavedGatherings experiences={[...app, ...marketing]} />
         <div className="stack gap-14">
           <h3 className="h3" style={{ fontSize: "1.1rem" }}>Your Circles</h3>
           <div className="empty-state">You haven&rsquo;t joined a circle yet. Attend a gathering to start one.</div>
         </div>
 
-        <div className="grid grid-2">
-          <div className="stack gap-14">
-            <h3 className="h3" style={{ fontSize: "1.1rem" }}>Upcoming Together</h3>
-            <div className="empty-state">No shared plans yet.</div>
-          </div>
-          <div className="stack gap-14">
-            <h3 className="h3" style={{ fontSize: "1.1rem" }}>Reserved Spots</h3>
-            <div className="empty-state">No reservations yet — explore the feed.</div>
-          </div>
+        <div className="stack gap-14">
+          <h3 className="h3" style={{ fontSize: "1.1rem" }}>Upcoming Together</h3>
+          <div className="empty-state">No shared plans yet.</div>
         </div>
 
         <div className="stack gap-14">
@@ -47,8 +45,8 @@ export default function MyHivePage() {
                 <p className="small text-2">
                   {circle.members} women · {circle.cadence}
                 </p>
-                <Link href="/app/explore" className="btn btn--outline btn--sm" style={{ alignSelf: "flex-start" }}>
-                  Explore gatherings
+                <Link href={`/app/circles/${circle.slug}`} className="btn btn--outline btn--sm" style={{ alignSelf: "flex-start" }}>
+                  View circle
                 </Link>
               </div>
             ))}

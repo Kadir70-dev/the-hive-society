@@ -1,6 +1,6 @@
 "use client";
 
-import { Component, Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
+import { Component, Suspense, useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, OrbitControls, PerspectiveCamera, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -93,12 +93,7 @@ function StudioLighting() {
 }
 
 function useReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    setReduced(prefersReducedMotion());
-    return onReducedMotionChange(setReduced);
-  }, []);
-  return reduced;
+  return useSyncExternalStore(onReducedMotionChange, prefersReducedMotion, () => false);
 }
 
 export function HiveCoffeeCup3D() {

@@ -718,6 +718,19 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 .app-filter__count{background:var(--bg-alt); color:var(--text-3); border-radius:999px; padding:1px 9px; font-size:.78rem; font-weight:700}
 .app-filter.is-active{background:var(--accent-deep); border-color:var(--accent-deep); color:#fff}
 .app-filter.is-active .app-filter__count{background:rgba(255,255,255,.25); color:#fff}
+.app-search{display:grid; gap:16px; margin-bottom:24px}
+.app-search .field{min-width:0}
+.app-search input,.app-search select{width:100%; min-width:0}
+@media(min-width:640px){.app-search{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}}
+.app-results-summary{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:20px}
+.event-grid__empty{grid-column:1/-1; align-self:start}
+.saved-gathering{min-width:0}
+.saved-gathering>.event-card{flex:1}
+.saved-gathering>.btn{align-self:flex-start}
+.saved-gathering-link{color:var(--accent-deep); text-decoration:underline; text-underline-offset:3px}
+.rail-saved-list{padding-left:18px; margin:14px 0 0; font-size:.88rem; color:var(--text-2)}
+.rail-saved-list li+li{margin-top:10px}
+.rail-saved-list a:hover{text-decoration:underline}
 
 .app-layout{display:grid; grid-template-columns:1fr; gap:24px}
 @media(min-width:1080px){.app-layout{grid-template-columns:1fr 320px}}
@@ -742,7 +755,7 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 .event-card__sayhi{display:inline-flex; align-items:center; gap:6px; background:var(--bg-alt); color:var(--text); font-size:.8rem; font-weight:600; padding:8px 14px; border-radius:999px}
 .event-card__sayhi svg{width:14px; height:14px}
 
-.utility-rail{display:flex; flex-direction:column; gap:20px}
+.utility-rail{display:flex; flex-direction:column; gap:20px; align-self:start}
 @media(min-width:1080px){.utility-rail{position:sticky; top:24px}}
 .rail-card{border-radius:var(--radius-l); padding:26px; border:1px solid var(--line); background:var(--surface)}
 .rail-card--dark{background:var(--surface-dark); border-color:var(--surface-dark)}

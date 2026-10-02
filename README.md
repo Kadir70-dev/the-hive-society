@@ -78,18 +78,18 @@ The Hive Society brings together the pieces that are normally scattered across d
 
 ## Current Status
 
-This repository currently contains a polished frontend / product prototype.
+The public website has a Supabase CMS, admin authentication, community
+applications, and a Ziina membership payment integration. See
+[`supabase/README.md`](supabase/README.md) for setup and payment limitations.
 
-Current limitations:
+The member app remains in development:
 
-- Static data (no CMS or database)
-- No production backend
-- No real authentication
-- No real payments
-- No live booking engine
-- No production messaging backend
-
-These are intentionally out of scope for this stage of the project.
+- Explore supports search, neighbourhood and category filters over the published catalogue.
+- Gathering details use the same catalogue as Explore, including CMS additions and edits.
+- Visitors can save gatherings to My Hive. Only gathering slugs are stored in this browser's
+  local storage; saves persist across reloads and sync across tabs on the same origin.
+- Saved gatherings are a shortlist, not confirmed bookings. Booking and event chats are not live.
+- Member authentication, personal profiles, circle membership and Creator Studio are not connected yet.
 
 ## Tech Stack
 
@@ -221,7 +221,9 @@ copy .env.example .env.local
 
 ## Forms
 
-The Membership waitlist, Host application, and Contact forms are static prototype flows: client components that call `preventDefault()` on submit and show a polished success state, with no backend call. Each is structured so the `onSubmit` handler can be swapped for a real server action or API call without touching the surrounding UI.
+The Join the Community form submits to Supabase. Host application and Contact
+forms remain frontend prototype flows. Membership checkout has a Ziina
+integration; its configuration and limitations are documented in `supabase/README.md`.
 
 ## Deployment
 

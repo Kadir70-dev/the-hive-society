@@ -31,6 +31,7 @@ const BELONGING_GALLERY = [
   { file: "belonging-01.png", alt: "A Hive member stretching through an outdoor yoga session in dappled sunlight" },
   { file: "belonging-02.png", alt: "A Hive member holding a racket and ball courtside in tennis whites" },
   { file: "belonging-04.png", alt: "Hive members mid-session in a sun-warmed Pilates studio" },
+  { file: "meera.jpeg", alt: "Meera, a Hive member" },
 ];
 
 export default async function HomePage() {

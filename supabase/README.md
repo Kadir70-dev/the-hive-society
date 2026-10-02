@@ -127,9 +127,11 @@ image, category, organiser, area, date/time/price labels, going count,
 attendee names, verified flag, description, publish state). Same RLS
 pattern as every other table here: enabled, zero anon/authenticated
 policies, service-role only. Reads go through
-`src/lib/content/getGatherings.ts` (falls back to the hardcoded
-`marketingExperiences` array in `src/data/experiences.ts` if the table is
-ever empty or unreachable); writes go through admin-checked API routes
+`src/lib/content/getGatherings.ts` (falls back to the matching hardcoded
+catalogue in `src/data/experiences.ts` if the table is unreachable; a
+successful empty query stays empty so unpublishing all gatherings works).
+Explore, My Hive, and gathering detail pages use this same published catalogue.
+Writes go through admin-checked API routes
 under `/api/admin/gatherings`. Images reuse the same `site-images` Storage
 bucket as the CMS above, under a `gatherings/` prefix.
 

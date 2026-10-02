@@ -1,14 +1,11 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { PhotoTile } from "@/components/ui/PhotoTile";
 import { AvatarStack } from "@/components/ui/AvatarStack";
 import { VerifiedBadge } from "@/components/ui/Badge";
-import { ReserveButton } from "@/components/product/ReserveButton";
-import { appExperiences, findExperience, marketingExperiences } from "@/data/experiences";
-
-export function generateStaticParams() {
-  return [...marketingExperiences, ...appExperiences].map((e) => ({ slug: e.slug }));
-}
+import { SaveGatheringButton } from "@/components/product/SaveGatheringButton";
+import { getGatheringBySlug } from "@/lib/content/getGatherings";
 
 export async function generateMetadata({
   params,
@@ -16,7 +13,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const experience = findExperience(slug);
+  const experience = await getGatheringBySlug(slug);
   if (!experience) return {};
   return {
     title: experience.title,
@@ -30,12 +27,13 @@ export default async function ExperienceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const experience = findExperience(slug);
+  const experience = await getGatheringBySlug(slug);
   if (!experience) notFound();
 
   return (
     <div className="app-content" style={{ paddingTop: 44 }}>
       <div className="stack gap-24" style={{ maxWidth: 680, margin: "0 auto" }}>
+        <Link href="/app/explore" className="saved-gathering-link small">← Explore gatherings</Link>
         <PhotoTile
           src={experience.image}
           alt={experience.title}
@@ -77,12 +75,11 @@ export default async function ExperienceDetailPage({
           <div className="icebreaker">&quot;Hi everyone, looking forward to meeting you.&quot;</div>
           <div className="icebreaker">&quot;Is this beginner friendly?&quot;</div>
           <span className="small text-3">
-            Preset icebreakers unlock in the group chat once you book — messaging is limited to
-            attendees and moderated by the host.
+            Event chats are coming soon. You&rsquo;ll be able to meet other attendees before the gathering.
           </span>
         </div>
 
-        <ReserveButton title={experience.title} />
+        <SaveGatheringButton slug={experience.slug} />
       </div>
     </div>
   );
