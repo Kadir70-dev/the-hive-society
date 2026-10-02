@@ -868,21 +868,14 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 .cms-image-edit:hover, .cms-image-edit:focus-visible{opacity:1}
 .cms-image-edit__label{ color:var(--cream); font-size:.75rem; font-weight:700; }
 
-/* Home page typography — Playfair Display, matching the reference. Scoped via the .home-type sentinel in the home page. */
-body:has(.home-type){--serif:var(--font-playfair), Georgia, 'Times New Roman', serif; --sans:var(--font-playfair), Georgia, 'Times New Roman', serif}
-body:has(.home-type) h1, body:has(.home-type) h2, body:has(.home-type) h3{font-weight:400}
-body:has(.home-type) .h2{text-transform:uppercase; letter-spacing:0; line-height:1.1; font-size:clamp(1.7rem,3vw + .5rem,2.9rem)}
-body:has(.home-type) .hero__title{text-transform:uppercase; letter-spacing:.01em; max-width:18ch; font-weight:400}
-body:has(.home-type) .nav-desktop a{white-space:nowrap; text-transform:uppercase; letter-spacing:.04em; font-size:.85rem}
-body:has(.home-type) .btn{font-size:.9rem; letter-spacing:.1em; text-transform:uppercase}
-/* Home fidelity pass — larger hero + body, closer to reference proportions */
-body:has(.home-type){font-size:18px; line-height:1.6}
-body:has(.home-type) .hero__content{max-width:min(94vw,980px)}
-body:has(.home-type) .hero__title{font-size:clamp(2.4rem,9vw,3.2rem); line-height:1.05; max-width:13ch}
-body:has(.home-type) .hero__lede{font-size:1.1rem; max-width:34ch}
+/* Home hero typography — Playfair Display, hero text only (nav and sections keep the site font). */
+.hero__content{--hero-font:var(--font-playfair), Georgia, 'Times New Roman', serif}
+.hero__kicker,.hero__title,.hero__lede,.hero__content .btn{font-family:var(--hero-font)}
+.hero__title{text-transform:uppercase; font-weight:400; letter-spacing:.01em; line-height:1.02; max-width:13ch; font-size:clamp(2.6rem,11vw,3.4rem)}
+.hero__lede{font-size:1.15rem; max-width:34ch}
+.hero__content .btn{text-transform:uppercase; letter-spacing:.1em; font-size:.95rem}
 @media(min-width:900px){
-  body:has(.home-type) .hero__title{font-size:clamp(3.6rem,5.2vw,5.4rem); max-width:14ch}
-  body:has(.home-type) .hero__lede{font-size:1.3rem; max-width:46ch}
-  body:has(.home-type) .hero__content{gap:26px}
-  body:has(.home-type) .btn:not(.btn--sm){font-size:.95rem}
+  .hero__content{max-width:min(94vw,980px); gap:26px}
+  .hero__title{font-size:clamp(4rem,6vw,6.4rem); max-width:14ch}
+  .hero__lede{font-size:1.4rem; max-width:62ch}
 }
