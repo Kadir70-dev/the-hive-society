@@ -78,7 +78,7 @@ interface EditablePlanValueProps {
   planId: string;
   field: "name" | "tagline" | "amount_aed";
   value: string | number;
-  as?: "span" | "h3" | "p";
+  as?: "span" | "h2" | "h3" | "p";
   className?: string;
   style?: CSSProperties;
 }

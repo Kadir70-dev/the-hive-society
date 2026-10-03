@@ -28,25 +28,22 @@ export default async function AboutPage() {
 
   return (
     <>
-      <div className="page-open">
-        <div className="container">
-          <div className="stack gap-14" style={{ maxWidth: 560 }}>
-            <EditableLabel contentKey="about.hero.eyebrow" value={t("about.hero.eyebrow", "About")} className="eyebrow" />
-            <EditableHeading
-              as="h1"
-              contentKey="about.hero.title"
-              value={t("about.hero.title", "Built in Abu Dhabi, for how women gather.")}
-              className="h1"
-              style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}
-            />
-          </div>
+      <section className="j-pagehero j-pagehero--maroon j-on-dark">
+        <div className="j-wrap">
+          <EditableLabel contentKey="about.hero.eyebrow" value={t("about.hero.eyebrow", "About")} className="j-label" />
+          <EditableHeading
+            as="h1"
+            contentKey="about.hero.title"
+            value={t("about.hero.title", "Built in Abu Dhabi, for how women gather.")}
+            className="j-display j-pagehero__title je-title-long"
+          />
         </div>
-      </div>
+      </section>
 
-      <div className="section section--intimate">
-        <div className="container">
-          <div className="split split--60-40">
-            <div className="photo img-hover" style={{ position: "relative" }}>
+      <section className="j-section je-intro">
+        <div className="j-wrap je-intro__grid">
+          <figure className="je-figure">
+            <div className="je-photo">
               <EditableImage
                 mediaKey="about.intro.image"
                 src={introImage.url}
@@ -54,99 +51,87 @@ export default async function AboutPage() {
                 objectPosition={introImage.objectPosition}
                 sizes="(min-width: 900px) 55vw, 100vw"
               />
-              <span className="photo__tag">Abu Dhabi, UAE</span>
             </div>
-            <div className="stack gap-16">
-              <EditableText
-                as="p"
-                multiline
-                contentKey="about.intro.lede"
-                value={t("about.intro.lede", "The real barrier was never finding something to do — it was not wanting to arrive alone.")}
-                className="lede"
-              />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="about.intro.paragraph"
-                value={t(
-                  "about.intro.paragraph",
-                  "Real gatherings. Trusted faces. A community worth returning to."
-                )}
-                className="text-2"
-              />
+            <figcaption>Abu Dhabi, UAE</figcaption>
+          </figure>
+          <div className="je-intro__copy">
+            <EditableText
+              as="p"
+              multiline
+              contentKey="about.intro.lede"
+              value={t("about.intro.lede", "The real barrier was never finding something to do — it was not wanting to arrive alone.")}
+              className="j-display je-intro__lede"
+            />
+            <EditableText
+              as="p"
+              multiline
+              contentKey="about.intro.paragraph"
+              value={t("about.intro.paragraph", "Real gatherings. Trusted faces. A community worth returning to.")}
+              className="j-lede"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="j-section je-team">
+        <div className="j-wrap">
+          <EditableLabel contentKey="about.team.eyebrow" value={t("about.team.eyebrow", "Our Team")} className="j-label" />
+          <div className="je-team__rows">
+            <div className="je-team__row">
+              <EditableHeading as="h3" contentKey="about.team.founder.title" value={t("about.team.founder.title", "Founder & CEO")} className="j-display" />
+              <EditableText as="p" multiline contentKey="about.team.founder.bio" value={t("about.team.founder.bio", "Full introduction coming soon.")} />
+            </div>
+            <div className="je-team__row">
+              <EditableHeading as="h3" contentKey="about.team.cofounder.title" value={t("about.team.cofounder.title", "Co-Founder & CTO")} className="j-display" />
+              <EditableText as="p" multiline contentKey="about.team.cofounder.bio" value={t("about.team.cofounder.bio", "Full introduction coming soon.")} />
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="section section--intimate">
-        <div className="container">
-          <EditableLabel contentKey="about.team.eyebrow" value={t("about.team.eyebrow", "Our Team")} className="label-sm" />
-          <div className="row wrap gap-32" style={{ marginTop: 20 }}>
-            <div className="row gap-16">
-              <div className="founder-photo" style={{ width: 64, height: 64, marginBottom: 0 }} />
-              <div>
-                <EditableHeading as="h3" contentKey="about.team.founder.title" value={t("about.team.founder.title", "Founder & CEO")} className="h3" style={{ fontSize: "1.02rem" }} />
-                <EditableText as="p" multiline contentKey="about.team.founder.bio" value={t("about.team.founder.bio", "Full introduction coming soon.")} className="small text-3" />
-              </div>
-            </div>
-            <div className="row gap-16">
-              <div className="founder-photo" style={{ width: 64, height: 64, marginBottom: 0 }} />
-              <div>
-                <EditableHeading as="h3" contentKey="about.team.cofounder.title" value={t("about.team.cofounder.title", "Co-Founder & CTO")} className="h3" style={{ fontSize: "1.02rem" }} />
-                <EditableText as="p" multiline contentKey="about.team.cofounder.bio" value={t("about.team.cofounder.bio", "Full introduction coming soon.")} className="small text-3" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="section section--alt section--intimate">
-        <div className="container">
-          <EditableLabel contentKey="about.neighbourhoods.eyebrow" value={t("about.neighbourhoods.eyebrow", "Where We Gather")} className="eyebrow" />
+      <section className="j-section section--dark jc-why je-places">
+        <div className="j-wrap">
+          <EditableLabel contentKey="about.neighbourhoods.eyebrow" value={t("about.neighbourhoods.eyebrow", "Where We Gather")} className="j-label" />
           <EditableHeading
             as="h2"
             contentKey="about.neighbourhoods.heading"
             value={t("about.neighbourhoods.heading", "Across Abu Dhabi’s neighbourhoods.")}
-            className="h2"
-            style={{ margin: "14px 0 24px" }}
+            className="j-display j-h2"
           />
-          <div className="pill-row">
+          <ul className="je-places__list">
             {NEIGHBOURHOODS.map((n) => (
-              <span className="area-chip" key={n}>{n}</span>
+              <li key={n}>{n}</li>
             ))}
-          </div>
+          </ul>
           <EditableText
             as="p"
             multiline
             contentKey="about.neighbourhoods.disclaimer"
             value={t("about.neighbourhoods.disclaimer", "Venue names don't imply partnership unless stated on the gathering.")}
-            className="small text-3"
-            style={{ marginTop: 16 }}
+            className="je-places__note"
           />
         </div>
-      </div>
+      </section>
 
-      <div className="section">
-        <div className="container">
+      <section className="j-section jc-steps">
+        <div className="j-wrap">
           <EditableHeading
             as="h2"
             contentKey="about.principles.heading"
             value={t("about.principles.heading", "What every gathering strengthens.")}
-            className="h2"
-            style={{ marginBottom: 32, maxWidth: "16ch" }}
+            className="j-display j-h2 je-principles__title"
           />
-          <div className="rule-list rule-list--row rule-list--row-3">
+          <ol className="jc-steps__list">
             {PRINCIPLES.map((p) => (
-              <div className="rule-list__item" key={p.letter}>
-                <span className="rule-list__num">{p.letter}</span>
-                <EditableHeading as="h3" contentKey={`about.principles.${p.key}.title`} value={t(`about.principles.${p.key}.title`, p.title)} className="h3" />
-                <EditableText as="p" multiline contentKey={`about.principles.${p.key}.desc`} value={t(`about.principles.${p.key}.desc`, p.desc)} className="small text-2" />
-              </div>
+              <li key={p.letter}>
+                <span className="jc-steps__n" aria-hidden="true">{p.letter}</span>
+                <EditableHeading as="h3" contentKey={`about.principles.${p.key}.title`} value={t(`about.principles.${p.key}.title`, p.title)} className="j-display" />
+                <EditableText as="p" multiline contentKey={`about.principles.${p.key}.desc`} value={t(`about.principles.${p.key}.desc`, p.desc)} />
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
-      </div>
+      </section>
     </>
   );
 }

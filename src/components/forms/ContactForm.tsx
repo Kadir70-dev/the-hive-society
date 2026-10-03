@@ -26,12 +26,13 @@ export function ContactForm() {
 
   return (
     <>
-      <div className="pill-row" style={{ marginBottom: 20 }}>
+      <div className="jc-tabs" role="group" aria-label="Enquiry type">
         {CATEGORIES.map((c) => (
           <button
             key={c}
             type="button"
-            className={`chip${category === c ? " is-active" : ""}`}
+            className={`jc-tab${category === c ? " is-active" : ""}`}
+            aria-pressed={category === c}
             onClick={() => setCategory(c)}
           >
             {c}

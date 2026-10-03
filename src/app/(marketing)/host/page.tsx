@@ -24,85 +24,84 @@ const BENEFITS = [
   { title: "Partnerships", desc: "Access to brand and venue opportunities as you grow." },
 ];
 
+const STEPS = [
+  { title: "Apply", desc: "Tell us about you and what you host." },
+  { title: "Get verified", desc: "We review every host before they go live." },
+  { title: "Go live", desc: "Publish your first gathering and start filling seats." },
+];
+
 export default function HostPage() {
   return (
     <>
-      <div className="page-hero">
-        <div className="container stack gap-14">
-          <span className="eyebrow">Host an Activity</span>
-          <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
-            Bring people together.
-          </h1>
-          <p className="lede" style={{ color: "var(--on-dark-2)", maxWidth: "56ch" }}>
+      <section className="j-pagehero j-pagehero--maroon j-on-dark">
+        <div className="j-wrap">
+          <span className="j-label">Host an Activity</span>
+          <h1 className="j-display j-pagehero__title">Bring people together.</h1>
+          <p className="j-lede j-pagehero__lede">
             Host what you love. Build your community. Reach women across Abu Dhabi who are ready
             to show up.
           </p>
-          <a href="#host-form" className="btn btn--primary">Apply to Host</a>
-        </div>
-      </div>
-
-      <div className="section">
-        <div className="container">
-          <span className="eyebrow">Who Can Host</span>
-          <h2 className="h2" style={{ margin: "14px 0 28px" }}>If you bring people together, you belong here.</h2>
-          <p className="small text-2" style={{ margin: "-14px 0 20px" }}>
-            Hosting a gathering requires an active Hive Membership.
-          </p>
-          <div className="pill-row">
-            {WHO_CAN_HOST.map((who) => (
-              <span className="area-chip" key={who}>{who}</span>
-            ))}
+          <div className="j-pagehero__actions">
+            <a href="#host-form" className="btn btn--primary">Apply to Host</a>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="section section--alt">
-        <div className="container">
-          <span className="eyebrow">Why Host With Hive</span>
-          <h2 className="h2" style={{ margin: "14px 0 28px" }}>Everything you need to fill the room.</h2>
-          <div className="grid grid-4">
+      <section className="j-section jc-who">
+        <div className="j-wrap jc-split">
+          <div>
+            <span className="j-label">Who Can Host</span>
+            <h2 className="j-display j-h2">If you bring people together, you belong here.</h2>
+            <p className="jc-note">Hosting a gathering requires an active Hive Membership.</p>
+          </div>
+          <ul className="jc-who__list">
+            {WHO_CAN_HOST.map((who) => (
+              <li key={who}>{who}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="j-section section--dark jc-why">
+        <div className="j-wrap">
+          <span className="j-label">Why Host With Hive</span>
+          <h2 className="j-display j-h2">Everything you need to fill the room.</h2>
+          <div className="jc-why__rows">
             {BENEFITS.map((b) => (
-              <div className="icon-tile stack gap-10" key={b.title}>
-                <div className="hex">◆</div>
-                <h3 className="h3" style={{ fontSize: "1rem" }}>{b.title}</h3>
-                <p className="small text-2">{b.desc}</p>
+              <div className="jc-why__row" key={b.title}>
+                <h3 className="j-display">{b.title}</h3>
+                <p>{b.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="section">
-        <div className="container">
-          <div className="grid grid-3">
-            <div className="step" style={{ flexDirection: "column", gap: 14 }}>
-              <div className="hex hex--lg">01</div>
-              <h3 className="h3" style={{ fontSize: "1.1rem" }}>Apply</h3>
-              <p className="small text-2">Tell us about you and what you host.</p>
-            </div>
-            <div className="step" style={{ flexDirection: "column", gap: 14 }}>
-              <div className="hex hex--lg">02</div>
-              <h3 className="h3" style={{ fontSize: "1.1rem" }}>Get verified</h3>
-              <p className="small text-2">We review every host before they go live.</p>
-            </div>
-            <div className="step" style={{ flexDirection: "column", gap: 14 }}>
-              <div className="hex hex--lg">03</div>
-              <h3 className="h3" style={{ fontSize: "1.1rem" }}>Go live</h3>
-              <p className="small text-2">Publish your first gathering and start filling seats.</p>
-            </div>
-          </div>
+      <section className="j-section jc-steps">
+        <div className="j-wrap">
+          <ol className="jc-steps__list">
+            {STEPS.map((step, i) => (
+              <li key={step.title}>
+                <span className="jc-steps__n" aria-hidden="true">0{i + 1}</span>
+                <h3 className="j-display">{step.title}</h3>
+                <p>{step.desc}</p>
+              </li>
+            ))}
+          </ol>
         </div>
-      </div>
+      </section>
 
-      <div className="section section--alt" id="host-form">
-        <div className="container" style={{ maxWidth: 760 }}>
-          <span className="eyebrow">Apply to Host</span>
-          <h2 className="h2" style={{ margin: "14px 0 28px" }}>Tell us about what you&rsquo;d like to host.</h2>
-          <div className="card" style={{ padding: 30 }}>
+      <section className="j-section jc-apply" id="host-form">
+        <div className="j-wrap jc-split">
+          <div>
+            <span className="j-label">Apply to Host</span>
+            <h2 className="j-display j-h2">Tell us about what you&rsquo;d like to host.</h2>
+          </div>
+          <div className="jc-apply__form">
             <HostApplicationForm />
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

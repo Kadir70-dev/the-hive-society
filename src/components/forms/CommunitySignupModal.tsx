@@ -47,18 +47,20 @@ export function CommunitySignupModalProvider({ children }: { children: ReactNode
     <CommunitySignupModalContext.Provider value={{ open }}>
       {children}
       <Modal open={isOpen} onClose={close} labelledBy="community-signup-title">
-        <div className="modal__body" ref={panelRef} tabIndex={-1} style={{ outline: "none" }}>
-          <div className="stack gap-6" style={{ marginBottom: 22 }}>
-            <EditableHeading as="h3" contentKey="modal.join.title" value={t("modal.join.title", "Join the Hive Society")} className="h3" id="community-signup-title" />
+        <div className="modal__body jm" ref={panelRef} tabIndex={-1} style={{ outline: "none" }}>
+          <div className="jm__head">
+            <EditableHeading as="h3" contentKey="modal.join.title" value={t("modal.join.title", "Join the Hive Society")} className="jm__title" id="community-signup-title" />
             <EditableText
               as="p"
               multiline
               contentKey="modal.join.subtitle"
               value={t("modal.join.subtitle", "Tell us a little about you — we’ll follow up with relevant updates and invitations.")}
-              className="text-2 small"
+              className="jm__sub"
             />
           </div>
-          <CommunitySignupForm onClose={close} />
+          <div className="jm__form">
+            <CommunitySignupForm onClose={close} />
+          </div>
         </div>
       </Modal>
     </CommunitySignupModalContext.Provider>

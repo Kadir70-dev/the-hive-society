@@ -29,58 +29,54 @@ const OPPORTUNITIES = [
 export default function PartnersPage() {
   return (
     <>
-      <div className="page-hero">
-        <div className="container stack gap-14">
-          <span className="eyebrow">Partners</span>
-          <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
-            Partner with The Hive Society.
-          </h1>
-          <p className="lede" style={{ color: "var(--on-dark-2)", maxWidth: "58ch" }}>
-            Reach women across Abu Dhabi through gatherings and brand experiences.
-          </p>
-          <Link href="/contact" className="btn btn--primary">Partner With Us</Link>
-        </div>
-      </div>
-
-      <div className="section">
-        <div className="container">
-          <span className="eyebrow">Who We Partner With</span>
-          <h2 className="h2" style={{ margin: "14px 0 28px" }}>
-            Brands, venues and organisations building trust with women in the UAE.
-          </h2>
-          <div className="pill-row">
-            {WHO_WE_PARTNER_WITH.map((who) => (
-              <span className="area-chip" key={who}>{who}</span>
-            ))}
+      <section className="j-pagehero j-pagehero--maroon j-on-dark">
+        <div className="j-wrap">
+          <span className="j-label">Partners</span>
+          <h1 className="j-display j-pagehero__title je-title-long">Partner with The Hive Society.</h1>
+          <p className="j-lede j-pagehero__lede">Reach women across Abu Dhabi through gatherings and brand experiences.</p>
+          <div className="j-pagehero__actions">
+            <Link href="/contact" className="btn btn--primary">Partner With Us</Link>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="section section--alt">
-        <div className="container">
-          <span className="eyebrow">Partnership Opportunities</span>
-          <h2 className="h2" style={{ margin: "14px 0 28px" }}>Ways to show up for the Hive community.</h2>
-          <div className="grid grid-3">
+      <section className="j-section jc-who">
+        <div className="j-wrap jc-split">
+          <div>
+            <span className="j-label">Who We Partner With</span>
+            <h2 className="j-display j-h2">Brands, venues and organisations building trust with women in the UAE.</h2>
+          </div>
+          <ul className="jc-who__list">
+            {WHO_WE_PARTNER_WITH.map((who) => (
+              <li key={who}>{who}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="j-section section--dark jc-why">
+        <div className="j-wrap">
+          <span className="j-label">Partnership Opportunities</span>
+          <h2 className="j-display j-h2">Ways to show up for the Hive community.</h2>
+          <div className="jc-why__rows">
             {OPPORTUNITIES.map((o) => (
-              <div className="card stack gap-8" style={{ padding: 24 }} key={o.title}>
-                <h3 className="h3" style={{ fontSize: "1.05rem" }}>{o.title}</h3>
-                <p className="small text-2">{o.desc}</p>
+              <div className="jc-why__row" key={o.title}>
+                <h3 className="j-display">{o.title}</h3>
+                <p>{o.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="section">
-        <div className="container">
-          <div className="cta-banner">
-            <h2 className="h2">Let&rsquo;s build something together.</h2>
-            <Link href="/contact" className="btn btn--primary" style={{ marginTop: 20 }}>
-              Contact the Partnerships Team
-            </Link>
+      <section className="je-cta">
+        <div className="j-wrap je-cta__inner">
+          <h2 className="j-display je-cta__title">Let&rsquo;s build something together.</h2>
+          <div className="je-cta__actions">
+            <Link href="/contact" className="j-btn j-btn--apricot">Contact the Partnerships Team</Link>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

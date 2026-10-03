@@ -1,3 +1,6 @@
+import "./journal.css";
+import "./conversion.css";
+import "./editorial.css";
 import { Header } from "@/components/marketing/Header";
 import { Footer } from "@/components/marketing/Footer";
 import { CommunitySignupModalProvider } from "@/components/forms/CommunitySignupModal";
@@ -14,6 +17,7 @@ export default async function MarketingLayout({
 
   return (
     <EditModeProvider isAdmin={Boolean(session)}>
+      <span className="j-shell" hidden />
       <GlobalContentProvider content={globalContent}>
         <CommunitySignupModalProvider>
           <Header />

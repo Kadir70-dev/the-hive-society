@@ -15,47 +15,29 @@ const CONTACT_CHANNELS = [
 
 export default function ContactPage() {
   return (
-    <>
-      <div className="page-hero">
-        <div className="container stack gap-14">
-          <span className="eyebrow">Contact</span>
-          <h1 className="h1" style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}>
-            We&rsquo;d love to hear from you.
-          </h1>
-        </div>
-      </div>
-      <div className="section">
-        <div className="container">
-          <div className="grid grid-2" style={{ alignItems: "flex-start" }}>
-            <div className="stack gap-24">
-              <div className="stack gap-14">
-                <span className="eyebrow">Reach the Right Team</span>
-                <h2 className="h2">Get in touch.</h2>
-              </div>
-              <div className="card stack" style={{ padding: 6 }}>
-                {CONTACT_CHANNELS.map((c, i) => (
-                  <div
-                    className="row"
-                    key={c.label}
-                    style={{
-                      justifyContent: "space-between",
-                      padding: "14px 18px",
-                      borderBottom: i < CONTACT_CHANNELS.length - 1 ? "1px solid var(--line)" : "none",
-                    }}
-                  >
-                    <span className="small" style={{ fontWeight: 600 }}>{c.label}</span>
-                    <span className="small text-3">{c.email}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="small text-3">*Placeholder addresses — to be confirmed before launch.</p>
-            </div>
-            <div className="card" style={{ padding: 30 }}>
-              <ContactForm />
-            </div>
+    <section className="j-section jc-contact">
+      <div className="j-wrap jc-contact__grid">
+        <div className="jc-contact__intro">
+          <span className="j-label">Contact</span>
+          <h1 className="j-display jc-contact__title">We&rsquo;d love to hear from you.</h1>
+          <div className="jc-contact__channels">
+            <span className="j-label">Reach the Right Team</span>
+            <h2 className="j-display jc-contact__sub">Get in touch.</h2>
+            <ul className="jc-channels">
+              {CONTACT_CHANNELS.map((c) => (
+                <li key={c.label}>
+                  <span className="jc-channels__name">{c.label}</span>
+                  <span className="jc-channels__email">{c.email}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="jc-note">*Placeholder addresses — to be confirmed before launch.</p>
           </div>
         </div>
+        <div className="jc-contact__form">
+          <ContactForm />
+        </div>
       </div>
-    </>
+    </section>
   );
 }

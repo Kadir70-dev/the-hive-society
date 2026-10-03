@@ -36,7 +36,7 @@ export default async function MembershipSuccessPage({
     return (
       <div className="section">
         <div className="container" style={{ maxWidth: 480 }}>
-          <div className="card stack gap-16" style={{ padding: 32, textAlign: "center" }}>
+          <div className="jc-success stack gap-16" style={{ padding: 32, textAlign: "center" }}>
             <h1 className="h3">You&apos;re on the list.</h1>
             <p className="text-2 small">
               We&apos;ve got your {planName} membership request — we&apos;ll confirm it and follow up shortly.
@@ -74,7 +74,7 @@ export default async function MembershipSuccessPage({
   return (
     <div className="section">
       <div className="container" style={{ maxWidth: 480 }}>
-        <div className="card stack gap-16" style={{ padding: 32, textAlign: "center" }}>
+        <div className="jc-success stack gap-16" style={{ padding: 32, textAlign: "center" }}>
           <h1 className="h3">{copy.title}</h1>
           <p className="text-2 small">{copy.body}</p>
           <Link href="/membership" className="btn btn--outline" style={{ alignSelf: "center" }}>

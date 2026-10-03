@@ -335,12 +335,6 @@ img{max-width:100%}
 .icon-tile .hex{margin-bottom:4px}
 
 /* editorial value list — no boxes, dividers instead */
-.value-list{display:flex; flex-direction:column}
-.value-item{display:flex; gap:20px; padding:22px 0; border-top:1px solid var(--line)}
-.value-item:first-child{border-top:none; padding-top:0}
-.value-item__mark{font-family:var(--serif); font-style:italic; font-size:1.1rem; color:var(--accent-deep); flex:none; width:2ch}
-.value-item h3{font-size:1.05rem}
-.value-item p{margin-top:4px}
 
 /* experiences section header — editorial headline + refined CTA pill */
 .exp-heading{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:22px 40px; margin-bottom:44px}
@@ -868,14 +862,85 @@ details.faq-item p{margin-top:12px; color:var(--text-2)}
 .cms-image-edit:hover, .cms-image-edit:focus-visible{opacity:1}
 .cms-image-edit__label{ color:var(--cream); font-size:.75rem; font-weight:700; }
 
-/* Home hero typography — Playfair Display, hero text only (nav and sections keep the site font). */
-.hero__content{--hero-font:var(--font-playfair), Georgia, 'Times New Roman', serif}
-.hero__kicker,.hero__title,.hero__lede,.hero__content .btn{font-family:var(--hero-font)}
-.hero__title{text-transform:uppercase; font-weight:400; letter-spacing:.01em; line-height:1.02; max-width:13ch; font-size:clamp(2.6rem,11vw,3.4rem)}
-.hero__lede{font-size:1.15rem; max-width:34ch}
-.hero__content .btn{text-transform:uppercase; letter-spacing:.1em; font-size:.95rem}
+/* ===== Home refresh (P0) — scoped to the home page via the .home-type marker =====
+   Roles: canvas/alt = surfaces · burgundy = brand + text · apricot = the one conversion accent
+   (primary CTA + small highlights only, always with deep-ink text, never as a section fill). */
+
+/* header: solid canvas bar, no floating capsule */
+
+/* buttons */
+
+/* hero — full-bleed photo, centered text over the image, light refined overlay */
+
+/* belonging — copy left, one large people photo with two overlapping */
+.belong{display:grid; grid-template-columns:1fr; gap:40px; align-items:center}
+.belong__collage{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; align-items:start}
+.belong__frame{position:relative; aspect-ratio:4/5; border-radius:var(--radius-m); overflow:hidden; background:var(--bg-alt)}
+.belong__frame:nth-child(even){margin-top:32px}
 @media(min-width:900px){
-  .hero__content{max-width:min(94vw,980px); gap:26px}
-  .hero__title{font-size:clamp(4rem,6vw,6.4rem); max-width:14ch}
-  .hero__lede{font-size:1.4rem; max-width:62ch}
+  .belong{grid-template-columns:5fr 7fr; gap:clamp(48px,6vw,96px)}
+  .belong__collage{gap:20px}
+  .belong__frame:nth-child(even){margin-top:56px}
 }
+
+/* gatherings */
+
+.gathering{display:flex; flex-direction:column; gap:8px; color:inherit}
+.gathering__photo{position:relative; aspect-ratio:4/5; border-radius:var(--radius-m); overflow:hidden; background:var(--bg-alt); margin-bottom:10px}
+.gathering__photo img{transition:transform .5s var(--ease)}
+.gathering:hover .gathering__photo img{transform:scale(1.025)}
+.gathering__meta{font-family:var(--sans); font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3)}
+.gathering__title{font-family:var(--serif); font-size:1.55rem; line-height:1.15; color:var(--text); margin:0}
+.gathering__when{font-size:.95rem; color:var(--text-2)}
+.gathering .link-arrow{align-self:flex-start; margin-top:8px}
+@media(prefers-reduced-motion:reduce){.gathering__photo img{transition:none}.gathering:hover .gathering__photo img{transform:none}}
+
+/* ===== Home refresh (P1) ===== */
+/* motion: one reveal — 14px rise + fade, 450ms; hero copy rises on load (60ms stagger) */
+.reveal{transition:opacity .45s var(--ease, cubic-bezier(.2,.7,.2,1)), transform .45s var(--ease, cubic-bezier(.2,.7,.2,1))}
+.reveal--hidden{opacity:0; transform:translateY(14px)}
+@keyframes rise{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
+
+@media(prefers-reduced-motion:reduce){.reveal{animation:none; transition:none}.reveal--hidden{opacity:1; transform:none}}
+
+/* belonging: the collage frame wrappers are Reveal divs now */
+.belong__copy{max-width:520px}
+
+/* values — compact, unboxed, hairline dividers */
+
+.value__icon{width:26px; height:26px; color:var(--accent-deep)}
+
+/* membership — 55/45 editorial split */
+.membership{display:grid; grid-template-columns:1fr; background:var(--bg-alt)}
+.membership__photo{position:relative; aspect-ratio:4/3}
+.membership__copy{display:flex; flex-direction:column; align-items:flex-start; gap:18px; padding:48px 24px 64px}
+.membership__copy .lede{max-width:34ch; margin:0}
+@media(min-width:900px){
+  .membership{grid-template-columns:55fr 45fr; min-height:620px}
+  .membership__photo{aspect-ratio:auto}
+  .membership__copy{justify-content:center; padding:80px var(--edge) 80px clamp(40px,6vw,96px)}
+}
+
+/* footer — warm light surface, strong burgundy brand, no decoration */
+
+/* ===== Home final polish (non-image) ===== */
+/* typography */
+
+/* CTA system: one apricot primary per view; header Join is the quiet outline */
+
+.hamburger{width:44px; height:44px}
+
+/* spacing rhythm */
+
+/* membership — typography + spacing only */
+
+/* footer */
+
+/* ===== Home: transparent header over the hero (feedback) ===== */
+
+/* ===== Rolling image strip under "Why the Hive" (continuous, slim frames) ===== */
+
+/* reduced-motion visitors still get the roll, just much slower; it never pauses */
+
+/* Why the Hive order: heading -> image strip -> values */
+

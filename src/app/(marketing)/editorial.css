@@ -1,0 +1,60 @@
+/* Phase 3 — content pages (about, community, partners). Builds on journal.css and conversion.css. */
+
+.je-title-long{font-size:clamp(2.75rem,6.4vw,6.5rem); max-width:18ch}
+.j-pagehero--maroon .j-lede{color:var(--j-paper)}
+
+/* about */
+.je-intro__grid{display:grid; gap:48px; align-items:center}
+.je-figure{margin:0}
+.je-photo{position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--j-line)}
+.je-figure figcaption{margin-top:14px; font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--j-soft)}
+.je-intro__copy{display:flex; flex-direction:column; gap:32px}
+.je-intro__lede{font-size:clamp(2.25rem,4.2vw,4.25rem); line-height:1.02; letter-spacing:-.025em}
+@media(min-width:900px){.je-intro__grid{grid-template-columns:7fr 5fr; gap:96px}}
+
+.je-team .j-label{color:var(--j-maroon)}
+.je-team__rows{border-bottom:1px solid var(--j-line); margin-top:16px}
+.je-team__row{display:grid; gap:12px; padding:36px 0; border-top:1px solid var(--j-line)}
+.je-team__row h3{font-size:clamp(2rem,3vw,3rem); margin:0}
+.je-team__row p{margin:0; max-width:46ch; font-size:1.0625rem; color:var(--j-soft)}
+@media(min-width:900px){.je-team__row{grid-template-columns:5fr 7fr; gap:96px; align-items:baseline}}
+
+.je-places__list{list-style:none; margin:56px 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--j-line-on-dark)}
+.je-places__list li{padding:20px 0; border-top:1px solid var(--j-line-on-dark); font-family:var(--j-display); font-size:clamp(1.75rem,2.2vw + .8rem,3rem); line-height:1.05; color:var(--j-paper)}
+.je-places__list li:nth-child(odd){padding-right:16px}
+.je-places__note{margin:24px 0 0; font-size:14px; color:var(--j-soft-on-dark)}
+@media(min-width:900px){.je-places__list{grid-template-columns:repeat(3,1fr); column-gap:48px}.je-places__list li:nth-child(odd){padding-right:0}}
+.je-principles__title{max-width:16ch; margin-bottom:56px}
+
+/* community */
+.je-circles__rows{list-style:none; margin:0; padding:0; border-bottom:1px solid var(--j-line)}
+.je-circles__rows li{display:flex; align-items:center; justify-content:space-between; gap:20px; padding:24px 0; border-top:1px solid var(--j-line)}
+.je-circles__info{display:flex; flex-direction:column; gap:6px; min-width:0}
+.je-circles__name{font-family:var(--j-display); font-size:clamp(1.875rem,1.6vw + 1.3rem,2.75rem); line-height:1.05; letter-spacing:-.01em}
+.je-circles__meta{font-size:14px; color:var(--j-soft)}
+.je-circles__count{display:flex; flex-direction:column; align-items:flex-end; flex:none; color:var(--j-maroon)}
+.je-circles__count strong{font-family:var(--j-display); font-weight:400; font-size:2.25rem; line-height:1}
+.je-circles__count span{font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase}
+.je-recurring .j-label{color:var(--j-maroon)}
+.je-recurring__lede{margin-top:24px}
+.je-steps-dark .j-label{color:var(--j-apricot)}
+.je-steps-dark .jc-steps__list li{border-top-color:var(--j-line-on-dark)}
+.je-steps-dark .jc-steps__n{color:var(--j-apricot)}
+.je-steps-dark .jc-steps__list h3{color:var(--j-paper)}
+.je-steps-dark .jc-steps__list p{color:var(--j-soft-on-dark)}
+.je-trust{padding:0 0 96px}
+.je-trust__list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr; border-bottom:1px solid var(--j-line)}
+.je-trust__list li{padding:18px 0; border-top:1px solid var(--j-line); font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--j-maroon)}
+.je-trust__text{margin:28px 0 0; max-width:60ch; font-size:1.0625rem; color:var(--j-soft)}
+.je-trust__link{color:var(--j-maroon); font-weight:600; text-decoration:underline; text-underline-offset:3px}
+@media(min-width:900px){.je-trust{padding-bottom:160px}.je-trust__list{grid-template-columns:repeat(3,1fr); column-gap:48px}}
+
+/* closing CTA band (community, partners) */
+.je-cta{background:var(--j-maroon); color:var(--j-paper); padding:96px 0}
+.je-cta__inner{display:flex; flex-direction:column; gap:40px}
+.je-cta__title{font-size:clamp(3rem,8vw,8rem); line-height:.95; letter-spacing:-.03em; max-width:12ch}
+.je-cta__actions{display:flex; flex-wrap:wrap; align-items:center; gap:16px 24px}
+.je-btn--outline{background:transparent; color:var(--j-paper); border-color:rgba(255,252,247,.7)}
+.je-btn--outline:hover{background:var(--j-paper); color:var(--j-maroon)}
+.je-cta :focus-visible{outline-color:var(--j-apricot)}
+@media(min-width:900px){.je-cta{padding:160px 0}.je-cta__inner{flex-direction:row; align-items:flex-end; justify-content:space-between}}

@@ -1,19 +1,17 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
+import "./home.css";
 import { JoinCommunityButton } from "@/components/forms/JoinCommunityButton";
 import { EditableText, EditableHeading, EditableLabel } from "@/components/content/EditableText";
 import { EditableImage } from "@/components/content/EditableImage";
 import { getPageContent, resolve } from "@/lib/content/getPageContent";
+import { Reveal } from "@/components/effects/Reveal";
+import { Marquee } from "@/components/home/Marquee";
+import { getGatherings } from "@/lib/content/getGatherings";
+import { getMembershipPlans } from "@/lib/content/getMembershipPlans";
 import { getPageMedia, resolveMedia } from "@/lib/content/getPageMedia";
-import { PeopleIcon, SparkleIcon, LeafIcon, CompassIcon } from "@/components/ui/Icons";
-import { RevealHeading } from "@/components/effects/RevealHeading";
-import { RevealPhotoCard } from "@/components/effects/RevealPhotoCard";
-import { ParallaxSection } from "@/components/effects/ParallaxSection";
-import { MagneticButton } from "@/components/effects/MagneticButton";
-import { HiveCoffeeCup3D } from "@/components/product/HiveCoffeeCup3D";
-import { MoreThanAClubBackground } from "@/components/backgrounds/production/MoreThanAClubBackground";
-import { WhatSetsUsApartBackground } from "@/components/backgrounds/production/WhatSetsUsApartBackground";
-import { ConstellationSoftPullVariant } from "@/components/backgrounds/interactive/ConstellationSoftPullVariant";
+import { circles } from "@/data/circles";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -21,22 +19,43 @@ export const metadata: Metadata = {
 };
 
 const PILLARS = [
-  { key: "connections", title: "Real Connections", Icon: PeopleIcon },
-  { key: "experiences", title: "Unique Experiences", Icon: SparkleIcon },
-  { key: "growth", title: "Personal Growth", Icon: LeafIcon },
-  { key: "access", title: "Exclusive Access", Icon: CompassIcon },
+  { key: "connections", title: "Real Connections" },
+  { key: "experiences", title: "Unique Experiences" },
+  { key: "growth", title: "Personal Growth" },
+  { key: "access", title: "Exclusive Access" },
 ];
 
-const BELONGING_GALLERY = [
+// Same files, same order as the previous rolling strip.
+const NIGHT_REEL = [
+  { file: "a4-brunch.jpg", alt: "Friends laughing together at a brunch table by the water" },
+  { file: "a7-padel.jpg", alt: "Two members playing padel at sunset" },
+  { file: "a8-wellness.jpg", alt: "Two members in a quiet wellness session" },
+  { file: "a9-bookclub.jpg", alt: "Members at a book club in a sunlit library" },
+  { file: "a10-creative.jpg", alt: "Two members painting at easels in a bright studio" },
+  { file: "coffee.jpg", alt: "Friends laughing over coffee and pastries" },
+];
+
+// First three of the previous belonging gallery (4th, meera.jpeg, now sits in the story section).
+const CIRCLE_COLLAGE = [
   { file: "belonging-01.png", alt: "A Hive member stretching through an outdoor yoga session in dappled sunlight" },
   { file: "belonging-02.png", alt: "A Hive member holding a racket and ball courtside in tennis whites" },
   { file: "belonging-04.png", alt: "Hive members mid-session in a sun-warmed Pilates studio" },
-  { file: "meera.jpeg", alt: "Meera, a Hive member" },
 ];
 
+const pad = (n: number) => String(n).padStart(2, "0");
+
 export default async function HomePage() {
-  const [content, media] = await Promise.all([getPageContent("home"), getPageMedia("home")]);
+  const [content, aboutContent, media, gatherings, plans] = await Promise.all([
+    getPageContent("home"),
+    getPageContent("about"),
+    getPageMedia("home"),
+    getGatherings("marketing"),
+    getMembershipPlans(),
+  ]);
+  const upcoming = gatherings.slice(0, 5);
+  const next = gatherings[0];
   const t = (key: string, fallback: string) => resolve(content, key, fallback);
+  const ta = (key: string, fallback: string) => resolve(aboutContent, key, fallback);
 
   const heroImage = resolveMedia(media, "home.hero.image", {
     url: "/images/a11-outdoor.jpg",
@@ -50,219 +69,370 @@ export default async function HomePage() {
 
   return (
     <>
-      <span className="home-type" hidden />
-      {/* HERO — full-bleed photo, edge-to-edge. The floating header pill
-          (position:absolute, no flow height) sits directly on top of it —
-          the hero starts at the literal top of the page. Centered lockup:
-          label, headline, lede, cta, sitting in the upper-middle third. */}
-      <section className="hero">
-        <EditableImage
-          mediaKey="home.hero.image"
-          src={heroImage.url}
-          alt={heroImage.alt}
-          objectPosition={heroImage.objectPosition}
-          sizes="100vw"
-          priority
-        />
-        <div className="hero__content">
+      <span className="hj-marker" hidden />
+
+      {/* 1 · HERO — full-bleed photo, everything centred over it. */}
+      <section className="hj-hero">
+        <div className="hj-hero__media">
+          <EditableImage
+            mediaKey="home.hero.image"
+            src={heroImage.url}
+            alt={heroImage.alt}
+            objectPosition={heroImage.objectPosition}
+            sizes="100vw"
+            priority
+          />
+        </div>
+        <div className="hj-hero__copy">
           <EditableLabel
-            hero
             contentKey="home.hero2.eyebrow"
             value={t("home.hero2.eyebrow", "Soon in Abu Dhabi")}
-            className="hero__kicker"
+            className="j-label"
           />
-          <RevealHeading>
-            <EditableHeading
-              hero
-              as="h1"
-              contentKey="home.hero2.title"
-              value={t("home.hero2.title", "Find your Hive in Abu Dhabi")}
-              className="hero__title"
+          <h1 className="hj-hero__title">
+            <EditableText
+              as="span"
+              contentKey="home.hero3.title_lead"
+              value={t("home.hero3.title_lead", "Find your")}
+              className="hj-hero__lead"
+            />{" "}
+            <EditableText
+              as="em"
+              contentKey="home.hero3.title_accent"
+              value={t("home.hero3.title_accent", "Hive.")}
             />
-          </RevealHeading>
+          </h1>
           <EditableText
-            hero
             as="p"
             multiline
             contentKey="home.hero2.lede"
             value={t("home.hero2.lede", "Host or join gatherings, classes, and slow mornings")}
-            className="hero__lede"
+            className="hj-hero__lede"
           />
-          <MagneticButton strength={0.18}>
-            <JoinCommunityButton className="btn btn--on-dark">
+          <div className="hj-hero__actions">
+            <JoinCommunityButton className="j-btn j-btn--apricot">
               {t("home.hero2.cta_label", "Join The Hive")}
-              <span aria-hidden="true">→</span>
             </JoinCommunityButton>
-          </MagneticButton>
+            <Link href="/explore" className="j-link">
+              See gatherings <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+        {next && (
+          <p className="hj-hero__caption">
+            Next gathering: {next.title} · {next.date}
+            {next.time ? ` · ${next.time}` : ""}
+          </p>
+        )}
+      </section>
+
+      {/* 2 · MARQUEE — circle names from circles.ts */}
+      <Marquee words={circles.map((c) => c.name)} label="The Hive circles" />
+
+      {/* 3 · MANIFESTO */}
+      <section className="j-section hj-manifesto">
+        <div className="j-wrap">
+          <Reveal>
+            <EditableHeading
+              as="h2"
+              contentKey="home.about.heading"
+              value={t("home.about.heading", "Belonging feels different here")}
+              className="j-display hj-manifesto__text"
+            />
+          </Reveal>
+          <Reveal className="hj-manifesto__foot">
+            <EditableLabel
+              contentKey="home.about.eyebrow"
+              value={t("home.about.eyebrow", "The Hive Society")}
+              className="j-label"
+            />
+            <EditableText
+              as="p"
+              multiline
+              contentKey="home.about.lede"
+              value={t("home.about.lede", "A private community for women who grow, connect and create more.")}
+              className="j-lede"
+            />
+          </Reveal>
         </div>
       </section>
 
-      {/* PRIVILEGE OF GOOD COMPANY — copy on the left, a 360°-rotating
-          3D product (public/models/coffee-box.glb) on the right, staged
-          on a transparent overflow:visible canvas so it reads as floating
-          past the section rather than boxed in a photo frame.
-          Temporarily disabled — re-enable by flipping `false` below to `true`. */}
-      {false && (
-        <section className="section">
-          <div className="container">
-            <div className="split split--40-60" style={{ alignItems: "center" }}>
-              <div className="stack gap-16">
+      {/* 4 · THIS WEEK'S GATHERINGS — live data, hairline rows */}
+      {upcoming.length > 0 && (
+        <section className="j-section hj-gatherings">
+          <div className="j-wrap">
+            <div className="j-head">
+              <div>
                 <EditableLabel
-                  contentKey="home.coffee.eyebrow"
-                  value={t("home.coffee.eyebrow", "Good Mornings")}
-                  className="eyebrow"
+                  contentKey="home.gatherings.eyebrow"
+                  value={t("home.gatherings.eyebrow", "Gatherings")}
+                  className="j-label"
                 />
                 <EditableHeading
                   as="h2"
-                  contentKey="home.coffee.heading"
-                  value={t("home.coffee.heading", "Where good mornings begin")}
-                  className="h2"
-                />
-                <EditableText
-                  as="p"
-                  multiline
-                  contentKey="home.coffee.body"
-                  value={t(
-                    "home.coffee.body",
-                    "Slow mornings, cold coffee, and the people who make both worth showing up for."
-                  )}
-                  className="text-2"
+                  contentKey="home.gatherings.heading"
+                  value={t("home.gatherings.heading", "Come as you are. Leave with friends.")}
+                  className="j-display j-h2"
                 />
               </div>
-              <div className="product-stage">
-                <HiveCoffeeCup3D />
-              </div>
+              <Link href="/explore" className="j-link">
+                See all gatherings <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <div className="j-rows">
+              {upcoming.map((g, i) => (
+                <Reveal key={g.id} index={i}>
+                  <Link href="/explore" className="j-row">
+                    <span className="j-row__when">
+                      {g.date}
+                      {g.time ? <span> · {g.time}</span> : null}
+                    </span>
+                    <h3 className="j-display j-row__title">{g.title}</h3>
+                    <span className="j-row__details">
+                      <span className="j-row__meta">
+                        {g.category} · {g.area}
+                      </span>
+                      <span className="j-row__price">{g.price}</span>
+                    </span>
+                    <span className="j-row__photo">
+                      <Image src={g.image} alt="" fill loading="lazy" sizes="(min-width: 900px) 140px, 88px" />
+                    </span>
+                    <span className="j-row__arrow" aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* MORE THAN A CLUB — centered heading + short lede, then the
-          belonging photo gallery (staggered editorial grid).
-          Background: Flow + Soft Pull, behind everything (z-index:0), all
-          real content explicitly z-index:1 above it. */}
-      <section className="section section--intimate" style={{ position: "relative" }}>
-        <MoreThanAClubBackground />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div className="container" style={{ textAlign: "center" }}>
-            <div style={{ maxWidth: 560, margin: "0 auto" }}>
-              <EditableLabel
-                contentKey="home.about.eyebrow"
-                value={t("home.about.eyebrow", "The Hive Society")}
-                className="eyebrow"
-                style={{ justifyContent: "center" }}
-              />
-              <EditableHeading
-                as="h2"
-                contentKey="home.about.heading"
-                value={t("home.about.heading", "Belonging feels different here")}
-                className="h2"
-                style={{ marginTop: 14 }}
-              />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="home.about.lede"
-                value={t("home.about.lede", "A private community for women who grow, connect and create more.")}
-                className="lede"
-                style={{ margin: "16px auto 0" }}
-              />
-            </div>
+      {/* 5 · CIRCLES — asymmetric collage + the real circles list */}
+      <section className="j-section hj-circles">
+        <div className="j-wrap hj-circles__grid">
+          <div className="hj-collage">
+            {CIRCLE_COLLAGE.map((item, i) => (
+              <Reveal className={`hj-collage__frame hj-collage__frame--${i + 1}`} index={i} key={item.file}>
+                <Image
+                  src={`/images/${item.file}`}
+                  alt={item.alt}
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 900px) 28vw, 46vw"
+                />
+              </Reveal>
+            ))}
           </div>
-          <div className="container container--wide" style={{ marginTop: 56 }}>
-            <div className="belonging-gallery">
-              {BELONGING_GALLERY.map((item) => (
-                <RevealPhotoCard className="belonging-gallery__frame img-hover" key={item.file}>
-                  <Image
-                    src={`/images/${item.file}`}
-                    alt={item.alt}
-                    fill
-                    loading="lazy"
-                    sizes="(min-width: 1000px) 23vw, (min-width: 700px) 32vw, 46vw"
-                  />
-                </RevealPhotoCard>
+          <Reveal className="hj-circles__list">
+            <EditableLabel
+              contentKey="home.circles.eyebrow"
+              value={t("home.circles.eyebrow", "Circles")}
+              className="j-label"
+            />
+            <EditableHeading
+              as="h2"
+              contentKey="home.circles.heading"
+              value={t("home.circles.heading", "Find your circle.")}
+              className="j-display j-h2"
+            />
+            <ul className="hj-circles__rows">
+              {circles.map((c) => (
+                <li key={c.slug}>
+                  <span className="hj-circles__info">
+                    <span className="hj-circles__name">{c.name}</span>
+                    <span className="hj-circles__meta">{c.cadence}</span>
+                  </span>
+                  <span className="hj-circles__count">
+                    <strong>{c.members}</strong>
+                    <span>members</span>
+                  </span>
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+            <Link href="/community" className="j-link">
+              Explore the community <span aria-hidden="true">→</span>
+            </Link>
+          </Reveal>
         </div>
       </section>
 
-      {/* FEATURE BAND — large rounded-top, light-beige panel; contrast comes
-          from the surface shift + generous padding, never from a dark fill.
-          Background: Orbit + Orbit Nudge. */}
-      <div className="feature-band" style={{ position: "relative" }}>
-        <WhatSetsUsApartBackground />
-        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
-          <EditableLabel
-            contentKey="home.pillars.eyebrow"
-            value={t("home.pillars.eyebrow", "Why Join")}
-            className="eyebrow"
-            style={{ justifyContent: "center" }}
-          />
-          <EditableHeading
-            as="h2"
-            contentKey="home.pillars.heading"
-            value={t("home.pillars.heading", "What Sets Us Apart")}
-            className="h2"
-            style={{ marginTop: 14 }}
-          />
-          <ParallaxSection speed={0.1} className="feature-grid">
-            {PILLARS.map((p) => (
-              <div className="feature-item" key={p.key}>
-                <p.Icon className="feature-item__icon" />
+      {/* 6 · A NIGHT AT THE HIVE — frozen images in a horizontal reel, then the four pillars */}
+      <section className="j-section hj-night">
+        <div className="j-wrap">
+          <Reveal className="j-head">
+            <div>
+              <EditableLabel
+                contentKey="home.pillars.eyebrow"
+                value={t("home.pillars.eyebrow", "Why Join")}
+                className="j-label"
+              />
+              <EditableHeading
+                as="h2"
+                contentKey="home.pillars.heading"
+                value={t("home.pillars.heading", "What Sets Us Apart")}
+                className="j-display j-h2"
+              />
+            </div>
+          </Reveal>
+        </div>
+        <div className="hj-reel" role="region" aria-label="Moments from Hive gatherings" tabIndex={0}>
+          {NIGHT_REEL.map((item) => (
+            <figure className="hj-reel__item" key={item.file}>
+              <div className="hj-reel__frame">
+                <Image
+                  src={`/images/${item.file}`}
+                  alt={item.alt}
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 900px) 28vw, 70vw"
+                />
+              </div>
+            </figure>
+          ))}
+        </div>
+        <div className="j-wrap">
+          <ol className="j-pillars">
+            {PILLARS.map((p, i) => (
+              <Reveal className="j-pillar" index={i} key={p.key}>
+                <span className="j-pillar__n" aria-hidden="true">
+                  {pad(i + 1)}
+                </span>
                 <EditableHeading
                   as="h3"
                   contentKey={`home.about.pillar_${p.key}`}
                   value={t(`home.about.pillar_${p.key}`, p.title)}
-                  className="h3"
+                  className="j-display j-pillar__title"
                 />
-              </div>
+              </Reveal>
             ))}
-          </ParallaxSection>
+          </ol>
         </div>
-      </div>
+      </section>
 
-      {/* MEMBERSHIP — a very light, unboxed container: large photo on the
-          left, short copy and a primary CTA on the right. No dark background.
-          Background: Constellation, with a very subtle Soft Pull on its
-          connectors only (nodes never move). */}
-      <section className="section section--alt" style={{ position: "relative" }}>
-        <ConstellationSoftPullVariant />
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="split split--60-40" style={{ alignItems: "center" }}>
-            <div className="photo img-hover" style={{ aspectRatio: "4/3" }}>
-              <EditableImage
-                mediaKey="home.membership2.image"
-                src={membershipImage.url}
-                alt={membershipImage.alt}
-                objectPosition={membershipImage.objectPosition}
-                sizes="(min-width: 900px) 55vw, 100vw"
+      {/* 7 · VOICES — intentionally omitted until verified member quotes exist */}
+
+      {/* 8 · OUR STORY — existing about copy + frozen images */}
+      <section className="j-section j-story">
+        <div className="j-wrap j-story__grid">
+          <figure className="j-story__figure">
+            <Reveal className="j-story__photo">
+              <Image
+                src="/images/meera.jpeg"
+                alt=""
+                fill
+                loading="lazy"
+                sizes="(min-width: 900px) 40vw, 92vw"
               />
-            </div>
-            <div className="stack gap-16">
-              <EditableLabel
-                contentKey="home.membership2.eyebrow"
-                value={t("home.membership2.eyebrow", "Membership")}
-                className="eyebrow"
-              />
-              <EditableHeading
-                as="h2"
-                contentKey="home.membership2.heading"
-                value={t("home.membership2.heading", "Join The Hive")}
-                className="h2"
-              />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="home.membership2.body"
-                value={t("home.membership2.body", "A community built on trust, warmth and belonging.")}
-                className="text-2"
-              />
-              <JoinCommunityButton className="btn btn--primary" style={{ alignSelf: "flex-start", marginTop: 8 }}>
-                {t("home.membership2.button_label", "Join The Hive")}
-              </JoinCommunityButton>
-            </div>
+            </Reveal>
+            <figcaption>Three members laughing together on a padel court</figcaption>
+          </figure>
+          <Reveal className="j-story__copy">
+            <EditableLabel
+              contentKey="home.story.eyebrow"
+              value={t("home.story.eyebrow", "Our story")}
+              className="j-label"
+            />
+            <EditableText
+              as="p"
+              multiline
+              contentKey="about.intro.lede"
+              value={ta(
+                "about.intro.lede",
+                "The real barrier was never finding something to do — it was not wanting to arrive alone."
+              )}
+              className="j-display j-story__lede"
+            />
+            <EditableText
+              as="p"
+              multiline
+              contentKey="about.intro.paragraph"
+              value={ta("about.intro.paragraph", "Real gatherings. Trusted faces. A community worth returning to.")}
+              className="j-lede"
+            />
+            <Link href="/about" className="j-link">
+              Read our story <span aria-hidden="true">→</span>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 9 · MEMBERSHIP — live plans, checkout (Ziina) stays on /membership */}
+      <section className="hj-membership">
+        <Reveal className="hj-membership__copy">
+          <EditableLabel
+            contentKey="home.membership2.eyebrow"
+            value={t("home.membership2.eyebrow", "Membership")}
+            className="j-label"
+          />
+          <EditableHeading
+            as="h2"
+            contentKey="home.membership2.heading"
+            value={t("home.membership2.heading", "Join The Hive")}
+            className="j-display j-h2"
+          />
+          <EditableText
+            as="p"
+            multiline
+            contentKey="home.membership2.body"
+            value={t("home.membership2.body", "A community built on trust, warmth and belonging.")}
+            className="j-lede"
+          />
+          <ul className="j-plans">
+            {plans.map((p) => (
+              <li key={p.key}>
+                <span className="j-plans__name">{p.name}</span>
+                <span className="j-plans__tag">{p.tagline}</span>
+                <span className="j-plans__price">
+                  <strong>
+                    {p.currency} {p.amountAed}
+                  </strong>{" "}
+                  / {p.cadence === "annual" ? "year" : "month"}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="hj-membership__actions">
+            <JoinCommunityButton className="j-btn j-btn--apricot">
+              {t("home.membership2.button_label", "Join The Hive")}
+            </JoinCommunityButton>
+            <Link href="/membership" className="j-link">
+              Membership details <span aria-hidden="true">→</span>
+            </Link>
           </div>
+        </Reveal>
+        <div className="hj-membership__photo">
+          <EditableImage
+            mediaKey="home.membership2.image"
+            src={membershipImage.url}
+            alt={membershipImage.alt}
+            objectPosition={membershipImage.objectPosition}
+            sizes="(min-width: 900px) 50vw, 100vw"
+          />
+        </div>
+      </section>
+
+      {/* 10 · FINAL CTA — full-bleed. Fixed to The Morning Table gathering image. */}
+      <section className="j-final">
+        <div className="j-final__media">
+          <Image
+            src="https://bswcliacldjlsadntebd.supabase.co/storage/v1/object/public/site-images/gatherings/fd2b36ec-9368-4906-bea9-a9500f32f8c5/1789641860425.png"
+            alt="Friends gathered at The Morning Table"
+            fill
+            loading="lazy"
+            sizes="100vw"
+          />
+        </div>
+        <div className="j-final__copy">
+          <EditableHeading
+            as="h2"
+            contentKey="home.final.heading"
+            value={t("home.final.heading", "Pull up a chair.")}
+            className="j-display j-final__title"
+          />
+          <JoinCommunityButton className="j-btn j-btn--apricot">
+            {t("home.final.button_label", "Join The Hive")}
+          </JoinCommunityButton>
         </div>
       </section>
     </>

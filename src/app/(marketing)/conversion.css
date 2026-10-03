@@ -1,0 +1,92 @@
+/* Phase 2 — conversion pages (membership, join modal, contact, host). Builds on journal.css. */
+
+/* ---------- shared ---------- */
+.jc-note{margin:20px 0 0; font-size:14px; color:var(--j-soft)}
+.jc-split{display:grid; gap:48px}
+@media(min-width:900px){.jc-split{grid-template-columns:5fr 7fr; gap:96px; align-items:start}}
+body:has(.j-shell) .j-pagehero--maroon .btn--primary{background:var(--j-apricot); color:var(--j-ink)}
+body:has(.j-shell) .j-pagehero--maroon .btn--primary:hover{background:#F69B6B}
+.jc-tag{display:inline-block; margin-top:32px; font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--j-apricot); padding-bottom:4px; border-bottom:1px solid var(--j-apricot)}
+
+/* ---------- membership ---------- */
+.jc-join__grid{display:grid; gap:40px}
+.jc-join__intro .j-lede{margin-top:24px}
+@media(min-width:900px){.jc-join__grid{grid-template-columns:5fr 7fr; gap:96px; align-items:start}}
+
+.jc-plans{border-top:0}
+.jc-plan{display:grid; gap:40px; padding:56px 0; border-top:1px solid var(--j-line-on-dark)}
+.jc-plan:last-child{border-bottom:1px solid var(--j-line-on-dark)}
+.jc-plan__name{font-size:clamp(3.25rem,7vw,6.5rem); line-height:.95; letter-spacing:-.03em; color:var(--j-paper)}
+.jc-plan__price{margin:20px 0 0; font-size:clamp(1.75rem,2.4vw,2.5rem); color:var(--j-apricot)}
+.jc-plan__per{font-size:.55em; margin-left:6px; color:var(--j-soft-on-dark)}
+.jc-plan__tag{margin:16px 0 0; font-size:1.125rem; color:var(--j-soft-on-dark)}
+.jc-plan__main ul{list-style:none; margin:28px 0 0; padding:0; border-top:1px solid var(--j-line-on-dark)}
+.jc-plan__main li{padding:12px 0; border-bottom:1px solid var(--j-line-on-dark); font-size:15px; color:rgba(255,252,247,.92)}
+.jc-plan__form .btn{width:100%}
+body:has(.j-shell) .jc-plans .field label{color:var(--j-paper)}
+body:has(.j-shell) .jc-plans .field input:not([type="checkbox"]):not([type="radio"]){color:var(--j-paper); border-bottom-color:rgba(255,252,247,.75); background:transparent}
+body:has(.j-shell) .jc-plans .field input:not([type="checkbox"]):not([type="radio"]):focus{border-bottom-color:var(--j-apricot); outline-color:var(--j-apricot)}
+body:has(.j-shell) .jc-plans [role="alert"]{color:#FFB4A8!important}
+@media(min-width:900px){.jc-plan{grid-template-columns:7fr 5fr; gap:96px; align-items:start; padding:80px 0}}
+
+.jc-faq__grid{display:grid; gap:40px}
+body:has(.j-shell) .faq{border-top:1px solid var(--j-line)}
+body:has(.j-shell) details.faq-item{padding:0; border-bottom:1px solid var(--j-line)}
+body:has(.j-shell) details.faq-item summary{padding:26px 0; min-height:44px; font-family:var(--j-display); font-weight:400; font-size:clamp(1.5rem,1.4vw + 1rem,2.125rem); line-height:1.1; letter-spacing:-.01em; color:var(--j-ink)}
+body:has(.j-shell) details.faq-item summary::after{font-family:var(--j-display); font-size:2rem; color:var(--j-maroon)}
+body:has(.j-shell) details.faq-item p{margin:0 0 28px; max-width:60ch; font-size:1.0625rem; line-height:1.7; color:var(--j-soft)}
+@media(min-width:900px){.jc-faq__grid{grid-template-columns:4fr 8fr; gap:96px; align-items:start}}
+
+/* ---------- join modal ---------- */
+body:has(.j-shell) .modal__body.jm{padding:0}
+.jm__head{background:var(--j-maroon); color:var(--j-paper); padding:72px 24px 32px}
+.jm__title{font-family:var(--j-display); font-weight:400; font-size:clamp(2.25rem,5vw,3.5rem); line-height:1; letter-spacing:-.02em; margin:0; color:var(--j-paper)}
+.jm__sub{margin:16px 0 0; font-size:16px; line-height:1.55; color:var(--j-soft-on-dark); max-width:44ch}
+.jm__form{padding:32px 24px 40px}
+body:has(.j-shell) .modal:has(.jm) .modal__close{border-color:rgba(255,252,247,.6); color:var(--j-paper)}
+body:has(.j-shell) .modal:has(.jm) .modal__close:hover{background:var(--j-paper); color:var(--j-maroon); border-color:var(--j-paper)}
+body:has(.j-shell) .modal:has(.jm) .modal__close:focus-visible{outline-color:var(--j-apricot)}
+@media(min-width:700px){.jm__head{padding:64px 48px 36px}.jm__form{padding:40px 48px 48px}}
+body:has(.j-shell) .checkchip-group{gap:8px}
+body:has(.j-shell) .checkchip-group .chip{border-radius:0; border:1px solid var(--j-line); background:transparent; font-size:14px; color:var(--j-ink)}
+body:has(.j-shell) .checkchip-group .chip:hover{border-color:var(--j-ink)}
+body:has(.j-shell) .checkchip-group .chip:has(input:checked){background:var(--j-maroon); border-color:var(--j-maroon); color:var(--j-paper)}
+body:has(.j-shell) .checkchip-group .chip:has(input:focus-visible){outline:2px solid var(--j-maroon); outline-offset:2px}
+
+/* ---------- contact ---------- */
+.jc-contact__grid{display:grid; gap:56px}
+.jc-contact__title{font-size:clamp(3rem,7vw,6.5rem); line-height:.95; letter-spacing:-.03em; margin:0 0 56px}
+.jc-contact__sub{font-size:clamp(1.75rem,2vw + 1rem,2.5rem); margin:0 0 20px}
+.jc-contact .j-label{color:var(--j-maroon)}
+.jc-channels{list-style:none; margin:0; padding:0; border-bottom:1px solid var(--j-line)}
+.jc-channels li{display:flex; flex-direction:column; gap:4px; padding:18px 0; border-top:1px solid var(--j-line)}
+.jc-channels__name{font-family:var(--j-display); font-size:1.75rem; line-height:1.1}
+.jc-channels__email{font-size:15px; color:var(--j-soft); overflow-wrap:anywhere}
+.jc-tabs{display:flex; flex-wrap:wrap; gap:0 28px; margin-bottom:36px; border-bottom:1px solid var(--j-line)}
+.jc-tab{min-height:44px; padding:10px 0; background:none; border:0; border-bottom:2px solid transparent; margin-bottom:-1px; font:600 12px/1.2 var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--j-soft); cursor:pointer}
+.jc-tab:hover{color:var(--j-ink)}
+.jc-tab.is-active{color:var(--j-ink); border-bottom-color:var(--j-maroon)}
+@media(min-width:900px){.jc-contact__grid{grid-template-columns:5fr 7fr; gap:96px; align-items:start}.jc-contact__form{padding-top:12px}}
+
+/* ---------- host ---------- */
+.jc-who .j-label,.jc-apply .j-label{color:var(--j-maroon)}
+.jc-who__list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr; border-bottom:1px solid var(--j-line)}
+.jc-who__list li{padding:18px 0; border-top:1px solid var(--j-line); font-family:var(--j-display); font-size:clamp(1.5rem,1vw + 1.2rem,2rem); line-height:1.1}
+@media(min-width:640px){.jc-who__list{grid-template-columns:1fr 1fr; column-gap:48px}}
+.jc-why .j-label{color:var(--j-apricot)}
+.jc-why__rows{margin-top:56px; border-bottom:1px solid var(--j-line-on-dark)}
+.jc-why__row{display:grid; gap:12px; padding:32px 0; border-top:1px solid var(--j-line-on-dark)}
+.jc-why__row h3{font-size:clamp(2rem,3vw,3rem); color:var(--j-paper); margin:0}
+.jc-why__row p{margin:0; max-width:46ch; font-size:1.125rem; line-height:1.55; color:var(--j-soft-on-dark)}
+@media(min-width:900px){.jc-why__row{grid-template-columns:4fr 8fr; gap:48px; align-items:baseline; padding:44px 0}}
+.jc-steps__list{list-style:none; margin:0; padding:0; display:grid; gap:0}
+.jc-steps__list li{padding:28px 0 36px; border-top:1px solid var(--j-ink)}
+.jc-steps__n{display:block; margin-bottom:20px; font-size:12px; font-weight:600; letter-spacing:.14em; color:var(--j-maroon)}
+.jc-steps__list h3{font-size:clamp(2.5rem,4vw,4rem); line-height:1; margin:0 0 14px}
+.jc-steps__list p{margin:0; max-width:32ch; font-size:1.0625rem; color:var(--j-soft)}
+@media(min-width:900px){.jc-steps__list{grid-template-columns:repeat(3,1fr); gap:48px}}
+
+/* ---------- success page ---------- */
+body:has(.j-shell) .jc-success{max-width:640px; margin:0 auto; padding:0!important; text-align:left!important; align-items:flex-start}
+body:has(.j-shell) .jc-success h1{font-size:clamp(2.75rem,6vw,4.5rem); line-height:1}
+body:has(.j-shell) .jc-success p{font-size:1.125rem; color:var(--j-soft)}

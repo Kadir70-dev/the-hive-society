@@ -19,91 +19,76 @@ export default async function MembershipPage() {
 
   return (
     <>
-      <div className="masthead section--dark">
-        <div className="container">
-          <div className="split split--60-40" style={{ alignItems: "start" }}>
-            <div className="stack gap-14">
-              <EditableLabel contentKey="membership.masthead.eyebrow" value={t("membership.masthead.eyebrow", "Join the Hive")} className="eyebrow" />
-              <EditableHeading
-                as="h1"
-                contentKey="membership.masthead.title"
-                value={t("membership.masthead.title", "Be part of it")}
-                className="h1"
-                style={{ fontSize: "clamp(2rem,4vw + .4rem,3.2rem)" }}
-              />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="membership.masthead.lede"
-                value={t("membership.masthead.lede", "Get updates on Abu Dhabi events, meetups & launch news")}
-                className="lede"
-              />
-            </div>
-            <EditableLabel
-              contentKey="membership.masthead.tag"
-              value={t("membership.masthead.tag", "Membership coming soon")}
-              className="tag-proposed"
-              style={{ justifySelf: "start", marginTop: 10 }}
+      <section className="j-pagehero j-pagehero--maroon j-on-dark">
+        <div className="j-wrap">
+          <EditableLabel contentKey="membership.masthead.eyebrow" value={t("membership.masthead.eyebrow", "Join the Hive")} className="j-label" />
+          <EditableHeading
+            as="h1"
+            contentKey="membership.masthead.title"
+            value={t("membership.masthead.title", "Be part of it")}
+            className="j-display j-pagehero__title"
+          />
+          <EditableText
+            as="p"
+            multiline
+            contentKey="membership.masthead.lede"
+            value={t("membership.masthead.lede", "Get updates on Abu Dhabi events, meetups & launch news")}
+            className="j-lede j-pagehero__lede"
+          />
+          <EditableLabel
+            contentKey="membership.masthead.tag"
+            value={t("membership.masthead.tag", "Membership coming soon")}
+            className="jc-tag"
+          />
+        </div>
+      </section>
+
+      <section className="j-section jc-join" id="join-form">
+        <div className="j-wrap jc-join__grid">
+          <div className="jc-join__intro">
+            <EditableHeading as="h2" contentKey="membership.form.title" value={t("membership.form.title", "Join the Hive")} className="j-display j-h2" />
+            <EditableText
+              as="p"
+              multiline
+              contentKey="membership.form.subtitle"
+              value={t("membership.form.subtitle", "Get updates & invites")}
+              className="j-lede"
             />
           </div>
-        </div>
-      </div>
-
-      <div className="section section--intimate" id="join-form">
-        <div className="container">
-          <div className="card popup-card">
-            <div className="stack gap-6" style={{ textAlign: "center", marginBottom: 22 }}>
-              <EditableHeading as="h2" contentKey="membership.form.title" value={t("membership.form.title", "Join the Hive")} className="h3" />
-              <EditableText
-                as="p"
-                multiline
-                contentKey="membership.form.subtitle"
-                value={t("membership.form.subtitle", "Get updates & invites")}
-                className="text-2 small"
-              />
-            </div>
+          <div className="jc-join__form">
             <CommunitySignupForm />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="section section--alt">
-        <div className="container">
-          <div className="grid grid-2">
-            {plans.map((plan) => (
-              <div
-                key={plan.key}
-                className={plan.key === "create" ? "card card--warm stack gap-14" : "card stack gap-14"}
-                style={
-                  plan.key === "create"
-                    ? { padding: 32, borderColor: "var(--accent-deep)" }
-                    : { padding: 32 }
-                }
-              >
-                <EditablePlanValue planId={plan.id} field="name" value={plan.name} as="span" className="eyebrow" />
-                <h3 className="h3">
+      <section className="j-section section--dark jc-plans">
+        <div className="j-wrap">
+          {plans.map((plan) => (
+            <div key={plan.key} className="jc-plan">
+              <div className="jc-plan__main">
+                <EditablePlanValue planId={plan.id} field="name" value={plan.name} as="h2" className="j-display jc-plan__name" />
+                <p className="j-display jc-plan__price">
                   AED <EditablePlanValue planId={plan.id} field="amount_aed" value={plan.amountAed} as="span" />
-                  <span className="small text-2">/mo</span>
-                </h3>
-                <EditablePlanValue planId={plan.id} field="tagline" value={plan.tagline} as="p" className="text-2 small" />
+                  <span className="jc-plan__per">/mo</span>
+                </p>
+                <EditablePlanValue planId={plan.id} field="tagline" value={plan.tagline} as="p" className="jc-plan__tag" />
                 <EditablePlanFeatures planId={plan.id} features={plan.features} />
-                <div style={{ marginTop: 8, width: "100%" }}>
-                  <MembershipCheckoutForm planKey={plan.key} amountAed={plan.amountAed} />
-                </div>
               </div>
-            ))}
-          </div>
+              <div className="jc-plan__form">
+                <MembershipCheckoutForm planKey={plan.key} amountAed={plan.amountAed} />
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      <div className="section">
-        <div className="container" style={{ maxWidth: 800 }}>
+      <section className="j-section jc-faq">
+        <div className="j-wrap jc-faq__grid">
           <EditableHeading
             as="h2"
             contentKey="membership.faq.heading"
             value={t("membership.faq.heading", "Membership questions.")}
-            className="h2"
-            style={{ marginBottom: 8 }}
+            className="j-display j-h2"
           />
           <div className="faq">
             {membershipFaqs.map((faq, i) => {
@@ -125,7 +110,7 @@ export default async function MembershipPage() {
             })}
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -1,0 +1,132 @@
+/* The Hive Journal — homepage layer.
+   Everything is scoped under .hj* or body:has(.hj-marker), so nothing leaks to other pages. */
+
+.hj-hero :focus-visible,.hj-marquee :focus-visible,.hj-manifesto :focus-visible,.hj-night :focus-visible,.hj-membership :focus-visible{outline-color:var(--j-apricot)}
+
+/* shared type + controls */
+
+/* ---------- header: flat, transparent, over the hero ---------- */
+
+/* quiet outline Join — the apricot hero button is the only filled CTA in view */
+
+/* ---------- mobile menu: full-screen maroon ---------- */
+
+/* ---------- 1 hero ---------- */
+.hj-hero{position:relative; min-height:100vh; min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:var(--j-deep); color:var(--j-paper)}
+.hj-hero__media{position:absolute; left:0; right:0; top:-14%; height:114%}
+@media(min-width:900px){.hj-hero__media{top:0; height:100%}}
+.hj-hero::after{content:""; position:absolute; inset:0; pointer-events:none; /* scrim: original stops and positions */
+  background:linear-gradient(180deg, rgba(43,15,23,.38) 0%, rgba(43,15,23,0) 22%), radial-gradient(62% 46% at 50% 66%, rgba(43,15,23,.62) 0%, rgba(43,15,23,0) 80%), linear-gradient(0deg, rgba(43,15,23,.42) 0%, rgba(43,15,23,0) 45%)}
+.hj-hero__copy{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; width:100%; padding:128px var(--j-edge) 104px}
+.hj-hero__copy .j-label{color:var(--j-paper); margin-bottom:28px}
+.hj-hero__title{font-family:var(--j-display); font-weight:400; font-synthesis:none; font-size:clamp(3.5rem,16vw,4.5rem); line-height:.92; letter-spacing:-.02em; margin:0; color:var(--j-paper); text-shadow:0 1px 18px rgba(43,15,23,.35)}
+.hj-hero__title em{font-style:italic; color:var(--j-apricot)}
+.hj-hero__lead{display:block}
+.hj-hero__lede{font-size:1.0625rem; line-height:1.5; max-width:300px; margin:28px 0 0; color:rgba(255,252,247,.96); text-shadow:0 1px 12px rgba(43,15,23,.4)}
+.hj-hero__actions{display:flex; flex-direction:column; align-items:center; gap:20px; margin-top:36px; width:100%}
+.hj-hero__actions .j-btn{width:100%; max-width:280px}
+.hj-hero__actions .j-link{align-self:center}
+.hj-hero__caption{position:absolute; z-index:1; left:20px; right:20px; bottom:28px; margin:0; font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,252,247,.94); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow:0 1px 12px rgba(43,15,23,.4)}
+@media(min-width:900px){
+  .hj-hero__title{font-size:clamp(5.5rem,11vw,10.5rem)}
+  .hj-hero__lead{display:inline}
+  .hj-hero__lede{font-size:1.3125rem; max-width:540px; margin-top:32px}
+  .hj-hero__actions{flex-direction:row; justify-content:center; gap:32px; width:auto; margin-top:44px}
+  .hj-hero__actions .j-btn{width:auto; max-width:none}
+  .hj-hero__caption{bottom:36px}
+}
+@keyframes hj-rise{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
+.hj-hero__copy > *{animation:hj-rise .5s var(--j-ease) both}
+.hj-hero__copy > :nth-child(2){animation-delay:60ms}
+.hj-hero__copy > :nth-child(3){animation-delay:120ms}
+.hj-hero__copy > :nth-child(4){animation-delay:180ms}
+
+/* ---------- 2 marquee ---------- */
+.hj-marquee{position:relative; overflow:hidden; background:var(--j-deep); color:var(--j-paper); padding:32px 0 12px}
+.hj-marquee__track{display:flex; width:max-content; animation:hj-roll 70s linear infinite}
+.hj-marquee.is-paused .hj-marquee__track,.hj-marquee:hover .hj-marquee__track{animation-play-state:paused}
+.hj-marquee__set{display:flex; margin:0; padding:0; list-style:none}
+.hj-marquee__set li{font-family:var(--j-display); font-size:clamp(2.75rem,6vw,5.5rem); line-height:1.1; letter-spacing:-.02em; white-space:nowrap; padding-right:.6em}
+.hj-marquee__set li::after{content:"·"; color:var(--j-apricot); padding-left:.6em}
+.hj-marquee__toggle{display:block; margin:8px var(--j-edge) 0 auto; min-height:44px; padding:0 2px; background:none; border:0; border-bottom:1px solid var(--j-line-on-dark); color:var(--j-soft-on-dark); font:600 12px/1 var(--sans); letter-spacing:.12em; text-transform:uppercase; cursor:pointer}
+@keyframes hj-roll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- 3 manifesto: maroon, one big statement across the full width ---------- */
+.hj-manifesto{background:var(--j-maroon); color:var(--j-paper)}
+.hj-manifesto .j-label{color:var(--j-apricot); margin:0}
+.hj-manifesto__text{font-size:clamp(3rem,10vw,10.5rem); line-height:.95; letter-spacing:-.03em}
+.hj-manifesto__foot{display:flex; flex-direction:column; align-items:flex-start; gap:20px; margin-top:48px; padding-top:28px; border-top:1px solid var(--j-line-on-dark)}
+.hj-manifesto__foot .j-lede{font-size:clamp(1.25rem,1vw + 1rem,1.75rem); line-height:1.45; max-width:30ch; color:var(--j-paper)}
+@media(min-width:900px){
+  .hj-manifesto .j-wrap{display:grid; grid-template-columns:8fr 4fr; gap:96px; align-items:end}
+  .hj-manifesto__foot{margin-top:0; padding-bottom:12px}
+}
+
+/* ---------- 4 gatherings ---------- */
+.hj-gatherings .j-label{color:var(--j-maroon)}
+
+/* ---------- 5 circles ---------- */
+.hj-circles{border-top:1px solid var(--j-line)}
+.hj-circles .j-label{color:var(--j-maroon)}
+.hj-circles__grid{display:grid; gap:56px}
+.hj-collage{display:grid; grid-template-columns:repeat(12,1fr); gap:12px; align-items:start}
+.hj-collage__frame{position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--j-line)}
+.hj-collage__frame--1{grid-column:1 / 9; grid-row:1 / 3}
+.hj-collage__frame--2{grid-column:9 / 13}
+.hj-collage__frame--3{grid-column:9 / 13}
+.hj-circles__rows{list-style:none; margin:40px 0 32px; padding:0; border-bottom:1px solid var(--j-line)}
+.hj-circles__rows li{display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px 0; border-top:1px solid var(--j-line)}
+.hj-circles__info{display:flex; flex-direction:column; gap:6px; min-width:0}
+.hj-circles__name{font-family:var(--j-display); font-size:clamp(1.75rem,1vw + 1.4rem,2.25rem); line-height:1.05; letter-spacing:-.01em}
+.hj-circles__meta{font-size:14px; color:var(--j-soft)}
+.hj-circles__count{display:flex; flex-direction:column; align-items:flex-end; flex:none; color:var(--j-maroon)}
+.hj-circles__count strong{font-family:var(--j-display); font-weight:400; font-size:2rem; line-height:1}
+.hj-circles__count span{font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase}
+@media(min-width:900px){
+  .hj-circles__grid{grid-template-columns:7fr 5fr; gap:96px; align-items:start}
+  .hj-collage{gap:16px}
+}
+
+/* ---------- 6 night at the hive ---------- */
+.hj-night{background:var(--j-deep); color:var(--j-paper); padding-bottom:96px}
+@media(min-width:900px){.hj-night{padding-bottom:160px}}
+.hj-night .j-label{color:var(--j-apricot)}
+.hj-reel{display:flex; align-items:flex-start; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; padding:0 var(--j-edge) 8px; scroll-padding-inline:var(--j-edge)}
+.hj-reel:focus-visible{outline-offset:-3px}
+.hj-reel__item{flex:none; width:clamp(260px,28vw,420px); margin:0; scroll-snap-align:start}
+.hj-reel__frame{position:relative; aspect-ratio:3/4; overflow:hidden; background:var(--j-line-on-dark)}
+@media(min-width:900px){
+  .hj-reel{gap:28px; padding-bottom:64px}
+  .hj-reel__item:nth-child(even){margin-top:64px}
+}
+
+/* ---------- 8 story ---------- */
+
+/* ---------- 9 membership ---------- */
+.hj-membership{display:grid; background:var(--j-maroon); color:var(--j-paper)}
+.hj-membership .j-label{color:var(--j-apricot)}
+.hj-membership__copy{display:flex; flex-direction:column; align-items:flex-start; gap:28px; padding:96px var(--j-edge)}
+.hj-membership__copy .j-label{margin-bottom:0}
+.hj-membership__photo{position:relative; aspect-ratio:4/3}
+
+.hj-membership__actions{display:flex; flex-direction:column; align-items:flex-start; gap:20px; margin-top:12px}
+@media(min-width:640px){.hj-membership__actions{flex-direction:row; align-items:center; gap:32px}}
+@media(min-width:900px){
+  .hj-membership{grid-template-columns:1fr 1fr; min-height:780px}
+  .hj-membership__copy{justify-content:center; padding:128px 80px 128px max(72px, calc((100vw - 1440px)/2 + 72px))}
+  .hj-membership__photo{aspect-ratio:auto}
+}
+
+/* ---------- 10 final CTA: copy sits at the bottom, clear of the faces ---------- */
+
+/* ---------- 13 footer ---------- */
+
+/* ---------- motion preferences ---------- */
+@media(prefers-reduced-motion:reduce){
+  .hj-hero__copy > *{animation:none}
+  .hj-marquee__track{animation:none; width:auto; flex-wrap:wrap}
+  .hj-marquee__set[aria-hidden="true"],.hj-marquee__toggle{display:none}
+  .hj-marquee__set{flex-wrap:wrap}
+  
+  
+}
